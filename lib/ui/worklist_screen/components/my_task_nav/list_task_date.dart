@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_list/constants/app_colors.dart';
@@ -49,12 +48,15 @@ class ListTaskDate extends StatelessWidget {
               return Column(
                 children: <Widget>[
                   for (int i = 0; i < nowData.length; i++)
-                    MyTaskCard(
-                      task: nowData[i]['title'],
-                      time: nowData[i]['time'],
-                      checked: nowData[i]['status'] == 1,
-                      idTask: nowData[i]['ID'].toString(),
-                    ),
+                    if (nowData[i]['status'] != -1)
+                      MyTaskCard(
+                        task: nowData[i]['title'].toString().length > 40
+                            ? nowData[i]['title'].toString().substring(0, 40)
+                            : nowData[i]['title'],
+                        time: nowData[i]['time'],
+                        checked: nowData[i]['status'] == 1,
+                        idTask: nowData[i]['ID'].toString(),
+                      ),
                   if (nowData.length == 0)
                     Center(
                       child: Text(
@@ -100,12 +102,17 @@ class ListTaskDate extends StatelessWidget {
               return Column(
                 children: <Widget>[
                   for (int i = 0; i < tomorrowData.length; i++)
-                    MyTaskCard(
-                      task: tomorrowData[i]['title'],
-                      time: tomorrowData[i]['time'],
-                      checked: tomorrowData[i]['status'] == 1,
-                      idTask: tomorrowData[i]['ID'].toString(),
-                    ),
+                    if (tomorrowData[i]['status'] != -1)
+                      MyTaskCard(
+                        task: tomorrowData[i]['title'].toString().length > 40
+                            ? tomorrowData[i]['title']
+                                .toString()
+                                .substring(0, 40)
+                            : tomorrowData[i]['title'],
+                        time: tomorrowData[i]['time'],
+                        checked: tomorrowData[i]['status'] == 1,
+                        idTask: tomorrowData[i]['ID'].toString(),
+                      ),
                   if (tomorrowData.length == 0)
                     Center(
                       child: Text(
@@ -147,7 +154,7 @@ class MyTaskCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: InkWell(
-        onTap: () => _showTaskDialog(context, task, "1", time),
+        onTap: () => _showTaskDialog(context, task, idTask, time),
         child: Container(
           width: size.width,
           height: 70,
@@ -393,7 +400,6 @@ class MyTaskCard extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(horizontal: 16),
                 content: Container(
                   width: size.width * .8,
-                  height: size.height * .8,
                   child: SingleChildScrollView(
                     child: ListBody(
                       children: <Widget>[
@@ -470,6 +476,7 @@ class MyTaskCard extends StatelessWidget {
                                           },
                                           color: Color(0xFF6074F9),
                                         ),
+                                      SizedBox(height: 30),
                                       Column(
                                         children: [
                                           Center(
@@ -706,11 +713,16 @@ class DecriptionTask extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            Text(
-              "$decription",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+            Container(
+              child: Text(
+                decription.length > 30
+                    ? "$decription".substring(0, 30)
+                    : "$decription",
+                maxLines: 3,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

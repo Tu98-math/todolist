@@ -77,7 +77,7 @@ class _MenuBodyState extends State<MenuBody> {
                                                 indexColor: data[i * 2 + 1]
                                                     ['color'],
                                                 press: () {},
-                                                task: data[i * 2]['task'],
+                                                task: data[i * 2 + 1]['task'],
                                               ),
                                           ],
                                         ),
