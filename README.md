@@ -35,7 +35,7 @@
     </ul>
     <hr>
     <h3> APK file </h3>
-    <a href="https://drive.google.com/file/d/14uWecRvOeAaF8J2BzcWPopNA3A4YUnum/view?usp=sharing">Freetuts.net</a>
+    <a href="https://drive.google.com/file/d/14uWecRvOeAaF8J2BzcWPopNA3A4YUnum/view?usp=sharing">Link</a>
     <hr>
     <h3> Photos </h3>
     <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-01.png" alt="">
