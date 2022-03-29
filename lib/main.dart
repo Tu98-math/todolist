@@ -1,9 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_list/routing/route_generator.dart';
-import 'package:to_do_list/utils/theme/themes.dart';
-import 'package:to_do_list/ui/welcome_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+import 'base/base_state.dart';
+import 'app/app.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -11,11 +17,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: RouteGenerator().onGenerateRoute,
-      theme: theme(),
-      home: const WelcomeScreen(),
+    return ProviderScope(
+      child: Consumer(
+        builder: (context, watch, _) {
+          return EasyLocalization(
+            supportedLocales: const [Locale('en', 'US'), Locale('ko', 'KR')],
+            path: 'assets/translations',
+            startLocale: const Locale('en', 'US'),
+            fallbackLocale: const Locale('en', 'US'),
+            child: const App(),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/ui/forgot_password_screen.dart';
-import 'package:to_do_list/ui/log_in_screen/log_in_screen.dart';
-import 'package:to_do_list/ui/new_check_list_screen/new_check_list_screen.dart';
-import 'package:to_do_list/ui/new_note_screen.dart';
-import 'package:to_do_list/ui/new_task_screen/new_task_screen.dart';
-import 'package:to_do_list/ui/reset_password_screen.dart';
-import 'package:to_do_list/ui/sign_up_screen/sign_up_screen.dart';
-import 'package:to_do_list/ui/succesful_screen.dart';
-import 'package:to_do_list/ui/walkthrough_screen/walkthrough_screen.dart';
-import 'package:to_do_list/ui/welcome_screen.dart';
-import 'package:to_do_list/ui/worklist_screen/work_list_screen.dart';
-import 'package:to_do_list/utils/exceptions/route_exception.dart';
+import 'package:get/get.dart';
 
+import '/pages/forgot_password_screen.dart';
+import '/pages/new_check_list_screen/new_check_list_screen.dart';
+import '/pages/new_note_screen.dart';
+import '/pages/new_task_screen/new_task_screen.dart';
+import '/pages/reset_password_screen.dart';
+import '/pages/sign_up_screen/sign_up_screen.dart';
+import '/pages/succesful_screen.dart';
+import '/pages/walkthrough_screen/walk_through_screen.dart';
+import '/pages/welcome/welcome_screen.dart';
+import '/pages/worklist_screen/work_list_screen.dart';
+import '../pages/log_in_screen/login_screen.dart';
 import 'routes.dart';
 
 class RouteGenerator {
@@ -24,16 +24,22 @@ class RouteGenerator {
     return _instance!;
   }
 
-  Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
+  Route<dynamic> onGenerateRoute(RouteSettings setting) {
+    final uri = Uri.parse(setting.name!);
+    GetPageRoute page({required Widget child}) {
+      return GetPageRoute(
+          settings: setting, page: () => child, transition: Transition.fadeIn);
+    }
+
+    switch (setting.name) {
       // case Routes.homeRoute:
       //   return MaterialPageRoute(builder: (_) => MyHomePage());
-      case Routes.welcomeRoute:
-        return MaterialPageRoute(builder: (_) => WelcomeScreen());
-      case Routes.walkthroughRoute:
-        return MaterialPageRoute(builder: (_) => WalkthroughScreen());
+      case Routes.welcome:
+        return MaterialPageRoute(builder: (_) => WelcomeScreen.instance());
+      case Routes.walkThroughRoute:
+        return MaterialPageRoute(builder: (_) => WalkThroughScreen.instance());
       case Routes.logInRoute:
-        return MaterialPageRoute(builder: (_) => LogInScreen());
+        return MaterialPageRoute(builder: (_) => LoginScreen.instance());
       case Routes.signUpRoutes:
         return MaterialPageRoute(builder: (_) => SignUpScreen());
       case Routes.forgotPasswordRoute:
@@ -54,4 +60,10 @@ class RouteGenerator {
         throw RouteException("Route not found");
     }
   }
+}
+
+class RouteException implements Exception {
+  final String message;
+
+  const RouteException(this.message);
 }

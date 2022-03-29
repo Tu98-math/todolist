@@ -1,7 +1,7 @@
 class Routes {
-  static const String welcomeRoute = '/welcomeScreen';
+  static const String welcome = '/welcomeScreen';
   static const String homeRoute = '/';
-  static const String walkthroughRoute = '/walkthroughScreen';
+  static const String walkThroughRoute = '/walkThroughScreen';
   static const String logInRoute = '/logInScreen';
   static const String signUpRoutes = '/signUpRoutes';
   static const String forgotPasswordRoute = '/forgotPasswordScreen';

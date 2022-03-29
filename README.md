@@ -38,12 +38,12 @@
     <a href="https://drive.google.com/file/d/1yp9j6XIEQJuqCMI-cTbi-DfPoC_QxJ6g/view?usp=sharing">Link</a>
     <hr>
     <h3> Photos </h3>
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-01.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-02.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-03.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-04.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-05.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-06.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-07.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-08.png" alt="">
-    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/EP-09.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-01.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-02.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-03.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-04.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-05.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-06.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-07.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-08.png" alt="">
+    <img src="https://raw.githubusercontent.com/Tu98-math/todolist/main/img/EP-09.png" alt="">
