@@ -3,8 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'base/base_state.dart';
 import 'app/app.dart';
+import 'base/base_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       child: Consumer(
         builder: (context, watch, _) {
           return EasyLocalization(
-            supportedLocales: const [Locale('en', 'US'), Locale('ko', 'KR')],
+            supportedLocales: const [Locale('en', 'US'), Locale('vi', 'VN')],
             path: 'assets/translations',
             startLocale: const Locale('en', 'US'),
             fallbackLocale: const Locale('en', 'US'),

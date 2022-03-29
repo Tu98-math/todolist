@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '/constants/app_colors.dart';
-import '/constants/images.dart';
 import '/pages/log_in_screen/components/link_forgot_password.dart';
 import '/pages/log_in_screen/login_vm.dart';
 import '/routing/routes.dart';
@@ -144,18 +142,7 @@ class LoginState extends BaseState<LoginScreen, LoginViewModel> {
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
       elevation: 0,
-      leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            icon: SvgPicture.asset(
-              AppImages.prevIcon,
-            ), // Put icon of your preference.
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          );
-        },
-      ),
+      leading: SizedBox(),
     );
   }
 

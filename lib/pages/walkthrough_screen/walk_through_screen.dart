@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '/base/base_state.dart';
 import '/routing/routes.dart';
+import '/util/extension/widget_extension.dart';
 import 'components/bot_nav.dart';
 import 'components/top_content.dart';
 import 'walk_through_provider.dart';
@@ -43,7 +44,7 @@ class WalkThroughState
           curve: Curves.easeIn,
         );
       } else {
-        Get.toNamed(Routes.logInRoute);
+        Get.offAndToNamed(Routes.logInRoute);
       }
     });
   }
@@ -56,25 +57,24 @@ class WalkThroughState
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SizedBox(
-        height: size.height,
+        height: maxH,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildContent(size),
+            buildContent(),
             Spacer(),
-            buildNav(size),
+            buildNav(),
           ],
         ),
       ),
     );
   }
 
-  Widget buildContent(Size _size) {
+  Widget buildContent() {
     return SizedBox(
-      height: _size.height * .67,
+      height: maxH * .67,
       child: TopContent(
         indexPage: indexWalkThrough,
         press: _setIndexPage,
@@ -83,9 +83,9 @@ class WalkThroughState
     );
   }
 
-  Widget buildNav(Size _size) {
+  Widget buildNav() {
     return SizedBox(
-      height: _size.height * 0.32,
+      height: maxH * 0.32,
       child: BotNav(
         indexPage: indexWalkThrough,
         press: _nextPage,

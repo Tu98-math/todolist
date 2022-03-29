@@ -1,17 +1,12 @@
 {
-    "icx_marketplace": "ICX Marketplace",
-    "login_screen": {
-        "enter_your_email": "Enter your Email",
-        "enter_your_pin": "Enter your PIN"
-    },
-    "onboarding": {
-        "title" : {
-            "trade_anytime_anywhere": "Trade anytime anywhere",
-            "buy_and_sell_reputable_nft": "Buy and sell reputable NFT",
-            "transact_fast_and_easy": "Transact fast and easy"
-        }
-    },
-    "new_to_icx?":"New to ICX?",
-    "import_wallet": "Import Wallet",
-    "create_a_wallet":"Create a Wallet"
+    "get_started": "Get Started",
+    "login": "Log In",
+    "welcome_to_aking": "Welcome to aking",
+    "whats_going_to_happen_tomorrow?": "Whats going to happen tomorrow?",
+    "work_happens": "Work happens",
+    "get_notified_when_work_happens": "Get notified when happens.",
+    "tasks_and_assign": "Task and assign",
+    "task_and_assign_them_to_colleagues":"Task and assign them to colleagues.",
+    "welcome_back": "Welcome back",
+    "sign_in_to_continue": "Sign in to continue"
 }

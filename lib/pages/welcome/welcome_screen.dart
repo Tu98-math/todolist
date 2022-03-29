@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
-import 'package:to_do_list/constants/app_colors.dart';
 
+import '/constants/app_colors.dart';
 import '/constants/images.dart';
 import '/pages/welcome/welcome_provider.dart';
 import '/pages/welcome/welcome_vm.dart';
@@ -40,11 +40,11 @@ class WelcomeState extends BaseState<WelcomeScreen, WelcomeViewModel> {
       print(value);
       switch (value) {
         case InitialState.onboarding:
-          Get.toNamed(Routes.walkThroughRoute);
+          Get.offAndToNamed(Routes.walkThroughRoute);
           debugPrint('Get: WALK_THROUGH ');
           break;
         case InitialState.home:
-          Get.toNamed(Routes.homeRoute);
+          Get.offAndToNamed(Routes.homeRoute);
           debugPrint('Get: HOME');
           break;
       }

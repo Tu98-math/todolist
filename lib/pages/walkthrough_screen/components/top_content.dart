@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/constants/constans.dart';
-import 'package:to_do_list/services/walkthrough_cache.dart';
+
+import '/constants/app_colors.dart';
+import '/constants/constans.dart';
+import '/services/walkthrough_cache.dart';
 
 class TopContent extends StatelessWidget {
   const TopContent({
