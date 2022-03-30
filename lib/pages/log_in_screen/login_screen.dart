@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 
 import '/constants/app_colors.dart';
 import '/pages/log_in_screen/components/link_forgot_password.dart';
 import '/pages/log_in_screen/login_vm.dart';
 import '/routing/routes.dart';
+import '/util/extension/widget_extension.dart';
 import '/widgets/nav_to_login.dart';
 import '/widgets/sign_in_button.dart';
 import '/widgets/sign_in_content.dart';
@@ -45,95 +47,122 @@ class LoginState extends BaseState<LoginScreen, LoginViewModel> {
 
   Future<void> _checkLogin() async {
     if (_formKey.currentState!.validate()) {
-      print('Email ${_emailController.text}');
-      print('Pass ${_passwordController.text}');
-      setState(() {
-        _status = 'loading...';
-      });
-      users = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-      setState(() {
-        _status = '';
-      });
+      getVm().login(_emailController.text, _passwordController.text);
     }
-    if (users.user != null) {
-      Navigator.pushNamed(context, Routes.workListScreen);
-    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getVm().bsLoginStatus.listen((value) {
+      switch (value) {
+        case LoginStatus.run:
+          setState(() {
+            _status = '';
+          });
+          break;
+        case LoginStatus.successful:
+          Get.offAndToNamed(Routes.workListScreen);
+          break;
+        case LoginStatus.userDisabled:
+          setState(() {
+            _status = 'Email has been disabled';
+          });
+          break;
+        case LoginStatus.invalidEmail:
+          setState(() {
+            _status = 'The email address is not valid.';
+          });
+          break;
+        case LoginStatus.userNotFound:
+          setState(() {
+            _status = 'No user found for that email.';
+          });
+          break;
+        case LoginStatus.wrongPassword:
+          setState(() {
+            _status = 'Wrong password provided for that user.';
+          });
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SignInContent(
-                  title: "Welcome back",
-                  content: "Sign in to continue",
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SignInContent(
+                title: StringTranslateExtension('welcome_back').tr(),
+                content: StringTranslateExtension('sign_in_to_continue').tr(),
+              ).pad(0, 0, 20),
+              TextFormField(
+                controller: _emailController,
+                validator: (val) => val!.isNotEmpty
+                    ? null
+                    : StringTranslateExtension('please_enter_a_email_address')
+                        .tr(),
+                style: TextStyle(
+                  decorationColor: AppColors.kTextColor10,
                 ),
-                TextFormField(
-                  controller: _emailController,
-                  validator: (val) =>
-                      val!.isNotEmpty ? null : 'Please enter a email address',
-                  style: TextStyle(
-                    decorationColor: Colors.black.withOpacity(0.01),
-                  ),
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    hintText: "Enter your email",
-                  ),
+                decoration: InputDecoration(
+                  labelText: StringTranslateExtension('email').tr(),
+                  hintText: StringTranslateExtension('enter_your_email').tr(),
                 ),
-                SizedBox(height: 32),
-                TextFormField(
-                  controller: _passwordController,
-                  validator: (val) =>
-                      val!.length < 6 ? 'Enter more than 6 char' : null,
-                  obscureText: _isHidden,
-                  obscuringCharacter: '●',
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    hintText: "Enter your password",
-                    suffix: InkWell(
-                      onTap: _togglePasswordView,
-                      child: Icon(
-                        Icons.visibility_outlined,
-                        color: AppColors.kLightTextColor,
-                      ),
+              ),
+              SizedBox(height: 32),
+              TextFormField(
+                controller: _passwordController,
+                validator: (val) => val!.length < 6
+                    ? StringTranslateExtension('enter_more_than_6_char').tr()
+                    : null,
+                obscureText: _isHidden,
+                obscuringCharacter: '●',
+                decoration: InputDecoration(
+                  labelText: StringTranslateExtension('password').tr(),
+                  hintText:
+                      StringTranslateExtension('enter_your_password').tr(),
+                  suffix: InkWell(
+                    onTap: _togglePasswordView,
+                    child: Icon(
+                      Icons.visibility_outlined,
+                      color: AppColors.kLightTextColor,
                     ),
                   ),
                 ),
-                SizedBox(height: 12),
-                LinkForgotPassword(),
-                SizedBox(height: 60),
-                Text(
-                  "$_status",
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
+              ),
+              LinkForgotPassword().pad(0, 0, 12, 60),
+              Text(
+                '$_status',
+                style: TextStyle(
+                  color: Colors.red,
                 ),
-                SizedBox(height: 20),
-                SignInButton(
-                  text: "Log In",
-                  press: _checkLogin,
-                ),
-                SizedBox(height: 20),
-                NavToLogin(
-                  isLogin: false,
-                ),
-                SizedBox(height: 20),
-              ],
-            ),
+              ),
+              SizedBox(height: 20),
+              StreamBuilder<LoginStatus>(
+                stream: getVm().bsLoginStatus,
+                builder: (context, snapshot) {
+                  return SignInButton(
+                    text: StringTranslateExtension('login').tr(),
+                    press: _checkLogin,
+                    disable: snapshot.data != LoginStatus.run,
+                  );
+                },
+              ),
+              NavToLogin(
+                isLogin: false,
+              ).pad(20, 0),
+            ],
           ),
         ),
-      ),
+      ).pad(24),
     );
   }
 

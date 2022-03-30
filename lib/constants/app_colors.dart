@@ -5,6 +5,8 @@ class AppColors {
 
   // [Text Color]
   static const kTextColor = Color(0xFF313131);
+  static const kTextColor80 = Color.fromRGBO(49, 49, 49, .8);
+  static const kTextColor10 = Color.fromRGBO(49, 49, 49, .1);
   static const kLightTextColor = Color(0xFFC6C6C6);
   static const kDarkTextColor = Color(0xFF8E8E93);
 

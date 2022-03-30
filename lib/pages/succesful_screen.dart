@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/images.dart';
 import 'package:to_do_list/routing/routes.dart';
@@ -37,7 +38,6 @@ class _SuccesfulScreenState extends State<SuccesfulScreen> {
               title: "Succesful!",
               content:
                   "You have succesfully change password. Please use your new passwords when logging in.",
-              succesful: true,
             )
           ],
         ),

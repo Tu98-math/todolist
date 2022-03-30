@@ -8,5 +8,11 @@
     "tasks_and_assign": "Task and assign",
     "task_and_assign_them_to_colleagues":"Task and assign them to colleagues.",
     "welcome_back": "Welcome back",
-    "sign_in_to_continue": "Sign in to continue"
+    "sign_in_to_continue": "Sign in to continue",
+    "please_enter_a_email_address":"Please enter a email address",
+    "email": "Email",
+    "enter_your_email": "Enter your email",
+    "enter_more_than_6_char": "Enter more than 6 char",
+    "password": "Password",
+    "enter_your_password": "Enter your password"
 }

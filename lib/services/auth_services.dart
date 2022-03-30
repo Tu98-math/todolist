@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:to_do_list/pages/sign_up_screen/sign_up_vm.dart';
+
+import '../pages/log_in_screen/login_vm.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
@@ -6,31 +9,57 @@ class AuthenticationService {
 
   Stream<User?> get authStateChange => _firebaseAuth.authStateChanges();
 
-  Future<String> signIn(String email, String password) async {
+  Future<LoginStatus> signIn(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return "Login Successful";
+      return LoginStatus.successful;
     } on FirebaseAuthException catch (e) {
-      return e.message.toString();
+      switch (e.code) {
+        case 'invalid-email':
+          return LoginStatus.invalidEmail;
+        case 'user-disabled':
+          return LoginStatus.userDisabled;
+        case 'user-not-found':
+          return LoginStatus.userNotFound;
+        case 'wrong-password':
+          return LoginStatus.wrongPassword;
+        default:
+          return LoginStatus.wrongPassword;
+      }
     }
   }
 
-  Future<String> signUp(String email, String password) async {
+  Future<SignUpStatus> signUp(String email, String password) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return "Signup Successful";
+      return SignUpStatus.successfulEmail;
     } on FirebaseAuthException catch (e) {
-      return e.message.toString();
+      switch (e.code) {
+        case 'email-already-in-use':
+          return SignUpStatus.emailAlreadyInUse;
+        case 'operation-not-allowed':
+          return SignUpStatus.operationNotAllowed;
+        case 'invalid-email':
+          return SignUpStatus.invalidEmail;
+        case 'weak-password':
+          return SignUpStatus.weakPassword;
+        default:
+          return SignUpStatus.weakPassword;
+      }
     }
   }
 
   Future<void> signout() async {
     await _firebaseAuth.signOut();
+  }
+
+  User? currentUser() {
+    return _firebaseAuth.currentUser;
   }
 }

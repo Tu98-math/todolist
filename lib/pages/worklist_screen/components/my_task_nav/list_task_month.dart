@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/constants/constans.dart';
+import 'package:to_do_list/constants/constants.dart';
 import 'package:to_do_list/constants/images.dart';
 import 'package:to_do_list/models/to_do_date_model.dart';
+
 import 'date_on_week.dart';
 
 class ListTaskMonth extends StatefulWidget {
@@ -23,7 +24,7 @@ class ListTaskMonth extends StatefulWidget {
 }
 
 class _ListTaskMonthState extends State<ListTaskMonth> {
-  List<ToDoDate> _listDate = []; 
+  List<ToDoDate> _listDate = [];
   final User? user = FirebaseAuth.instance.currentUser;
 
   Future<void> loadMonth() async {
@@ -36,29 +37,29 @@ class _ListTaskMonthState extends State<ListTaskMonth> {
         inMonth = !inMonth;
       }
       bool _isTask = false;
-      await FirebaseFirestore.instance
-      .collection('project')
-      .get()
-      .then((snap) {
+      await FirebaseFirestore.instance.collection('project').get().then((snap) {
         for (int j = 0; j < snap.docs.length; j++) {
           final listID = snap.docs.asMap()[j]!['member'];
           listID.add(snap.docs.asMap()[j]!['for']);
           if (listID.contains(user!.uid)) {
-            if (startMonth.add(Duration(days: i)).millisecondsSinceEpoch < DateTime.parse(snap.docs.asMap()[j]!['date'].toString()).millisecondsSinceEpoch  &&
-              startMonth.add(Duration(days: i)).millisecondsSinceEpoch > DateTime.parse(snap.docs.asMap()[j]!['create'].toString()).millisecondsSinceEpoch)
-            _isTask = true;
-          } 
+            if (startMonth.add(Duration(days: i)).millisecondsSinceEpoch <
+                    DateTime.parse(snap.docs.asMap()[j]!['date'].toString())
+                        .millisecondsSinceEpoch &&
+                startMonth.add(Duration(days: i)).millisecondsSinceEpoch >
+                    DateTime.parse(snap.docs.asMap()[j]!['create'].toString())
+                        .millisecondsSinceEpoch) _isTask = true;
+          }
         }
       });
       setState(() {
-        _listDate.add(new ToDoDate(
-          day: startMonth.add(Duration(days: i)).day,
-          isMonth: inMonth,
-          isTask: _isTask,
-        ),
-      );
+        _listDate.add(
+          new ToDoDate(
+            day: startMonth.add(Duration(days: i)).day,
+            isMonth: inMonth,
+            isTask: _isTask,
+          ),
+        );
       });
-      
     }
     print(startMonth.toString());
   }
@@ -73,8 +74,7 @@ class _ListTaskMonthState extends State<ListTaskMonth> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     DateTime now = DateTime.now();
-    
-    
+
     return Container(
       width: size.width,
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
@@ -90,7 +90,8 @@ class _ListTaskMonthState extends State<ListTaskMonth> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${AppConstants.kMonthHeader[now.month - 1]} ${now.year}".toUpperCase(),
+                "${AppConstants.kMonthHeader[now.month - 1]} ${now.year}"
+                    .toUpperCase(),
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -117,28 +118,29 @@ class _ListTaskMonthState extends State<ListTaskMonth> {
             ),
           ),
           SizedBox(height: 10),
-          _listDate.length == 35 ? 
-            Column(
-              children: [
-                if (widget.isFullMonth)
-                    DateOnWeek(
-                      toDoDate: _listDate,
-                      week: 1,
-                    )
-                  else
-                    for (int i = 0; i < 5; i++) DateOnWeek(
-                      toDoDate: _listDate,
-                      week: i,
-                      ),
-                  SizedBox(height: 20)
-              ],
-            )
-          : Container(
-              color: Colors.white,
-              child: Center(
-                child: Image.asset("assets/images/loader.gif"),
-              ),
-            ),
+          _listDate.length == 35
+              ? Column(
+                  children: [
+                    if (widget.isFullMonth)
+                      DateOnWeek(
+                        toDoDate: _listDate,
+                        week: 1,
+                      )
+                    else
+                      for (int i = 0; i < 5; i++)
+                        DateOnWeek(
+                          toDoDate: _listDate,
+                          week: i,
+                        ),
+                    SizedBox(height: 20)
+                  ],
+                )
+              : Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: Image.asset("assets/images/loader.gif"),
+                  ),
+                ),
         ],
       ),
     );

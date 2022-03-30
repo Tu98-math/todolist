@@ -19,7 +19,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Poppins',
+        fontFamily: 'AvenirNextRoundedPro',
       ),
       home: WelcomeScreen.instance(),
       debugShowCheckedModeBanner: false,

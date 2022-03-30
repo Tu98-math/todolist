@@ -6,11 +6,9 @@ class SignInContent extends StatelessWidget {
     Key? key,
     required this.title,
     required this.content,
-    this.succesful = false,
   }) : super(key: key);
 
   final String title, content;
-  final bool succesful;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +16,9 @@ class SignInContent extends StatelessWidget {
     return Container(
       width: size.width,
       child: Column(
-        crossAxisAlignment:
-            succesful ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: succesful ? 40 : 60),
+          SizedBox(height: 60),
           Text(
             title,
             style: TextStyle(
@@ -33,11 +30,11 @@ class SignInContent extends StatelessWidget {
           SizedBox(height: 12),
           Text(
             content,
-            textAlign: succesful ? TextAlign.center : TextAlign.start,
+            textAlign: TextAlign.start,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
-              color: succesful ? AppColors.kTextColor : Color(0xFF9B9B9B),
+              color: Color(0xFF9B9B9B),
             ),
           ),
           SizedBox(height: 48),

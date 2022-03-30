@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '/constants/app_colors.dart';
-import '/constants/constans.dart';
-import '/services/walkthrough_cache.dart';
+import '/constants/constants.dart';
+import '/util/extension/widget_extension.dart';
+import '/constants/images.dart';
 
 class TopContent extends StatelessWidget {
   const TopContent({
@@ -30,10 +32,9 @@ class TopContent extends StatelessWidget {
               controller: pageController,
               onPageChanged: (value) => press(value),
               itemCount: AppConstants.kLengthWalkthrough,
-              itemBuilder: (context, index) => Content(indexPage: index),
+              itemBuilder: (context, index) => buildContent(context),
             ),
           ),
-          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
@@ -41,7 +42,6 @@ class TopContent extends StatelessWidget {
               (index) => buildDot(index: index),
             ),
           ),
-          Spacer(),
         ],
       ),
     );
@@ -59,17 +59,8 @@ class TopContent extends StatelessWidget {
       ),
     );
   }
-}
 
-class Content extends StatelessWidget {
-  const Content({
-    Key? key,
-    required this.indexPage,
-  }) : super(key: key);
-  final int indexPage;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget buildContent(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
@@ -78,24 +69,22 @@ class Content extends StatelessWidget {
           SizedBox(
             height: size.height * .48,
             child: Image.asset(
-              WalkthroughCache.list[indexPage].imageTop,
+              AppImages.imgWalkThrough[indexPage],
             ),
           ),
-          Text(
-            WalkthroughCache.list[indexPage].title,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          AppConstants.kWalkThroughTitle[indexPage]
+              .tr()
+              .plain()
+              .fSize(24)
+              .weight(FontWeight.bold)
+              .b(),
           SizedBox(height: 9),
-          Text(
-            WalkthroughCache.list[indexPage].content,
-            style: TextStyle(
-              fontSize: 18,
-              color: AppColors.kTextColor.withOpacity(.8),
-            ),
-          ),
+          AppConstants.kWalkThroughDescript[indexPage]
+              .tr()
+              .plain()
+              .fSize(18)
+              .color(AppColors.kTextColor80)
+              .b(),
         ],
       ),
     );

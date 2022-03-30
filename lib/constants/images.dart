@@ -3,7 +3,7 @@ class AppImages {
   static const _baseImageFolder = "assets/images";
   // [Walkthrough]
   static const imgLogo = "$_baseImageFolder/logo.png";
-  static const imgWalkthrough = <String>[
+  static const imgWalkThrough = <String>[
     "$_baseImageFolder/walk_top_0.png",
     "$_baseImageFolder/walk_top_1.png",
     "$_baseImageFolder/walk_top_2.png",

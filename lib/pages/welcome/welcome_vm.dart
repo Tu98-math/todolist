@@ -2,27 +2,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '/base/base_view_model.dart';
-import '../../providers/auth_providers.dart';
+import '/providers/auth_providers.dart';
 
 class WelcomeViewModel extends BaseViewModel {
-  BehaviorSubject<InitialState> bsInitSate =
-      BehaviorSubject.seeded(InitialState.loading);
+  BehaviorSubject<InitialStatus> bsInitSate =
+      BehaviorSubject.seeded(InitialStatus.loading);
+  dynamic auth;
 
   WelcomeViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
 
-  void init(var ref) async {
-    final _authState = ref.watch(authStateProvider);
-    _authState.when(
+  void init(var ref) {
+    auth = ref.watch(authStateProvider);
+    auth.when(
       data: (value) {
         if (value != null) {
-          bsInitSate.add(InitialState.home);
+          bsInitSate.add(InitialStatus.home);
+        } else {
+          bsInitSate.add(InitialStatus.onBoarding);
         }
-        bsInitSate.add(InitialState.onboarding);
       },
       loading: () {},
-      error: (Object error, StackTrace? stackTrace) {},
+      error: (_, __) {},
     );
   }
 
@@ -33,4 +35,4 @@ class WelcomeViewModel extends BaseViewModel {
   }
 }
 
-enum InitialState { onboarding, home, loading }
+enum InitialStatus { onBoarding, home, loading }

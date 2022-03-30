@@ -62,9 +62,9 @@ class WalkThroughState
         height: maxH,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             buildContent(),
-            Spacer(),
             buildNav(),
           ],
         ),
