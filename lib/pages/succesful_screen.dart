@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/images.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 import 'package:to_do_list/widgets/sign_in_content.dart';
 
 class SuccesfulScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _SuccesfulScreenState extends State<SuccesfulScreen> {
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds: 4), (_timer) {
-      Navigator.pushNamed(context, Routes.logInRoute);
+      Navigator.pushNamed(context, AppRoutes.logInRoute);
       _timer.cancel();
     });
   }

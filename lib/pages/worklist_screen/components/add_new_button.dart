@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 
 class AddNewButton extends StatelessWidget {
   const AddNewButton({
@@ -23,7 +23,7 @@ class AddNewButton extends StatelessWidget {
         child: Center(
           child: Text(
             "+",
-            style: TextStyle( 
+            style: TextStyle(
               color: Colors.white,
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class AddNewButton extends StatelessWidget {
                 text: "Add Task",
                 press: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, Routes.newTaskScreen);
+                  Navigator.pushNamed(context, AppRoutes.newTaskScreen);
                 },
               ),
             ),
@@ -59,7 +59,7 @@ class AddNewButton extends StatelessWidget {
                 text: "Add Quick Note",
                 press: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, Routes.newNoteScreen);
+                  Navigator.pushNamed(context, AppRoutes.newNoteScreen);
                 },
               ),
             ),
@@ -69,7 +69,7 @@ class AddNewButton extends StatelessWidget {
                 text: "Add Check List",
                 press: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, Routes.newCheckListScreen);
+                  Navigator.pushNamed(context, AppRoutes.newCheckListScreen);
                 },
               ),
             ),

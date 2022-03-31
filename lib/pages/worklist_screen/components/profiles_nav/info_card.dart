@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
@@ -29,30 +29,25 @@ class _InfoCardState extends State<InfoCard> {
   int _completedTask = 0;
 
   Future<void> loadTask() async {
-    // quick note length 
+    // quick note length
     int completed = 0;
     int taskLength = 0;
-    await FirebaseFirestore.instance
-      .collection('project')
-      .get()
-      .then((snap) {
-        for (int i = 0; i < snap.docs.length; i++) {
-          final listID = snap.docs.asMap()[i]!['member'];
-          listID.add(snap.docs.asMap()[i]!['for']);
-          if (listID.contains(user!.uid)) {
-            taskLength++;
-            if (snap.docs.asMap()[i]!['status'] == 1) {
-              completed++;
-            }
+    await FirebaseFirestore.instance.collection('project').get().then((snap) {
+      for (int i = 0; i < snap.docs.length; i++) {
+        final listID = snap.docs.asMap()[i]!['member'];
+        listID.add(snap.docs.asMap()[i]!['for']);
+        if (listID.contains(user!.uid)) {
+          taskLength++;
+          if (snap.docs.asMap()[i]!['status'] == 1) {
+            completed++;
           }
-            
-        } // will return the collection size
+        }
+      } // will return the collection size
     });
     setState(() {
       _createTask = taskLength;
       _completedTask = completed;
     });
-    
   }
 
   void checkAvatar() {
@@ -64,9 +59,9 @@ class _InfoCardState extends State<InfoCard> {
           .then((DocumentSnapshot documentSnapshot) {
         bool _checkNoneAvatar;
         if (documentSnapshot.get('avatar') != '' && _noneAvatar == true)
-            _checkNoneAvatar = true;
-          else
-            _checkNoneAvatar = false;
+          _checkNoneAvatar = true;
+        else
+          _checkNoneAvatar = false;
         setState(() {
           _noneAvatar = _checkNoneAvatar;
         });
@@ -185,7 +180,6 @@ class _InfoCardState extends State<InfoCard> {
                                 context: context,
                                 builder: ((builder) => bottomSheet(context)),
                               );
-                              
                             },
                             child: Icon(
                               Icons.camera_alt,
@@ -208,7 +202,7 @@ class _InfoCardState extends State<InfoCard> {
                 IconButton(
                   onPressed: () async {
                     await FirebaseAuth.instance.signOut();
-                    Navigator.pushNamed(context, Routes.logInRoute);
+                    Navigator.pushNamed(context, AppRoutes.logInRoute);
                   },
                   icon: Icon(
                     Icons.logout,

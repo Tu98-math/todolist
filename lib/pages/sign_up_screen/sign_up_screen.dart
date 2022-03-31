@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:to_do_list/constants/app_colors.dart';
 import 'package:to_do_list/constants/images.dart';
 import 'package:to_do_list/pages/sign_up_screen/sign_up_vm.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 import 'package:to_do_list/widgets/nav_to_login.dart';
 import 'package:to_do_list/widgets/sign_in_button.dart';
 import 'package:to_do_list/widgets/sign_in_content.dart';
@@ -60,7 +60,7 @@ class SignUpState extends BaseState<SignUpScreen, SignUpViewModel> {
           getVm().createData(_emailController.text, _fullNameController.text);
           break;
         case SignUpStatus.successfulEmail:
-          Get.offAndToNamed(Routes.workListScreen);
+          Get.offAndToNamed(AppRoutes.workListScreen);
           break;
         default:
           break;

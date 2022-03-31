@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 import '/base/base_state.dart';
-import '/routing/routes.dart';
+import '../../routing/app_routes.dart';
 import '/util/extension/widget_extension.dart';
 import 'components/bot_nav.dart';
 import 'components/top_content.dart';
@@ -44,7 +44,7 @@ class WalkThroughState
           curve: Curves.easeIn,
         );
       } else {
-        Get.offAndToNamed(Routes.logInRoute);
+        Get.offAndToNamed(AppRoutes.logInRoute);
       }
     });
   }

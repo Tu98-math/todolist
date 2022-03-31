@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_list/constants/images.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 import 'package:to_do_list/widgets/sign_in_button.dart';
 import 'package:to_do_list/widgets/sign_in_content.dart';
 
@@ -52,7 +52,7 @@ class ResetPasswordScreen extends StatelessWidget {
               SignInButton(
                 text: "Change password",
                 press: () => {
-                  Navigator.pushNamed(context, Routes.succesfulScreen),
+                  Navigator.pushNamed(context, AppRoutes.succesfulScreen),
                 },
               ),
               SizedBox(height: 20),

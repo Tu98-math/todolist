@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_list/constants/images.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 import 'package:to_do_list/widgets/sign_in_button.dart';
 import 'package:to_do_list/widgets/sign_in_content.dart';
 
@@ -43,8 +43,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               SignInButton(
                 text: "Send Request",
                 press: () async {
-                  
-                  Navigator.pushNamed(context, Routes.resetPasswordRoute);
+                  Navigator.pushNamed(context, AppRoutes.resetPasswordRoute);
                 },
               ),
               SizedBox(height: 20),

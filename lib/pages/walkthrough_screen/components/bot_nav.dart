@@ -6,7 +6,7 @@ import '/util/extension/widget_extension.dart';
 import '/constants/app_colors.dart';
 import '/constants/constants.dart';
 import '/constants/images.dart';
-import '/routing/routes.dart';
+import '../../../routing/app_routes.dart';
 
 class BotNav extends StatelessWidget {
   const BotNav({
@@ -63,7 +63,7 @@ class BotNav extends StatelessWidget {
               .b()
               .tr()
               .inkTap(
-                onTap: () => Get.toNamed(Routes.logInRoute),
+                onTap: () => Get.toNamed(AppRoutes.logInRoute),
               ),
         ],
       ),

@@ -8,7 +8,7 @@ import '/pages/welcome/welcome_provider.dart';
 import '/pages/welcome/welcome_vm.dart';
 import '/util/extension/widget_extension.dart';
 import '../../base/base_state.dart';
-import '../../routing/routes.dart';
+import '../../routing/app_routes.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final ScopedReader watch;
@@ -39,11 +39,11 @@ class WelcomeState extends BaseState<WelcomeScreen, WelcomeViewModel> {
     getVm().bsInitSate.listen((value) {
       switch (value) {
         case InitialStatus.onBoarding:
-          Get.offAndToNamed(Routes.walkThroughRoute);
+          Get.offAndToNamed(AppRoutes.walkThroughRoute);
           debugPrint('Get: WALK_THROUGH ');
           break;
         case InitialStatus.home:
-          Get.offAndToNamed(Routes.workListScreen);
+          Get.offAndToNamed(AppRoutes.workListScreen);
           debugPrint('Get: HOME');
           break;
         default:

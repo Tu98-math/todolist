@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '/constants/app_colors.dart';
 import '/pages/log_in_screen/components/link_forgot_password.dart';
 import '/pages/log_in_screen/login_vm.dart';
-import '/routing/routes.dart';
+import '../../routing/app_routes.dart';
 import '/util/extension/widget_extension.dart';
 import '/widgets/nav_to_login.dart';
 import '/widgets/sign_in_button.dart';
@@ -39,13 +39,13 @@ class LoginState extends BaseState<LoginScreen, LoginViewModel> {
   late UserCredential users;
   final _formKey = GlobalKey<FormState>();
 
-  void _togglePasswordView() {
+  void togglePasswordView() {
     setState(() {
       _isHidden = !_isHidden;
     });
   }
 
-  Future<void> _checkLogin() async {
+  Future<void> loginClick() async {
     if (_formKey.currentState!.validate()) {
       getVm().login(_emailController.text, _passwordController.text);
     }
@@ -62,7 +62,7 @@ class LoginState extends BaseState<LoginScreen, LoginViewModel> {
           });
           break;
         case LoginStatus.successful:
-          Get.offAndToNamed(Routes.workListScreen);
+          Get.offAndToNamed(AppRoutes.workListScreen);
           break;
         case LoginStatus.userDisabled:
           setState(() {
@@ -130,7 +130,7 @@ class LoginState extends BaseState<LoginScreen, LoginViewModel> {
                   hintText:
                       StringTranslateExtension('enter_your_password').tr(),
                   suffix: InkWell(
-                    onTap: _togglePasswordView,
+                    onTap: togglePasswordView,
                     child: Icon(
                       Icons.visibility_outlined,
                       color: AppColors.kLightTextColor,
@@ -151,7 +151,7 @@ class LoginState extends BaseState<LoginScreen, LoginViewModel> {
                 builder: (context, snapshot) {
                   return SignInButton(
                     text: StringTranslateExtension('login').tr(),
-                    press: _checkLogin,
+                    press: loginClick,
                     disable: snapshot.data != LoginStatus.run,
                   );
                 },

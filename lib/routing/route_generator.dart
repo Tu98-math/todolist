@@ -12,7 +12,7 @@ import '/pages/walkthrough_screen/walk_through_screen.dart';
 import '/pages/welcome/welcome_screen.dart';
 import '/pages/worklist_screen/work_list_screen.dart';
 import '../pages/log_in_screen/login_screen.dart';
-import 'routes.dart';
+import 'app_routes.dart';
 
 class RouteGenerator {
   static RouteGenerator? _instance;
@@ -34,27 +34,27 @@ class RouteGenerator {
     switch (setting.name) {
       // case Routes.homeRoute:
       //   return MaterialPageRoute(builder: (_) => MyHomePage());
-      case Routes.welcome:
+      case AppRoutes.welcome:
         return MaterialPageRoute(builder: (_) => WelcomeScreen.instance());
-      case Routes.walkThroughRoute:
+      case AppRoutes.walkThroughRoute:
         return MaterialPageRoute(builder: (_) => WalkThroughScreen.instance());
-      case Routes.logInRoute:
+      case AppRoutes.logInRoute:
         return MaterialPageRoute(builder: (_) => LoginScreen.instance());
-      case Routes.signUpRoutes:
+      case AppRoutes.signUpRoutes:
         return MaterialPageRoute(builder: (_) => SignUpScreen.instance());
-      case Routes.forgotPasswordRoute:
+      case AppRoutes.forgotPasswordRoute:
         return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
-      case Routes.resetPasswordRoute:
+      case AppRoutes.resetPasswordRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
-      case Routes.succesfulScreen:
+      case AppRoutes.succesfulScreen:
         return MaterialPageRoute(builder: (_) => SuccesfulScreen());
-      case Routes.workListScreen:
+      case AppRoutes.workListScreen:
         return MaterialPageRoute(builder: (_) => WorkListScreen());
-      case Routes.newTaskScreen:
+      case AppRoutes.newTaskScreen:
         return MaterialPageRoute(builder: (_) => NewTaskScreen());
-      case Routes.newNoteScreen:
+      case AppRoutes.newNoteScreen:
         return MaterialPageRoute(builder: (_) => NewNoteScreen());
-      case Routes.newCheckListScreen:
+      case AppRoutes.newCheckListScreen:
         return MaterialPageRoute(builder: (_) => NewCheckListScreen());
       default:
         throw RouteException("Route not found");

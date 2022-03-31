@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 
 class LinkForgotPassword extends StatelessWidget {
   const LinkForgotPassword({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class LinkForgotPassword extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(
               context,
-              Routes.forgotPasswordRoute,
+              AppRoutes.forgotPasswordRoute,
             );
           },
           child: Text(

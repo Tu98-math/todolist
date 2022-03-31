@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/routing/routes.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 
 class NavToLogin extends StatelessWidget {
   const NavToLogin({
@@ -23,8 +23,8 @@ class NavToLogin extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Navigator.pushNamed(
-                context, isLogin ? Routes.logInRoute : Routes.signUpRoutes);
+            Navigator.pushNamed(context,
+                isLogin ? AppRoutes.logInRoute : AppRoutes.signUpRoutes);
           },
           child: Text(
             isLogin ? ' Login' : " Sign Up",
