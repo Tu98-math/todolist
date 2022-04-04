@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:to_do_list/pages/home/tab/quick_nav/quick_tab.dart';
 
 import '/base/base_state.dart';
 import '/constants/images.dart';
@@ -31,18 +32,14 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
   int currentTab = 0;
   PageController tabController = PageController();
 
-  List<Widget> tabBottomNav = [
+  List<Widget> tabWidget = [
     MyTaskTab.instance(),
     SizedBox(
       child: Center(
         child: 'Menu'.desc(),
       ),
     ),
-    SizedBox(
-      child: Center(
-        child: 'Quick'.desc(),
-      ),
-    ),
+    QuickTab.instance(),
     SizedBox(
       child: Center(
         child: 'Profile'.desc(),
@@ -51,13 +48,22 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
   ];
 
   void tabClick(int index) {
-    setState(() {
-      if (index > 1) {
+    if (index > 1) {
+      setState(() {
         currentTab = index - 1;
-      } else {
+      });
+    } else {
+      setState(() {
         currentTab = index;
-      }
-    });
+      });
+    }
+    tabController.animateToPage(
+      currentTab,
+      duration: Duration(
+        milliseconds: 300,
+      ),
+      curve: Curves.easeIn,
+    );
   }
 
   void goTab(int index) {
@@ -86,7 +92,7 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
       child: PageView.builder(
         itemCount: 4,
         onPageChanged: (index) => goTab(index),
-        itemBuilder: (context, index) => tabBottomNav[index],
+        itemBuilder: (context, index) => tabWidget[index],
         controller: tabController,
       ),
     );

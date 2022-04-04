@@ -17,7 +17,14 @@ class AddNewButton extends StatelessWidget {
         width: size.width * .15,
         height: size.width * .15,
         decoration: BoxDecoration(
-          color: Colors.red,
+          //color: Colors.red,
+          gradient: RadialGradient(
+            colors: [
+              Color(0xFFF68888),
+              Color(0xFFF96060),
+            ],
+            center: Alignment.centerRight,
+          ),
           borderRadius: BorderRadius.circular(56),
         ),
         child: Center(
