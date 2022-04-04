@@ -14,28 +14,28 @@ import 'components/link_forgot_password.dart';
 import 'sign_in_provider.dart';
 import 'sign_in_vm.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignInPage extends StatefulWidget {
   final ScopedReader watch;
 
   static Widget instance() {
     return Consumer(builder: (context, watch, _) {
-      return LoginScreen._(watch);
+      return SignInPage._(watch);
     });
   }
 
-  const LoginScreen._(this.watch);
+  const SignInPage._(this.watch);
 
   @override
   State<StatefulWidget> createState() {
-    return LoginState();
+    return SignInState();
   }
 }
 
-class LoginState extends BaseState<LoginScreen, SignInViewModel> {
+class SignInState extends BaseState<SignInPage, SignInViewModel> {
   bool _isHidden = true;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  String _status = '';
+  String signInStatusString = '';
   late UserCredential users;
   final _formKey = GlobalKey<FormState>();
 
@@ -58,7 +58,7 @@ class LoginState extends BaseState<LoginScreen, SignInViewModel> {
       switch (value) {
         case LoginStatus.run:
           setState(() {
-            _status = '';
+            signInStatusString = '';
           });
           break;
         case LoginStatus.successful:
@@ -66,25 +66,28 @@ class LoginState extends BaseState<LoginScreen, SignInViewModel> {
           break;
         case LoginStatus.userDisabled:
           setState(() {
-            _status = 'Email has been disabled';
+            signInStatusString = 'Email has been disabled';
           });
           break;
         case LoginStatus.invalidEmail:
           setState(() {
-            _status = 'The email address is not valid.';
+            signInStatusString = 'The email address is not valid.';
           });
           break;
         case LoginStatus.userNotFound:
           setState(() {
-            _status = 'No user found for that email.';
+            signInStatusString = 'No user found for that email.';
           });
           break;
         case LoginStatus.wrongPassword:
           setState(() {
-            _status = 'Wrong password provided for that user.';
+            signInStatusString = 'Wrong password provided for that user.';
           });
           break;
         default:
+          setState(() {
+            signInStatusString = 'Network Error';
+          });
           break;
       }
     });
@@ -140,7 +143,7 @@ class LoginState extends BaseState<LoginScreen, SignInViewModel> {
               ),
               LinkForgotPassword().pad(0, 0, 12, 60),
               Text(
-                '$_status',
+                '$signInStatusString',
                 style: TextStyle(
                   color: Colors.red,
                 ),

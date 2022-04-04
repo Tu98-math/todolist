@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_list/pages/home/home_page.dart';
 
 import '../pages/auth/forgot_password_screen.dart';
 import '../pages/auth/sign_in/sign_in_page.dart';
@@ -35,11 +36,13 @@ class RouteGenerator {
       case AppRoutes.WELCOME:
         return page(child: WelcomePage.instance());
       case AppRoutes.SPLASH:
-        return MaterialPageRoute(builder: (_) => SplashPage.instance());
-      case AppRoutes.logInRoute:
-        return MaterialPageRoute(builder: (_) => LoginScreen.instance());
-      case AppRoutes.signUpRoutes:
-        return MaterialPageRoute(builder: (_) => SignUpScreen.instance());
+        return page(child: SplashPage.instance());
+      case AppRoutes.SIGN_IN:
+        return page(child: SignInPage.instance());
+      case AppRoutes.SIGN_UP:
+        return page(child: SignUpScreen.instance());
+      case AppRoutes.HOME:
+        return page(child: HomePage.instance());
       case AppRoutes.forgotPasswordRoute:
         return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case AppRoutes.resetPasswordRoute:

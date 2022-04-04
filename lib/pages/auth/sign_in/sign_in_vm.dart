@@ -34,6 +34,7 @@ enum LoginStatus {
   invalidEmail,
   userDisabled,
   wrongPassword,
+  networkError,
   run,
   successful
 }

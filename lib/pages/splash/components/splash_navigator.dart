@@ -63,7 +63,7 @@ class SplashNavigator extends StatelessWidget {
               .b()
               .tr()
               .inkTap(
-                onTap: () => Get.toNamed(AppRoutes.logInRoute),
+                onTap: () => Get.toNamed(AppRoutes.SIGN_IN),
               ),
         ],
       ),

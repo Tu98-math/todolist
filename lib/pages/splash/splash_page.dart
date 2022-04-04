@@ -44,7 +44,7 @@ class SplashState
           curve: Curves.easeIn,
         );
       } else {
-        Get.offAndToNamed(AppRoutes.logInRoute);
+        Get.offAndToNamed(AppRoutes.SIGN_IN);
       }
     });
   }

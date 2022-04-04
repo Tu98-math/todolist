@@ -40,10 +40,10 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
       switch (value) {
         case InitialStatus.onBoarding:
           Get.offAndToNamed(AppRoutes.SPLASH);
-          debugPrint('Get: WALK_THROUGH ');
+          debugPrint('Get: SPLASH ');
           break;
         case InitialStatus.home:
-          Get.offAndToNamed(AppRoutes.workListScreen);
+          Get.offAndToNamed(AppRoutes.HOME);
           debugPrint('Get: HOME');
           break;
         default:
