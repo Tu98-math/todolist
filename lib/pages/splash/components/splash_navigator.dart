@@ -6,7 +6,7 @@ import '/util/extension/widget_extension.dart';
 import '/constants/app_colors.dart';
 import '/constants/constants.dart';
 import '/constants/images.dart';
-import '../../../routing/app_routes.dart';
+import '/routing/app_routes.dart';
 
 class SplashNavigator extends StatelessWidget {
   const SplashNavigator({

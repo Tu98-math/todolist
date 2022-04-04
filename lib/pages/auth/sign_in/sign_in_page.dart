@@ -62,7 +62,7 @@ class SignInState extends BaseState<SignInPage, SignInViewModel> {
           });
           break;
         case LoginStatus.successful:
-          Get.offAndToNamed(AppRoutes.workListScreen);
+          Get.offAndToNamed(AppRoutes.HOME);
           break;
         case LoginStatus.userDisabled:
           setState(() {

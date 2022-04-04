@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_list/constants/images.dart';
-import 'components/add_new_button.dart';
+
+import '../home/widgets/add_new_button.dart';
 import 'components/menu_nav/menu_body.dart';
 import 'components/my_task_nav/my_task_body.dart';
 import 'components/profiles_nav/profiles_body.dart';
