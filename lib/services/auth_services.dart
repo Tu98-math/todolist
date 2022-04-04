@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:to_do_list/pages/sign_up_screen/sign_up_vm.dart';
+import '../pages/auth/sign_in/sign_in_vm.dart';
+import '../pages/auth/sign_up_screen/sign_up_vm.dart';
 
-import '../pages/log_in_screen/login_vm.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
+
   AuthenticationService(this._firebaseAuth);
 
   Stream<User?> get authStateChange => _firebaseAuth.authStateChanges();

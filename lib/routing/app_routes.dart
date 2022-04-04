@@ -2,7 +2,7 @@ abstract class AppRoutes {
   // WELCOME
   static const WELCOME = '/welcome';
 
-  // SLPASH
+  // SPLASH
   static const SPLASH = '/splash';
 
   // AUTH
@@ -15,7 +15,7 @@ abstract class AppRoutes {
   static const FORGOT_PASSWORD = AUTH + PATH_FORGOT_PASSWORD;
   static const PATH_RESET_PASSWORD = '/reset_password';
   static const RESET_PASSWORD = AUTH + PATH_RESET_PASSWORD;
-  static const PATH_SUCCESSFUL = '/succesful';
+  static const PATH_SUCCESSFUL = '/successful';
   static const SUCCESSFUL = AUTH + PATH_SUCCESSFUL;
 
   // HOME
@@ -24,8 +24,8 @@ abstract class AppRoutes {
   static const MY_TASK = HOME + PATH_MY_TASK;
   static const PATH_MENU = '/menu';
   static const MENU = HOME + PATH_MENU;
-  static const PATH_WHICK = '/quick';
-  static const WHICK = HOME + PATH_WHICK;
+  static const PATH_QUICK = '/quick';
+  static const QUICK = HOME + PATH_QUICK;
   static const PATH_PROFILE = '/profile';
   static const PROFILE = HOME + PATH_PROFILE;
   static const PATH_NEW_TASK = '/new_task';
@@ -35,9 +35,6 @@ abstract class AppRoutes {
   static const PATH_ADD_CHECK_LIST = '/add_check_list';
   static const ADD_CHECK_LIST = HOME + PATH_ADD_CHECK_LIST;
 
-  static const String welcome = '/welcomeScreen';
-  static const String homeRoute = '/';
-  static const String walkThroughRoute = '/walkThroughScreen';
   static const String logInRoute = '/logInScreen';
   static const String signUpRoutes = '/signUpRoutes';
   static const String forgotPasswordRoute = '/forgotPasswordScreen';

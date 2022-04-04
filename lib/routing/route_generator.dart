@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/pages/forgot_password_screen.dart';
+import '../pages/auth/forgot_password_screen.dart';
+import '../pages/auth/sign_in/sign_in_page.dart';
 import '/pages/new_check_list_screen/new_check_list_screen.dart';
 import '/pages/new_note_screen.dart';
 import '/pages/new_task_screen/new_task_screen.dart';
-import '/pages/reset_password_screen.dart';
-import '/pages/sign_up_screen/sign_up_screen.dart';
-import '/pages/succesful_screen.dart';
-import '/pages/walkthrough_screen/walk_through_screen.dart';
-import '/pages/welcome/welcome_screen.dart';
+import '../pages/auth/reset_password_screen.dart';
+import '/pages/auth/sign_up_screen/sign_up_screen.dart';
+import '../pages/auth/succesful_screen.dart';
+import '/pages/splash/splash_page.dart';
+import '/pages/welcome/welcome_page.dart';
 import '/pages/worklist_screen/work_list_screen.dart';
-import '../pages/log_in_screen/login_screen.dart';
 import 'app_routes.dart';
 
 class RouteGenerator {
@@ -32,12 +32,10 @@ class RouteGenerator {
     }
 
     switch (setting.name) {
-      // case Routes.homeRoute:
-      //   return MaterialPageRoute(builder: (_) => MyHomePage());
-      case AppRoutes.welcome:
-        return MaterialPageRoute(builder: (_) => WelcomeScreen.instance());
-      case AppRoutes.walkThroughRoute:
-        return MaterialPageRoute(builder: (_) => WalkThroughScreen.instance());
+      case AppRoutes.WELCOME:
+        return page(child: WelcomePage.instance());
+      case AppRoutes.SPLASH:
+        return MaterialPageRoute(builder: (_) => SplashPage.instance());
       case AppRoutes.logInRoute:
         return MaterialPageRoute(builder: (_) => LoginScreen.instance());
       case AppRoutes.signUpRoutes:

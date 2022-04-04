@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import '/routing/route_generator.dart';
-import '../pages/welcome/welcome_screen.dart';
+import '../pages/welcome/welcome_page.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'AvenirNextRoundedPro',
       ),
-      home: WelcomeScreen.instance(),
+      home: WelcomePage.instance(),
       debugShowCheckedModeBanner: false,
     );
   }
