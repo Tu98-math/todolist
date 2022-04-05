@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:to_do_list/constants/app_colors.dart';
 import 'package:to_do_list/routing/app_routes.dart';
 
@@ -65,8 +66,7 @@ class AddNewButton extends StatelessWidget {
               child: CreateItem(
                 text: "Add Quick Note",
                 press: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, AppRoutes.newNoteScreen);
+                  Get.offAndToNamed(AppRoutes.NEW_NOTE);
                 },
               ),
             ),

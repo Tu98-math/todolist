@@ -30,8 +30,8 @@ abstract class AppRoutes {
   static const PROFILE = HOME + PATH_PROFILE;
   static const PATH_NEW_TASK = '/new_task';
   static const NEW_TASK = HOME + PATH_NEW_TASK;
-  static const PATH_ADD_NOTE = '/add_note';
-  static const ADD_NOTE = HOME + PATH_ADD_NOTE;
+  static const PATH_NEW_NOTE = '/add_note';
+  static const NEW_NOTE = HOME + PATH_NEW_NOTE;
   static const PATH_ADD_CHECK_LIST = '/add_check_list';
   static const ADD_CHECK_LIST = HOME + PATH_ADD_CHECK_LIST;
 

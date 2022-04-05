@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list/pages/home/home_page.dart';
 
-import '../pages/auth/forgot_password_screen.dart';
-import '../pages/auth/sign_in/sign_in_page.dart';
+import '/pages/auth/sign_up_screen/sign_up_page.dart';
 import '/pages/new_check_list_screen/new_check_list_screen.dart';
-import '/pages/new_note_screen.dart';
 import '/pages/new_task_screen/new_task_screen.dart';
-import '../pages/auth/reset_password_screen.dart';
-import '/pages/auth/sign_up_screen/sign_up_screen.dart';
-import '../pages/auth/succesful_screen.dart';
 import '/pages/splash/splash_page.dart';
 import '/pages/welcome/welcome_page.dart';
 import '/pages/worklist_screen/work_list_screen.dart';
+import '../pages/auth/forgot_password_screen.dart';
+import '../pages/auth/reset_password_screen.dart';
+import '../pages/auth/sign_in/sign_in_page.dart';
+import '../pages/auth/succesful_screen.dart';
+import '../pages/new_note/new_note_page.dart';
 import 'app_routes.dart';
 
 class RouteGenerator {
@@ -40,7 +40,7 @@ class RouteGenerator {
       case AppRoutes.SIGN_IN:
         return page(child: SignInPage.instance());
       case AppRoutes.SIGN_UP:
-        return page(child: SignUpScreen.instance());
+        return page(child: SignUpPage.instance());
       case AppRoutes.HOME:
         return page(child: HomePage.instance());
       case AppRoutes.forgotPasswordRoute:
@@ -53,8 +53,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => WorkListScreen());
       case AppRoutes.newTaskScreen:
         return MaterialPageRoute(builder: (_) => NewTaskScreen());
-      case AppRoutes.newNoteScreen:
-        return MaterialPageRoute(builder: (_) => NewNoteScreen());
+      case AppRoutes.NEW_NOTE:
+        return MaterialPageRoute(builder: (_) => NewNotePage.instance());
       case AppRoutes.newCheckListScreen:
         return MaterialPageRoute(builder: (_) => NewCheckListScreen());
       default:

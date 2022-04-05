@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
+import '/base/base_state.dart';
 import '/constants/app_colors.dart';
 import '/routing/app_routes.dart';
 import '/util/extension/widget_extension.dart';
 import '/widgets/nav_to_login.dart';
 import '/widgets/sign_in_button.dart';
 import '/widgets/sign_in_content.dart';
-import '/base/base_state.dart';
 import 'components/link_forgot_password.dart';
 import 'sign_in_provider.dart';
 import 'sign_in_vm.dart';
@@ -56,9 +56,9 @@ class SignInState extends BaseState<SignInPage, SignInViewModel> {
     super.initState();
     getVm().bsLoginStatus.listen((value) {
       switch (value) {
-        case LoginStatus.run:
+        case LoginStatus.networkError:
           setState(() {
-            signInStatusString = '';
+            signInStatusString = 'Network Error';
           });
           break;
         case LoginStatus.successful:
@@ -86,7 +86,7 @@ class SignInState extends BaseState<SignInPage, SignInViewModel> {
           break;
         default:
           setState(() {
-            signInStatusString = 'Network Error';
+            signInStatusString = '';
           });
           break;
       }

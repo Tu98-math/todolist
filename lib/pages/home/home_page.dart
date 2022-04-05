@@ -32,6 +32,10 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
   int currentTab = 0;
   PageController tabController = PageController();
 
+  void logOutClick() {
+    getVm().logOut();
+  }
+
   List<Widget> tabWidget = [
     MyTaskTab.instance(),
     SizedBox(
@@ -41,8 +45,11 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
     ),
     QuickTab.instance(),
     SizedBox(
-      child: Center(
-        child: 'Profile'.desc(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          'Profile'.desc(),
+        ],
       ),
     ),
   ];

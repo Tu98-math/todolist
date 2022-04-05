@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:to_do_list/constants/app_colors.dart';
 
 import '/base/base_state.dart';
 import '/pages/home/tab/my_task/my_task_vm.dart';
+import '/routing/app_routes.dart';
 import '/util/extension/widget_extension.dart';
 import 'my_task_provider.dart';
 import 'widgets/filter_button.dart';
@@ -38,22 +40,30 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
 
   Widget buildContainer() {
     return Container(
-      child: Container(
-        color: AppColors.kPrimaryColor,
-        height: 60,
-        child: Column(
-          children: [
-            StreamBuilder<bool>(
-              stream: getVm().bsIsToDay,
-              builder: (context, snapshot) {
-                return ToDaySwitch(
-                  isToDay: snapshot.data != null ? snapshot.data! : true,
-                  press: getVm().setToDay,
-                );
-              },
+      child: Column(
+        children: [
+          Container(
+            color: AppColors.kPrimaryColor,
+            height: 60,
+            child: Column(
+              children: [
+                StreamBuilder<bool>(
+                  stream: getVm().bsIsToDay,
+                  builder: (context, snapshot) {
+                    return ToDaySwitch(
+                      isToDay: snapshot.data != null ? snapshot.data! : true,
+                      press: getVm().setToDay,
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          'LogOut'.desc().inkTap(onTap: () {
+            getVm().signOut();
+            Get.offAllNamed(AppRoutes.SIGN_IN);
+          }),
+        ],
       ),
     );
   }

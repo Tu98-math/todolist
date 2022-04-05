@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+
 import '../pages/auth/sign_in/sign_in_vm.dart';
 import '../pages/auth/sign_up_screen/sign_up_vm.dart';
-
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
@@ -56,7 +56,7 @@ class AuthenticationService {
     }
   }
 
-  Future<void> signout() async {
+  Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
 

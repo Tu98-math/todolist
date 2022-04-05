@@ -1,15 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '/base/base_view_model.dart';
+import '../../providers/auth_provider.dart';
 
 class HomeViewModel extends BaseViewModel {
-
+  dynamic auth;
   HomeViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
 
-  void init(var ref) async {}
+  void init(var ref) async {
+    auth = ref.watch(authServicesProvider);
+  }
+
+  void logOut() {
+    auth.logOut();
+  }
 
   @override
   void dispose() {
@@ -17,9 +23,4 @@ class HomeViewModel extends BaseViewModel {
   }
 }
 
-enum tabStatus {
-  myTask,
-  menu,
-  quick,
-  profile
-}
+enum tabStatus { myTask, menu, quick, profile }
