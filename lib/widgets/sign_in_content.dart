@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/app_colors.dart';
 
+import '/util/extension/dimens.dart';
+import '/util/extension/widget_extension.dart';
+
 class SignInContent extends StatelessWidget {
   const SignInContent({
     Key? key,
@@ -12,32 +15,21 @@ class SignInContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width,
+    return SizedBox(
+      width: screenWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 60),
-          Text(
-            title,
-            style: TextStyle(
-              color: AppColors.kTextColor,
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 12),
-          Text(
-            content,
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: Color(0xFF9B9B9B),
-            ),
-          ),
-          SizedBox(height: 48),
+          title
+              .plain()
+              .fSize(32)
+              .weight(FontWeight.bold)
+              .lHeight(41)
+              .color(AppColors.kText)
+              .b(),
+          SizedBox(height: 12.w),
+          content.plain().fSize(16).lHeight(19.7).color(AppColors.grayText).b(),
+          SizedBox(height: 48.w),
         ],
       ),
     );

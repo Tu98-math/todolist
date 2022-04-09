@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
+import '/base/base_state.dart';
 import '/constants/app_colors.dart';
 import '/constants/images.dart';
 import '/pages/welcome/welcome_provider.dart';
 import '/pages/welcome/welcome_vm.dart';
+import '/routing/app_routes.dart';
+import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
-import '../../base/base_state.dart';
-import '../../routing/app_routes.dart';
 
 class WelcomePage extends StatefulWidget {
   final ScopedReader watch;
@@ -55,26 +56,26 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildWelcome(),
+      body: buildBody(),
     );
   }
 
-  Container buildWelcome() {
+  Container buildBody() {
     return Container(
       color: Colors.white,
-      width: maxW,
+      width: screenWidth,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
             AppImages.imgLogo,
-            width: maxW * .4,
+            width: 149.w,
             fit: BoxFit.fitWidth,
           ),
           SizedBox(
-            height: 12,
+            height: 12.w,
           ),
-          'aking'.trim().plain().fSize(48).weight(FontWeight.bold).fShadow(
+          'aking'.trim().plain().fSize(48.t).weight(FontWeight.bold).fShadow(
             [
               BoxShadow(
                 offset: Offset(0, 4),

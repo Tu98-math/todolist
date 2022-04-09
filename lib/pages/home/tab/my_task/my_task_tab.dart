@@ -44,7 +44,7 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
         children: [
           Container(
             color: AppColors.kPrimaryColor,
-            height: 60,
+            height: 66,
             child: Column(
               children: [
                 StreamBuilder<bool>(

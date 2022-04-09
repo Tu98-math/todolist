@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:to_do_list/constants/app_colors.dart';
 import 'package:to_do_list/routing/app_routes.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 class InfoCard extends StatefulWidget {
   const InfoCard({
@@ -309,7 +309,7 @@ class CompoText extends StatelessWidget {
           TextSpan(
             text: "$title\n",
             style: TextStyle(
-              color: AppColors.kTextColor,
+              color: AppColors.kText,
             ),
           ),
           TextSpan(

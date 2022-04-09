@@ -33,7 +33,7 @@ class _SuccesfulScreenState extends State<SuccesfulScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(AppImages.imgSuccesful),
+            Image.asset(AppImages.imgSuccessful),
             SignInContent(
               title: "Succesful!",
               content:

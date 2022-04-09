@@ -1,16 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/base/base_view_model.dart';
-import '../../providers/auth_provider.dart';
+import '/providers/fire_store_provider.dart';
+import '/providers/auth_provider.dart';
 
 class HomeViewModel extends BaseViewModel {
-  dynamic auth;
+  dynamic auth, firestore;
+
+  Stream<QuerySnapshot<Map<String, dynamic>>>? quickNoteStream;
+
   HomeViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
 
   void init(var ref) async {
     auth = ref.watch(authServicesProvider);
+    firestore = ref.watch(firestoreServicesProvider);
+    loadQuick();
+  }
+
+  void loadQuick() async {
+    User? user = auth.currentUser();
+    if (user != null) {
+      print('Load Quick');
+      quickNoteStream = firestore.getQuickNote(user.uid);
+    }
   }
 
   void logOut() {

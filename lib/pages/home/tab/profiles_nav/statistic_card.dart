@@ -3,9 +3,9 @@ import 'package:to_do_list/constants/app_colors.dart';
 
 class StatisticCard extends StatelessWidget {
   const StatisticCard({
-    Key? key, 
-    required this.event, 
-    required this.toDo, 
+    Key? key,
+    required this.event,
+    required this.toDo,
     required this.quickNote,
   }) : super(key: key);
 
@@ -43,7 +43,7 @@ class StatisticCard extends StatelessWidget {
               Text(
                 "Statistic",
                 style: TextStyle(
-                  color: AppColors.kTextColor,
+                  color: AppColors.kText,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -53,17 +53,17 @@ class StatisticCard extends StatelessWidget {
                 children: [
                   StatisticIcon(
                     color: Color(0xFFF96060),
-                    text: event.toStringAsFixed(2).substring(2,4) + "%",
+                    text: event.toStringAsFixed(2).substring(2, 4) + "%",
                     title: 'Event',
                   ),
                   StatisticIcon(
                     color: Color(0xFF6074F9),
-                    text: toDo.toStringAsFixed(2).substring(2,4) + "%",
+                    text: toDo.toStringAsFixed(2).substring(2, 4) + "%",
                     title: 'To do',
                   ),
                   StatisticIcon(
                     color: Color(0xFF8560F9),
-                    text: quickNote.toStringAsFixed(2).substring(2,4) + "%",
+                    text: quickNote.toStringAsFixed(2).substring(2, 4) + "%",
                     title: 'Quick Note',
                   ),
                 ],
@@ -80,7 +80,7 @@ class StatisticIcon extends StatelessWidget {
   const StatisticIcon({
     Key? key,
     required this.color,
-    required this.text, 
+    required this.text,
     required this.title,
   }) : super(key: key);
 
@@ -131,7 +131,7 @@ class StatisticIcon extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: AppColors.kTextColor,
+              color: AppColors.kText,
               fontSize: 16,
             ),
           ),

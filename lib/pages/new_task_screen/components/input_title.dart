@@ -26,7 +26,7 @@ class InputTitle extends StatelessWidget {
           decoration: InputDecoration(
             hintText: "Title",
             hintStyle: TextStyle(
-              color: AppColors.kTextColor,
+              color: AppColors.kText,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),

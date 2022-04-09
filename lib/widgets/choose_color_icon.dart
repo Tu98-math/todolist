@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:to_do_list/constants/app_colors.dart';
+
+import '/constants/images.dart';
+import '/util/extension/dimens.dart';
+import '/util/extension/widget_extension.dart';
 
 class ChooseColorIcon extends StatelessWidget {
   const ChooseColorIcon({
@@ -14,28 +19,19 @@ class ChooseColorIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    List<int> _color = [
-      0xFF6074F9,
-      0xFFE42B6A,
-      0xFF5ABB56,
-      0xFF3D3A62,
-      0xFFF4CA8F,
-    ];
-    return InkWell(
+    return Container(
+      width: 48.w,
+      height: 48.w,
+      decoration: BoxDecoration(
+          color: AppColors.kColorNote[index],
+          borderRadius: BorderRadius.circular(5.r)),
+      child: SvgPicture.asset(
+        AppImages.tickIcon,
+        color: Colors.white.withOpacity(tick ? 1 : 0),
+      ).center(),
+    ).inkTap(
       onTap: () => press(index),
-      child: Container(
-        width: size.width * .12,
-        height: size.width * .12,
-        decoration: BoxDecoration(
-            color: Color(_color[index]),
-            borderRadius: BorderRadius.circular(5)),
-        child: Center(
-            child: SvgPicture.asset(
-          "assets/icons/tick.svg",
-          color: Colors.white.withOpacity(tick ? 1 : 0),
-        )),
-      ),
+      borderRadius: BorderRadius.circular(5.r),
     );
   }
 }

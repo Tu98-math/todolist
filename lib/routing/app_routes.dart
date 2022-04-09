@@ -32,8 +32,8 @@ abstract class AppRoutes {
   static const NEW_TASK = HOME + PATH_NEW_TASK;
   static const PATH_NEW_NOTE = '/add_note';
   static const NEW_NOTE = HOME + PATH_NEW_NOTE;
-  static const PATH_ADD_CHECK_LIST = '/add_check_list';
-  static const ADD_CHECK_LIST = HOME + PATH_ADD_CHECK_LIST;
+  static const PATH_NEW_CHECK_LIST = '/add_check_list';
+  static const NEW_CHECK_LIST = HOME + PATH_NEW_CHECK_LIST;
 
   static const String logInRoute = '/logInScreen';
   static const String signUpRoutes = '/signUpRoutes';

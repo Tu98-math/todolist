@@ -1,44 +1,41 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:to_do_list/constants/app_colors.dart';
+import 'package:to_do_list/util/extension/dimens.dart';
+import 'package:to_do_list/util/extension/widget_extension.dart';
 import 'package:to_do_list/widgets/choose_color_icon.dart';
-import 'package:to_do_list/widgets/sign_in_button.dart';
+import 'package:to_do_list/widgets/primary_button.dart';
 
 class AddProjectButton extends StatelessWidget {
-  const AddProjectButton({
-    Key? key,
-  }) : super(key: key);
+  const AddProjectButton({Key? key, required this.press}) : super(key: key);
+
+  final Function press;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 12,
-        left: 20,
+    return Container(
+      width: 80.w,
+      height: 80.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.r),
+        color: AppColors.kColorNote[0],
       ),
-      child: InkWell(
-        onTap: () => showAddProjectDialog(context),
-        child: Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Color(0xFF6074F9),
-          ),
-          child: Center(
-            child: Text(
-              "+",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+      child: Center(
+        child: Text(
+          "+",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
-    );
+    )
+        .inkTap(
+          onTap: () => showAddProjectDialog(context),
+          borderRadius: BorderRadius.circular(5.r),
+        )
+        .pad(20, 0, 12);
   }
 
   Future<void> showAddProjectDialog(BuildContext context) async {
@@ -70,7 +67,7 @@ class AddProjectButton extends StatelessWidget {
                     Text(
                       "Title",
                       style: TextStyle(
-                        color: AppColors.kTextColor,
+                        color: AppColors.kText,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -86,7 +83,7 @@ class AddProjectButton extends StatelessWidget {
                     Text(
                       "Choose Color",
                       style: TextStyle(
-                        color: AppColors.kTextColor,
+                        color: AppColors.kText,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -104,34 +101,15 @@ class AddProjectButton extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20),
-                    SignInButton(
-                        text: 'Done',
-                        press: () async {
-                          int size = 0;
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(FirebaseAuth.instance.currentUser!.uid)
-                              .collection("project")
-                              .get()
-                              .then((snap) {
-                            size = snap
-                                .docs.length; // will return the collection size
-                          });
-                          if (_formKey.currentState!.validate()) {
-                            FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(FirebaseAuth.instance.currentUser!.uid)
-                                .collection("project")
-                                .doc('${size + 1}')
-                                .set({
-                              'title': _projectController.text.trim(),
-                              'color': indexChooseColor,
-                              'task': 0,
-                              'id': '${size + 1}'
-                            });
-                            Navigator.pop(context);
-                          }
-                        }),
+                    PrimaryButton(
+                      text: 'Done',
+                      press: () async {
+                        if (_formKey.currentState!.validate()) {
+                          press(_projectController.text, indexChooseColor);
+                          Get.back();
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),

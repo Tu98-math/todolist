@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../pages/auth/sign_in/sign_in_vm.dart';
-import '../pages/auth/sign_up_screen/sign_up_vm.dart';
+import '../pages/auth/sign_up/sign_up_vm.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
@@ -10,25 +10,25 @@ class AuthenticationService {
 
   Stream<User?> get authStateChange => _firebaseAuth.authStateChanges();
 
-  Future<LoginStatus> signIn(String email, String password) async {
+  Future<SignInStatus> signIn(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return LoginStatus.successful;
+      return SignInStatus.successful;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'invalid-email':
-          return LoginStatus.invalidEmail;
+          return SignInStatus.invalidEmail;
         case 'user-disabled':
-          return LoginStatus.userDisabled;
+          return SignInStatus.userDisabled;
         case 'user-not-found':
-          return LoginStatus.userNotFound;
+          return SignInStatus.userNotFound;
         case 'wrong-password':
-          return LoginStatus.wrongPassword;
+          return SignInStatus.wrongPassword;
         default:
-          return LoginStatus.wrongPassword;
+          return SignInStatus.wrongPassword;
       }
     }
   }

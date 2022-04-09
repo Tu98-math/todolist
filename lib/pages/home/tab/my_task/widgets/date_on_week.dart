@@ -5,7 +5,7 @@ import 'package:to_do_list/models/to_do_date_model.dart';
 class DateOnWeek extends StatelessWidget {
   const DateOnWeek({
     Key? key,
-    required this.week, 
+    required this.week,
     required this.toDoDate,
   }) : super(key: key);
   final int week;
@@ -57,7 +57,7 @@ class MonthItem extends StatelessWidget {
                 fontSize: 14,
                 color: isHeader || !isMonth
                     ? AppColors.kDarkTextColor
-                    : AppColors.kTextColor,
+                    : AppColors.kText,
               ),
             ),
             isHeader

@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_list/constants/app_colors.dart';
 import 'package:to_do_list/constants/images.dart';
-import 'package:to_do_list/widgets/sign_in_button.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:to_do_list/widgets/primary_button.dart';
 
 import 'components/input_descripttion.dart';
 import 'components/input_due_date.dart';
@@ -302,7 +302,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                       SizedBox(height: 6),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: SignInButton(
+                        child: PrimaryButton(
                           text: "Done",
                           disable: disable,
                           press: () async {

@@ -4,11 +4,15 @@ class AppColors {
   static const kPrimaryColor = Color(0xFFF96060);
 
   // [Text Color]
-  static const kTextColor = Color(0xFF313131);
-  static const kTextColor80 = Color.fromRGBO(49, 49, 49, .8);
-  static const kTextColor10 = Color.fromRGBO(49, 49, 49, .1);
-  static const kLightTextColor = Color(0xFFC6C6C6);
+  static const kText = Color(0xFF313131);
+  static const kText80 = Color.fromRGBO(49, 49, 49, .8);
+  static const kText10 = Color.fromRGBO(49, 49, 49, .1);
+  static const kGrayText = Color(0xFF9B9B9B);
+  static const kInnerBorder = Color(0xFF979797);
+  static const kLightText = Color(0xFFC6C6C6);
   static const kDarkTextColor = Color(0xFF8E8E93);
+
+  static const kGrayBack = Color(0xFFF4F4F4);
 
   static const kBarrierColor = Color(0x65000000);
   static const kBoxShadow = Color(0x80E3E3E3);

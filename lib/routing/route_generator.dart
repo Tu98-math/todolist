@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list/pages/home/home_page.dart';
 
-import '/pages/auth/sign_up_screen/sign_up_page.dart';
-import '/pages/new_check_list_screen/new_check_list_screen.dart';
+import '/pages/auth/sign_up/sign_up_page.dart';
 import '/pages/new_task_screen/new_task_screen.dart';
 import '/pages/splash/splash_page.dart';
 import '/pages/welcome/welcome_page.dart';
-import '/pages/worklist_screen/work_list_screen.dart';
 import '../pages/auth/forgot_password_screen.dart';
 import '../pages/auth/reset_password_screen.dart';
 import '../pages/auth/sign_in/sign_in_page.dart';
 import '../pages/auth/succesful_screen.dart';
+import '../pages/new_check_list/new_check_list_page.dart';
 import '../pages/new_note/new_note_page.dart';
 import 'app_routes.dart';
 
@@ -49,14 +48,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
       case AppRoutes.succesfulScreen:
         return MaterialPageRoute(builder: (_) => SuccesfulScreen());
-      case AppRoutes.workListScreen:
-        return MaterialPageRoute(builder: (_) => WorkListScreen());
       case AppRoutes.newTaskScreen:
         return MaterialPageRoute(builder: (_) => NewTaskScreen());
       case AppRoutes.NEW_NOTE:
-        return MaterialPageRoute(builder: (_) => NewNotePage.instance());
-      case AppRoutes.newCheckListScreen:
-        return MaterialPageRoute(builder: (_) => NewCheckListScreen());
+        return page(child: NewNotePage.instance());
+      case AppRoutes.NEW_CHECK_LIST:
+        return page(child: NewCheckListPage.instance());
       default:
         throw RouteException("Route not found");
     }

@@ -1,16 +1,21 @@
 class AppImages {
-  /// [Images]
+  /// [Base]
   static const _baseImageFolder = "assets/images";
-  // [Walkthrough]
+
+  /// [Welcome]
   static const imgLogo = "$_baseImageFolder/logo.png";
-  static const imgWalkThrough = <String>[
+
+  /// [Splash]
+  static const imgSplash = <String>[
     "$_baseImageFolder/walk_top_0.png",
     "$_baseImageFolder/walk_top_1.png",
     "$_baseImageFolder/walk_top_2.png",
   ];
   static const imgWalkthroughBottom = "$_baseImageFolder/walk_bot.png";
-  // [Succesful]
-  static const imgSuccesful = "$_baseImageFolder/succesful.png";
+
+  // [Successful]
+  static const imgSuccessful = "$_baseImageFolder/succesful.png";
+
   // [WorkList Navigator Profile]
   static const imgAvatar = "$_baseImageFolder/avatar.png";
   static const imgStatistic = "$_baseImageFolder/statistic.png";

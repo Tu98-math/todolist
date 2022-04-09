@@ -75,8 +75,7 @@ class AddNewButton extends StatelessWidget {
               child: CreateItem(
                 text: "Add Check List",
                 press: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, AppRoutes.newCheckListScreen);
+                  Get.offAndToNamed(AppRoutes.NEW_CHECK_LIST);
                 },
               ),
             ),
@@ -113,7 +112,7 @@ class CreateItem extends StatelessWidget {
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
-            color: AppColors.kTextColor,
+            color: AppColors.kText,
             decoration: TextDecoration.none,
           ),
         ),

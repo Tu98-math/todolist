@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_list/constants/images.dart';
 import 'package:to_do_list/routing/app_routes.dart';
-import 'package:to_do_list/widgets/sign_in_button.dart';
+import 'package:to_do_list/widgets/primary_button.dart';
 import 'package:to_do_list/widgets/sign_in_content.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
               SizedBox(height: 32),
-              SignInButton(
+              PrimaryButton(
                 text: "Send Request",
                 press: () async {
                   Navigator.pushNamed(context, AppRoutes.resetPasswordRoute);

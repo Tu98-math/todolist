@@ -6,7 +6,7 @@ import 'package:to_do_list/constants/app_colors.dart';
 import 'package:to_do_list/constants/constants.dart';
 import 'package:to_do_list/constants/images.dart';
 import 'package:to_do_list/widgets/avatar.dart';
-import 'package:to_do_list/widgets/sign_in_button.dart';
+import 'package:to_do_list/widgets/primary_button.dart';
 
 class ListTaskDate extends StatelessWidget {
   const ListTaskDate({
@@ -472,7 +472,7 @@ class MyTaskCard extends StatelessWidget {
                                       TagTask(inName: _inName),
                                       SizedBox(height: 32),
                                       if (_status == 0)
-                                        SignInButton(
+                                        PrimaryButton(
                                           text: "Complete Task",
                                           press: () {
                                             FirebaseFirestore.instance
@@ -481,7 +481,7 @@ class MyTaskCard extends StatelessWidget {
                                                 .update({'status': 1});
                                             Navigator.pop(context);
                                           },
-                                          color: Color(0xFF6074F9),
+                                          backgroundColor: Color(0xFF6074F9),
                                         ),
                                       SizedBox(height: 30),
                                       Column(

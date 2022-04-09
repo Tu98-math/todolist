@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:to_do_list/pages/home/tab/quick_nav/quick_tab.dart';
+import 'package:to_do_list/pages/home/tab/menu_nav/menu_tab.dart';
 
 import '/base/base_state.dart';
 import '/constants/images.dart';
 import '/util/extension/widget_extension.dart';
+import '../../util/extension/dimens.dart';
 import 'home_provider.dart';
 import 'home_vm.dart';
 import 'tab/my_task/my_task_tab.dart';
+import 'tab/quick/quick_tab.dart';
 import 'widgets/add_new_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,11 +40,7 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
 
   List<Widget> tabWidget = [
     MyTaskTab.instance(),
-    SizedBox(
-      child: Center(
-        child: 'Menu'.desc(),
-      ),
-    ),
+    MenuTab.instance(),
     QuickTab.instance(),
     SizedBox(
       child: Column(
@@ -95,7 +93,7 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
   Container buildBody() {
     return Container(
       width: double.infinity,
-      height: maxH,
+      height: screenHeight,
       child: PageView.builder(
         itemCount: 4,
         onPageChanged: (index) => goTab(index),

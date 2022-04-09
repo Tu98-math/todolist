@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/constants/app_colors.dart';
+import 'package:to_do_list/util/extension/dimens.dart';
 
 extension WidgetExtension on Widget {
   Widget square(double size) {
@@ -76,13 +78,13 @@ extension WidgetExtension on Widget {
     EdgeInsets mPad;
 
     if (d != null) {
-      mPad = EdgeInsets.only(left: a!, right: b!, top: c!, bottom: d);
+      mPad = EdgeInsets.only(left: a!.w, right: b!.w, top: c!.w, bottom: d.w);
     } else if (c != null) {
-      mPad = EdgeInsets.only(left: a!, right: b!, top: c);
+      mPad = EdgeInsets.only(left: a!.w, right: b!.w, top: c.w);
     } else if (b != null) {
-      mPad = EdgeInsets.symmetric(vertical: a!, horizontal: b);
+      mPad = EdgeInsets.symmetric(vertical: a!.w, horizontal: b.w);
     } else if (a != null) {
-      mPad = EdgeInsets.all(a);
+      mPad = EdgeInsets.all(a.w);
     } else {
       mPad = EdgeInsets.zero;
     }
@@ -141,6 +143,8 @@ class _TextWidgetBuilder {
   int? _maxLength;
 
   List<Shadow>? _shadow;
+
+  TextDecoration? _decoration;
 
   _TextWidgetBuilder(this.text);
 
@@ -204,17 +208,23 @@ class _TextWidgetBuilder {
     return this;
   }
 
+  _TextWidgetBuilder decoration(TextDecoration value) {
+    _decoration = value;
+    return this;
+  }
+
   Text build() {
     return Text(
       text,
       style: TextStyle(
         color: _color,
         backgroundColor: _fillColor,
-        fontSize: _fontSize ?? 12,
+        fontSize: (_fontSize ?? 12).t,
         fontWeight: _fontWeight,
         fontStyle: _fontStyle ?? FontStyle.normal,
         height: _height != null ? _height! / (_fontSize ?? 12) : (16 / 12),
         shadows: _shadow,
+        decoration: _decoration,
       ),
       textAlign: _textAlign,
       maxLines: _maxLines,
@@ -345,20 +355,70 @@ extension TextBuilderExtension on String {
   }
 }
 
-extension WidgetStateExtension on State {
-  double get maxW => MediaQuery.of(context).size.width;
-
-  double get maxH => MediaQuery.of(context).size.height;
-}
-
-extension WidgetContextExtension on BuildContext {
-  double get maxW => MediaQuery.of(this).size.width;
-
-  double get maxH => MediaQuery.of(this).size.height;
-}
-
 extension TextExtension on _TextWidgetBuilder {
   Text b() {
+    return build();
+  }
+}
+
+class _AppBarWidgetBuilder {
+  Widget? title;
+
+  bool? _centerTitle;
+
+  Color? _backgroundColor;
+
+  double? _elevation;
+
+  Widget? _leading;
+
+  _AppBarWidgetBuilder(this.title);
+
+  _AppBarWidgetBuilder centerTitle(bool value) {
+    _centerTitle = value;
+    return this;
+  }
+
+  _AppBarWidgetBuilder backgroundColor(Color? value) {
+    _backgroundColor = value;
+    return this;
+  }
+
+  _AppBarWidgetBuilder elevation(double value) {
+    _elevation = value;
+    return this;
+  }
+
+  _AppBarWidgetBuilder leading(Widget? value) {
+    _leading = value;
+    return this;
+  }
+
+  AppBar build() {
+    return AppBar(
+      title: title,
+      centerTitle: _centerTitle ?? true,
+      backgroundColor: _backgroundColor ?? AppColors.kPrimaryColor,
+      elevation: _elevation ?? 0,
+      leading: _leading,
+    );
+  }
+}
+
+extension AppBarBuilderExtension on String {
+  _AppBarWidgetBuilder plainAppBar({Color color = Colors.white}) {
+    return _AppBarWidgetBuilder(this
+        .plain()
+        .color(color)
+        .weight(FontWeight.bold)
+        .fSize(20)
+        .weight(FontWeight.w600)
+        .b());
+  }
+}
+
+extension AppBarExtension on _AppBarWidgetBuilder {
+  AppBar bAppBar() {
     return build();
   }
 }

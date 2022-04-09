@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 
 import '/base/base_state.dart';
 import '/routing/app_routes.dart';
-import '/util/extension/widget_extension.dart';
-import 'components/splash_navigator.dart';
-import 'components/splash_content.dart';
+import '/util/extension/dimens.dart';
 import 'splash_provider.dart';
 import 'splash_vm.dart';
+import 'widgets/splash_content.dart';
+import 'widgets/splash_navigator.dart';
 
 class SplashPage extends StatefulWidget {
   final ScopedReader watch;
@@ -27,8 +27,7 @@ class SplashPage extends StatefulWidget {
   }
 }
 
-class SplashState
-    extends BaseState<SplashPage, SplashViewModel> {
+class SplashState extends BaseState<SplashPage, SplashViewModel> {
   int currentSplash = 0;
   final PageController pageController = PageController(initialPage: 0);
 
@@ -59,7 +58,7 @@ class SplashState
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        height: maxH,
+        height: screenHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +73,7 @@ class SplashState
 
   Widget buildContent() {
     return SizedBox(
-      height: maxH * .67,
+      height: 542.h,
       child: SplashContent(
         indexPage: currentSplash,
         press: setCurrentPage,
@@ -85,7 +84,7 @@ class SplashState
 
   Widget buildNavigator() {
     return SizedBox(
-      height: maxH * 0.32,
+      height: 270.h,
       child: SplashNavigator(
         indexPage: currentSplash,
         press: toNextPage,

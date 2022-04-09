@@ -9,15 +9,15 @@ class SignInViewModel extends BaseViewModel {
   SignInViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
-  BehaviorSubject<LoginStatus> bsLoginStatus =
-      BehaviorSubject.seeded(LoginStatus.pause);
+  BehaviorSubject<SignInStatus> bsLoginStatus =
+      BehaviorSubject.seeded(SignInStatus.pause);
 
   void init(var ref) async {
     auth = ref.watch(authServicesProvider);
   }
 
   void login(String email, String password) async {
-    bsLoginStatus.add(LoginStatus.run);
+    bsLoginStatus.add(SignInStatus.run);
     var status = await auth.signIn(email, password);
     bsLoginStatus.add(status);
   }
@@ -28,7 +28,7 @@ class SignInViewModel extends BaseViewModel {
   }
 }
 
-enum LoginStatus {
+enum SignInStatus {
   pause,
   userNotFound,
   invalidEmail,
