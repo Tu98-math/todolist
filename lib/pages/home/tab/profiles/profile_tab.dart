@@ -1,8 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
-import 'package:to_do_list/widgets/avatar.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:to_do_list/constants/constants.dart';
+import 'package:to_do_list/pages/home/tab/profiles/widgets/count_task_item.dart';
+import 'package:to_do_list/pages/home/tab/profiles/widgets/statistic_item.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 
 import '/base/base_state.dart';
 import '/constants/app_colors.dart';
@@ -10,6 +15,8 @@ import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
 import 'profile_provider.dart';
 import 'profile_vm.dart';
+import 'widgets/profile_info.dart';
+import 'widgets/setting_card.dart';
 
 class ProfileTab extends StatefulWidget {
   final ScopedReader watch;
@@ -30,6 +37,53 @@ class ProfileTab extends StatefulWidget {
 
 class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
   bool isToDay = true;
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
+  int quickNoteLength = 0;
+  int quickNoteSuccessfulLength = 0;
+  double quickNoteRatio = 0;
+
+  int checkListLength = 0;
+  int checkListSuccessfulLength = 0;
+  double checkListRatio = 0;
+
+  Future<void> getImage(ImageSource source) async {
+    var image = await _picker.pickImage(source: source);
+    if (image != null) {}
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initQuickNoteState();
+  }
+
+  void initQuickNoteState() {
+    int check = 0;
+    getVm().streamQuickNote().listen((event) {
+      setState(() {
+        quickNoteLength =
+            event.where((element) => element.listNote.length == 0).length;
+        quickNoteSuccessfulLength = event
+            .where((element) =>
+                ((element.listNote.length == 0) && (element.isSuccessful)))
+            .length;
+
+        quickNoteRatio = quickNoteSuccessfulLength / quickNoteLength * 100;
+
+        checkListLength = event.length - quickNoteLength;
+
+        checkListSuccessfulLength = event
+            .where((element) =>
+                ((element.listNote.length > 0) && (element.isSuccessful)))
+            .length;
+
+        checkListRatio = checkListSuccessfulLength / checkListLength * 100;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +103,10 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
             children: [
               SizedBox(height: 20.w),
               buildCardInfo(),
+              SizedBox(height: 24.w),
+              buildListCountTask(),
+              SizedBox(height: 24.w),
+              buildStatistic(),
             ],
           ),
         ),
@@ -82,12 +140,19 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
         builder: (context, snapshot) {
           if (snapshot.data == infoStatus.setting) {
             return SettingCard(
-              press: () => getVm().changeInfoStatus(infoStatus.info),
+              pressToProfile: () => getVm().changeInfoStatus(infoStatus.info),
+              pressSignOut: () {
+                getVm().signOut();
+                Get.offAllNamed(AppRoutes.SIGN_IN);
+                },
             );
           }
           return ProfileInfo(
             user: getVm().user!,
             press: () => getVm().changeInfoStatus(infoStatus.setting),
+            createTask: quickNoteLength + checkListLength,
+            completedTask:
+                quickNoteSuccessfulLength + checkListSuccessfulLength,
           );
         },
       ),
@@ -98,131 +163,80 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
     return Container();
   }
 
+  Widget buildListCountTask() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          CountTaskItem(
+            text: AppConstants.kStatisticTitle[0],
+            task: 12,
+          ).pad(0, 10, 0),
+          CountTaskItem(
+            text: AppConstants.kStatisticTitle[1],
+            task: quickNoteLength,
+            color: AppColors.kSplashColor[1],
+          ).pad(0, 10, 0),
+          CountTaskItem(
+            text: AppConstants.kStatisticTitle[2],
+            task: checkListLength,
+            color: AppColors.kSplashColor[2],
+          ),
+        ],
+      ).pad(20, 20, 0),
+    );
+  }
+
+  Widget buildStatistic() {
+    return Container(
+      width: 343.w,
+      height: 205.w,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5.r),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.kBoxShadow,
+              offset: Offset(2, 10),
+              blurRadius: 8.0,
+            )
+          ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          'Statistic'
+              .plain()
+              .fSize(18)
+              .lHeight(21.09)
+              .weight(FontWeight.bold)
+              .color(AppColors.kText)
+              .b()
+              .pad(0, 0, 16, 21),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              StatisticIcon(
+                color: AppColors.kPrimaryColor,
+                ratio: 12.88,
+                title: AppConstants.kStatisticTitle[0],
+              ),
+              StatisticIcon(
+                color: AppColors.kSplashColor[1],
+                ratio: quickNoteRatio,
+                title: AppConstants.kStatisticTitle[1],
+              ),
+              StatisticIcon(
+                color: AppColors.kSplashColor[2],
+                ratio: checkListRatio,
+                title: AppConstants.kStatisticTitle[2],
+              )
+            ],
+          )
+        ],
+      ).pad(0, 24),
+    ).pad(0, 16);
+  }
+
   @override
   ProfileViewModel getVm() => widget.watch(viewModelProvider).state;
-}
-
-class ProfileInfo extends StatelessWidget {
-  const ProfileInfo({
-    Key? key,
-    required this.user,
-    required this.press,
-  }) : super(key: key);
-
-  final User user;
-
-  final Function press;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Avatar(
-          avatarLink: user.photoURL,
-          sizeAvatar: 64.w,
-        ).pad(23, 10, 24),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              user.displayName
-                  .toString()
-                  .plain()
-                  .fSize(18)
-                  .lHeight(21.09)
-                  .color(AppColors.kText)
-                  .weight(FontWeight.w600)
-                  .lines(1)
-                  .overflow(TextOverflow.ellipsis)
-                  .b(),
-              user.email
-                  .toString()
-                  .plain()
-                  .fSize(16)
-                  .lHeight(19.7)
-                  .color(AppColors.kGrayTextB)
-                  .lines(1)
-                  .overflow(TextOverflow.ellipsis)
-                  .b(),
-            ],
-          ).pad(0, 0, 35),
-        ),
-        Icon(Icons.settings).pad(10).inkTap(
-              onTap: press,
-              borderRadius: BorderRadius.circular(100),
-            ),
-      ],
-    );
-  }
-}
-
-class SettingCard extends StatefulWidget {
-  const SettingCard({
-    Key? key,
-    required this.press,
-  }) : super(key: key);
-
-  final Function press;
-
-  @override
-  State<SettingCard> createState() => _SettingCardState();
-}
-
-class _SettingCardState extends State<SettingCard> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            'Language'
-                .plain()
-                .fSize(18)
-                .weight(FontWeight.w600)
-                .b()
-                .pad(15, 0, 10),
-            Icon(Icons.person).pad(10).inkTap(
-                  onTap: widget.press,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-          ],
-        ),
-        SizedBox(height: 5.w),
-        Row(
-          children: [
-            'Vietnamese'
-                .plain()
-                .fSize(14)
-                .color(AppColors.grayText)
-                .weight(FontWeight.w400)
-                .b()
-                .pad(2, 5)
-                .inkTap(
-                  onTap: () async {
-                    EasyLocalization.of(context)?.setLocale(Locale('vi', 'VN'));
-
-                    print(context.locale);
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                ),
-            SizedBox(width: 20.w),
-            'English'
-                .plain()
-                .fSize(14)
-                .weight(FontWeight.w500)
-                .b()
-                .pad(2, 5)
-                .inkTap(
-                  onTap: () {
-                    Get.updateLocale(Locale('en', 'US'));
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                ),
-          ],
-        ).pad(10, 0, 0),
-      ],
-    );
-  }
 }

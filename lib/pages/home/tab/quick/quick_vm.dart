@@ -1,50 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_do_list/models/quick_note_model.dart';
+import '/models/quick_note_model.dart';
 
 import '/base/base_view_model.dart';
 import '/providers/auth_provider.dart';
 import '/providers/fire_store_provider.dart';
 
 class QuickViewModel extends BaseViewModel {
-  dynamic auth, firestore;
-  CollectionReference? quickNote;
+  dynamic firestore, user;
 
   QuickViewModel(AutoDisposeProviderReference ref) {
-    init(ref);
+    user = ref.watch(authServicesProvider).currentUser();
+    firestore = ref.watch(firestoreServicesProvider);
   }
 
   void init(var ref) async {
-    auth = ref.watch(authServicesProvider);
-    quickNote = ref.watch(quickFirebaseFirestoreProvider);
-    streamQuickNote();
+    user = ref.watch(authServicesProvider).currentUser();
+    firestore = ref.watch(firestoreServicesProvider);
   }
 
-  Stream<List<QuickNoteModel>>? streamQuickNote() {
-    if (quickNote != null)
-      return quickNote!.orderBy('time').snapshots().map((list) =>
-          list.docs.map((doc) => QuickNoteModel.fromFirestore(doc)).toList());
-    else
-      return null;
+  Stream<List<QuickNoteModel>> streamQuickNote() {
+    return firestore.quickNoteStream(user.uid);
   }
 
-  void deleteQuickNote(String id) {
-    if (quickNote != null) {
-      quickNote!
-          .doc(id)
-          .delete()
-          .then((value) => print("User Deleted"))
-          .catchError(
-            (error) => print("Failed to delete user: $error"),
-          );
-    }
+  void successfulQuickNote(QuickNoteModel quickNoteModel) {
+    quickNoteModel.isSuccessful = true;
+
+    firestore.updateQuickNote(user.uid, quickNoteModel);
   }
 
   void checkedNote(QuickNoteModel quickNoteModel, int idNote) {
     quickNoteModel.listNote[idNote].check = true;
-    if (quickNote != null) {
-      quickNote!.doc(quickNoteModel.id).set(quickNoteModel.toFirestore());
-    }
+
+    firestore.updateQuickNote(user.uid, quickNoteModel);
   }
 
   @override

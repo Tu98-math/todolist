@@ -8,35 +8,30 @@ import '/providers/auth_provider.dart';
 import '/providers/fire_store_provider.dart';
 
 class MenuViewModel extends BaseViewModel {
-  dynamic auth, firestore;
-  CollectionReference? project;
+  dynamic user, firestore;
 
   MenuViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
 
   void init(var ref) async {
-    auth = ref.watch(authServicesProvider);
-    project = ref.watch(projectFirebaseFirestoreProvider);
+    user = ref.watch(authServicesProvider).currentUser();
+    firestore = ref.watch(firestoreServicesProvider);
   }
 
   Stream<List<ProjectModel>> streamProject() {
-    return project!.orderBy('name').snapshots().map((list) =>
-        list.docs.map((doc) => ProjectModel.fromFirestore(doc)).toList());
+    return firestore.projectStream(user.uid);
   }
 
   void addProject(String name, int indexColor) {
-    User? user = auth.currentUser();
-    if (user != null) {
-      var temp = new ProjectModel(
-        name: name,
-        idAuthor: user.uid,
-        countTask: 0,
-        indexColor: indexColor,
-        timeCreate: DateTime.now(),
-      );
-      project!.doc().set(temp.toFirestore());
-    }
+    var temp = new ProjectModel(
+      name: name,
+      idAuthor: user.uid,
+      countTask: 0,
+      indexColor: indexColor,
+      timeCreate: DateTime.now(),
+    );
+    firestore.addProject(temp);
   }
 
   @override

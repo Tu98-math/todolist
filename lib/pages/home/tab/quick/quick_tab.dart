@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 
 import '/base/base_state.dart';
 import '/constants/app_colors.dart';
 import '/models/quick_note_model.dart';
+import '/routing/app_routes.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
 import '/widgets/quick_note_card.dart';
@@ -59,15 +61,15 @@ class QuickState extends BaseState<QuickTab, QuickViewModel> {
                     }
 
                     List<QuickNoteModel> data = snapshot.data!;
-                    print(data.length);
                     return Column(
                       children: [
+                        if (data.length == 0) buildNoneNote(),
                         for (int i = 0; i < data.length; i++)
                           QuickNoteCard(
                             note: data[i],
                             color: AppColors.kColorNote[data[i].indexColor],
-                            deletePress: () =>
-                                getVm().deleteQuickNote(data[i].id!),
+                            successfulPress: () =>
+                                getVm().successfulQuickNote(data[i]),
                             checkedPress: getVm().checkedNote,
                           )
                       ],
@@ -84,6 +86,13 @@ class QuickState extends BaseState<QuickTab, QuickViewModel> {
       .plainAppBar(color: AppColors.kText)
       .backgroundColor(Colors.white)
       .bAppBar();
+
+  Widget buildNoneNote() =>
+      'You are not have a note, create a note to continue'.desc().inkTap(
+        onTap: () {
+          Get.toNamed(AppRoutes.NEW_NOTE);
+        },
+      );
 
   @override
   QuickViewModel getVm() => widget.watch(viewModelProvider).state;

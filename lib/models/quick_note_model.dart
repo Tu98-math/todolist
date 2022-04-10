@@ -3,34 +3,40 @@ import 'package:intl/intl.dart';
 import 'package:to_do_list/models/note_model.dart';
 
 class QuickNoteModel {
-  final String? id;
+  String id;
   final String content;
   final int indexColor;
   final DateTime time;
   List<NoteModel> listNote;
+  bool isSuccessful;
 
   QuickNoteModel({
-    this.id,
+    this.id = '',
     required this.content,
     required this.indexColor,
     required this.time,
+    this.isSuccessful = false,
     this.listNote = const [],
   });
 
   factory QuickNoteModel.fromJson(Map<String, dynamic> json) {
     List<NoteModel> _list = [];
     for (int i = 0; i < (json['list.length'] ?? 0); i++) {
-      _list.add(new NoteModel(
-          id: i,
-          text: json['list.data_$i.note'],
-          check: json['list.data_$i.check']));
+      _list.add(
+        new NoteModel(
+            id: i,
+            text: json['list.data_$i.note'],
+            check: json['list.data_$i.check']),
+      );
     }
     return QuickNoteModel(
-        id: json['id'],
-        content: json['content'],
-        indexColor: json['index_color'],
-        time: DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time']),
-        listNote: _list);
+      id: json['id'],
+      content: json['content'],
+      indexColor: json['index_color'],
+      time: DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time']),
+      isSuccessful: json['is_successful'],
+      listNote: _list,
+    );
   }
 
   factory QuickNoteModel.fromFirestore(DocumentSnapshot doc) {
@@ -52,6 +58,7 @@ class QuickNoteModel {
       content: data['content'],
       indexColor: data['index_color'],
       time: DateFormat("yyyy-MM-dd hh:mm:ss").parse(data['time']),
+      isSuccessful: data['is_successful'],
       listNote: _list,
     );
   }
@@ -61,6 +68,7 @@ class QuickNoteModel {
         'content': this.content,
         'index_color': this.indexColor,
         'time': DateFormat("yyyy-MM-dd hh:mm:ss").format(this.time),
+        'is_successful': this.isSuccessful,
         'list': {
           'length': listNote.length,
           for (int i = 0; i < listNote.length; i++)
@@ -75,6 +83,7 @@ class QuickNoteModel {
         'content': this.content,
         'index_color': this.indexColor,
         'time': DateFormat("yyyy-MM-dd hh:mm:ss").format(this.time),
+        'is_successful': this.isSuccessful,
         'list': {
           'length': listNote.length,
           for (int i = 0; i < listNote.length; i++)

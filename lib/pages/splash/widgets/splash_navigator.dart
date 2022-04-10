@@ -29,7 +29,7 @@ class SplashNavigator extends StatelessWidget {
           image: AssetImage(AppImages.imgWalkthroughBottom),
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
-            AppColors.kColorWalkthrough[indexPage],
+            AppColors.kSplashColor[indexPage],
             BlendMode.srcATop,
           ),
         ),

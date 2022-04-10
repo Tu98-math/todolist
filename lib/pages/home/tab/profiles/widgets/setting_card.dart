@@ -1,0 +1,148 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '/constants/app_colors.dart';
+import '/util/extension/dimens.dart';
+import '/util/extension/widget_extension.dart';
+
+class SettingCard extends StatefulWidget {
+  const SettingCard({
+    Key? key,
+    required this.pressToProfile,
+    required this.pressSignOut,
+  }) : super(key: key);
+
+  final Function pressToProfile, pressSignOut;
+
+  @override
+  State<SettingCard> createState() => _SettingCardState();
+}
+
+class _SettingCardState extends State<SettingCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        buildLanguage(),
+        buildChangeAvatar(),
+        buildSignOut(),
+      ],
+    );
+  }
+
+  Widget buildLanguage() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            'Language'
+                .plain()
+                .fSize(18)
+                .weight(FontWeight.w600)
+                .b()
+                .pad(15, 0, 10),
+            Icon(Icons.person).pad(10).inkTap(
+                  onTap: widget.pressToProfile,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+          ],
+        ),
+        SizedBox(height: 5.w),
+        Row(
+          children: [
+            'Vietnamese'
+                .plain()
+                .fSize(14)
+                .color(AppColors.grayText)
+                .weight(FontWeight.w400)
+                .b()
+                .pad(2, 5)
+                .inkTap(
+                  onTap: () async {
+                    EasyLocalization.of(context)?.setLocale(Locale('vi', 'VN'));
+                    print(context.locale);
+                  },
+                  borderRadius: BorderRadius.circular(5),
+                ),
+            SizedBox(width: 20.w),
+            'English'
+                .plain()
+                .fSize(14)
+                .weight(FontWeight.w500)
+                .b()
+                .pad(2, 5)
+                .inkTap(
+                  onTap: () {
+                    Get.updateLocale(Locale('en', 'US'));
+                  },
+                  borderRadius: BorderRadius.circular(5),
+                ),
+          ],
+        ).pad(10, 0, 0),
+      ],
+    );
+  }
+
+  Widget buildChangeAvatar() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        'Change avatar'
+            .plain()
+            .fSize(18)
+            .weight(FontWeight.w600)
+            .b()
+            .pad(15, 0, 10),
+        SizedBox(height: 5.w),
+        Row(
+          children: [
+            Row(
+              children: [
+                Icon(Icons.image),
+                'Gallery'
+                    .plain()
+                    .fSize(14)
+                    .weight(FontWeight.w500)
+                    .b()
+                    .pad(2, 5)
+              ],
+            ).inkTap(
+              onTap: () {
+                Get.updateLocale(Locale('en', 'US'));
+              },
+              borderRadius: BorderRadius.circular(5),
+            ),
+            SizedBox(width: 20.w),
+            Row(
+              children: [
+                Icon(Icons.camera_alt),
+                'Camera'.plain().fSize(14).weight(FontWeight.w500).b().pad(2, 5)
+              ],
+            ).inkTap(
+              onTap: () {
+                Get.updateLocale(Locale('en', 'US'));
+              },
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ],
+        ).pad(15, 0, 0),
+      ],
+    );
+  }
+
+  Widget buildSignOut() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(Icons.logout_outlined).pad(0, 15, 0),
+        'Sign Out'.plain().fSize(18).weight(FontWeight.w600).b(),
+      ],
+    ).pad(15, 0, 10, 10).inkTap(
+          onTap: widget.pressSignOut,
+          borderRadius: BorderRadius.circular(10),
+        );
+  }
+}

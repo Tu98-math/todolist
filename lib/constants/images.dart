@@ -13,7 +13,7 @@ class AppImages {
   ];
   static const imgWalkthroughBottom = "$_baseImageFolder/walk_bot.png";
 
-  // [Successful]
+  /// [Successful]
   static const imgSuccessful = "$_baseImageFolder/succesful.png";
 
   // [WorkList Navigator Profile]
@@ -45,6 +45,7 @@ class AppImages {
   // [WorkList Navigator Profile]
   static const profileIcon = "$_baseIconFolder/profile.svg";
   static const settingIcon = "$_baseIconFolder/setting.svg";
+  static const imageStatistic = '$_baseImageFolder/statistic.png';
   // [New Task]
   static const attachIcon = "$_baseIconFolder/attach.svg";
 }

@@ -31,14 +31,14 @@ class SplashContent extends StatelessWidget {
             child: PageView.builder(
               controller: pageController,
               onPageChanged: (value) => press(value),
-              itemCount: AppConstants.kLengthWalkthrough,
+              itemCount: AppConstants.kLengthSplash,
               itemBuilder: (context, index) => buildContent(),
             ),
           ).pad(0, 0, 0, 48.w),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
-              AppConstants.kLengthWalkthrough,
+              AppConstants.kLengthSplash,
               (index) => buildDot(index: index),
             ),
           ),
@@ -71,14 +71,14 @@ class SplashContent extends StatelessWidget {
               AppImages.imgSplash[indexPage],
             ),
           ).pad(0, 0, 0, 53.w),
-          AppConstants.kWalkThroughTitle[indexPage]
+          AppConstants.kSplashTitle[indexPage]
               .tr()
               .plain()
               .fSize(24.t)
               .weight(FontWeight.bold)
               .b(),
           SizedBox(height: 9.w),
-          AppConstants.kWalkThroughDescript[indexPage]
+          AppConstants.kSplashDescription[indexPage]
               .tr()
               .plain()
               .fSize(18.t)
