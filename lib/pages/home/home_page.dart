@@ -5,7 +5,7 @@ import 'package:to_do_list/pages/home/tab/menu_nav/menu_tab.dart';
 
 import '/base/base_state.dart';
 import '/constants/images.dart';
-import '/util/extension/widget_extension.dart';
+import '/pages/home/tab/profiles/profile_tab.dart';
 import '../../util/extension/dimens.dart';
 import 'home_provider.dart';
 import 'home_vm.dart';
@@ -42,14 +42,7 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
     MyTaskTab.instance(),
     MenuTab.instance(),
     QuickTab.instance(),
-    SizedBox(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          'Profile'.desc(),
-        ],
-      ),
-    ),
+    ProfileTab.instance(),
   ];
 
   void tabClick(int index) {
@@ -132,7 +125,7 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
           index: 2,
         ),
         buildBottomNavigationBarItem(
-          title: "Profile",
+          title: 'Profiles',
           icon: AppImages.profileIcon,
           index: 3,
         ),

@@ -39,7 +39,7 @@ class CheckItem extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: "List Item ${index + 1}",
                 hintStyle: TextStyle(
-                  color: AppColors.kGrayText,
+                  color: AppColors.kGrayTextA,
                 ),
                 border: InputBorder.none,
               ),

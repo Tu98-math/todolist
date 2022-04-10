@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
             path: 'assets/translations',
             startLocale: const Locale('en', 'US'),
             fallbackLocale: const Locale('en', 'US'),
-            child: const App(),
+            child: App(),
           );
         },
       ),

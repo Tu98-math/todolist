@@ -21,11 +21,13 @@ class ProjectCard extends StatelessWidget {
       height: 180.w,
       decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.circular(5.r),
         boxShadow: [
           BoxShadow(
-              offset: Offset(2, 10),
-              color: Color(0xFFE3E3E3).withOpacity(.5),
-              blurRadius: 3)
+            offset: Offset(2, 10),
+            color: Color(0xFFE3E3E3).withOpacity(.5),
+            blurRadius: 5.r,
+          )
         ],
       ),
       child: Padding(
@@ -60,6 +62,9 @@ class ProjectCard extends StatelessWidget {
           ],
         ),
       ),
-    ).inkTap(onTap: () => press());
+    ).inkTap(
+      onTap: () => press(),
+      borderRadius: BorderRadius.circular(5),
+    );
   }
 }

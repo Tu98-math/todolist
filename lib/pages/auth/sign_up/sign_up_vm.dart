@@ -9,6 +9,7 @@ import '/providers/auth_provider.dart';
 class SignUpViewModel extends BaseViewModel {
   dynamic auth;
   dynamic firestore;
+  User? user;
   SignUpViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
@@ -28,10 +29,9 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   void createData(String email, String name) async {
-    bsSignUpStatus.add(SignUpStatus.runData);
-    User? user = auth.currentUser();
+    user = auth.currentUser();
     if (user != null) {
-      await firestore.addUser(user.uid, email, name);
+      user!.updateDisplayName(name);
     }
     bsSignUpStatus.add(SignUpStatus.successfulData);
   }

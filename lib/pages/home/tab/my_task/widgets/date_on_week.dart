@@ -56,7 +56,7 @@ class MonthItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 color: isHeader || !isMonth
-                    ? AppColors.kDarkTextColor
+                    ? AppColors.kDarkText
                     : AppColors.kText,
               ),
             ),

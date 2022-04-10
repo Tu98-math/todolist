@@ -195,7 +195,7 @@ class MyTaskCard extends StatelessWidget {
                   Text(
                     time,
                     style: TextStyle(
-                      color: AppColors.kDarkTextColor,
+                      color: AppColors.kDarkText,
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       decoration: checked
@@ -630,8 +630,7 @@ class MemberTask extends StatelessWidget {
                 for (int i = 0; i < _memberLinkAvatar.length; i++)
                   Avatar(
                     avatarLink: _memberLinkAvatar[i],
-                    sizeAvatr: 16.0,
-                    padding: 2.5,
+                    sizeAvatar: 16.0,
                   )
               ],
             )
@@ -778,7 +777,7 @@ class InfoForTask extends StatelessWidget {
       children: [
         Avatar(
           avatarLink: _avatar,
-          sizeAvatr: 22,
+          sizeAvatar: 22,
         ),
         SizedBox(width: 10),
         Column(
