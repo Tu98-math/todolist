@@ -16,7 +16,7 @@ class AppColors {
   static const kGrayBack = Color(0xFFF4F4F4);
 
   static const kBarrierColor = Color(0x65000000);
-  static const kBoxShadow = Color(0x80E3E3E3);
+  static const kBoxShadowColor = Color(0x80E3E3E3);
 
   static const primary = Color(0xFF4FB3C1);
   static const primaryBackground = Color(0xFF1B232A);

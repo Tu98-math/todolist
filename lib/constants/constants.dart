@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:to_do_list/constants/app_colors.dart';
+
 class AppConstants {
   static const kAnimationDuration = Duration(milliseconds: 200);
   static const kDefaultBorderRadius = 5.0;
@@ -33,5 +36,13 @@ class AppConstants {
     'whats_going_to_happen_tomorrow?',
     'get_notified_when_work_happens',
     'task_and_assign_them_to_colleagues',
+  ];
+
+  static const kBoxShadow = [
+    BoxShadow(
+      offset: Offset(2, 10),
+      color: AppColors.kBoxShadowColor,
+      blurRadius: 8.0,
+    )
   ];
 }

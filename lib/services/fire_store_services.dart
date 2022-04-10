@@ -6,7 +6,7 @@ class FirestoreService {
   final FirebaseFirestore _firebaseFirestore;
   FirestoreService(this._firebaseFirestore);
 
-  Stream<List<QuickNoteModel>>? quickNoteStream(String uid) {
+  Stream<List<QuickNoteModel>> quickNoteStream(String uid) {
     return _firebaseFirestore
         .collection('user')
         .doc(uid)
@@ -83,7 +83,7 @@ class FirestoreService {
         );
   }
 
-  Stream<List<ProjectModel>>? projectStream(String uid) {
+  Stream<List<ProjectModel>> projectStream(String uid) {
     return _firebaseFirestore
         .collection('project')
         .where('id_author', isEqualTo: uid)
@@ -131,13 +131,7 @@ class FirestoreService {
         .set(quickNoteModel.toFirestore());
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getQuickNote(String uid) {
-    return _firebaseFirestore
-        .collection('user')
-        .doc(uid)
-        .collection('quick_note')
-        .snapshots();
-  }
+
 
   void addProject(ProjectModel project) {
     _firebaseFirestore.collection('project').doc().set(project.toFirestore());

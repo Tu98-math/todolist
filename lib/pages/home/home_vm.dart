@@ -18,16 +18,8 @@ class HomeViewModel extends BaseViewModel {
   void init(var ref) async {
     auth = ref.watch(authServicesProvider);
     firestore = ref.watch(firestoreServicesProvider);
-    loadQuick();
   }
 
-  void loadQuick() async {
-    User? user = auth.currentUser();
-    if (user != null) {
-      print('Load Quick');
-      quickNoteStream = firestore.getQuickNote(user.uid);
-    }
-  }
 
   void logOut() {
     auth.logOut();

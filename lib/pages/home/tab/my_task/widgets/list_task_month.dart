@@ -80,7 +80,7 @@ class _ListTaskMonthState extends State<ListTaskMonth> {
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
           offset: Offset(0, 5),
-          color: AppColors.kBoxShadow,
+          color: AppColors.kBoxShadowColor,
         )
       ]),
       child: Column(

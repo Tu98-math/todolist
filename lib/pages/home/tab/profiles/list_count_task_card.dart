@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/app_colors.dart';
+import 'package:to_do_list/constants/constants.dart';
 
 class ListCountTaskCard extends StatelessWidget {
   const ListCountTaskCard({
-    Key? key, required this.event, required this.task, required this.quickNote,
+    Key? key,
+    required this.event,
+    required this.task,
+    required this.quickNote,
   }) : super(key: key);
 
-  final int event,task,quickNote;
-  
+  final int event, task, quickNote;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,17 +25,17 @@ class ListCountTaskCard extends StatelessWidget {
             CountTaskCard(
               title: "Events",
               task: event,
-              backGroundcolor: Color(0xFFF96060),
+              backgroundColor: Color(0xFFF96060),
             ),
             CountTaskCard(
               title: "To do Task",
               task: task,
-              backGroundcolor: Color(0xFF6074F9),
+              backgroundColor: Color(0xFF6074F9),
             ),
             CountTaskCard(
               title: "Quick Notes Task",
               task: quickNote,
-              backGroundcolor: Color(0xFF8560F9),
+              backgroundColor: Color(0xFF8560F9),
             ),
           ],
         ),
@@ -45,12 +49,12 @@ class CountTaskCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.task,
-    required this.backGroundcolor,
+    required this.backgroundColor,
   }) : super(key: key);
 
   final String title;
   final int task;
-  final Color backGroundcolor;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -86,14 +90,9 @@ class CountTaskCard extends StatelessWidget {
           ),
         ),
         decoration: BoxDecoration(
-          color: backGroundcolor,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(2, 10),
-              color: AppColors.kBoxShadow,
-            ),
-          ],
+          boxShadow: AppConstants.kBoxShadow,
         ),
       ),
     );

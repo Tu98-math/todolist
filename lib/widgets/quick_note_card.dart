@@ -30,7 +30,7 @@ class QuickNoteCard extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: AppColors.kBoxShadow,
+            color: AppColors.kBoxShadowColor,
             offset: Offset(5, 9),
             blurRadius: 5,
           ),

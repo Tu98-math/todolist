@@ -163,7 +163,7 @@ class MyTaskCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 offset: Offset(0, 5),
-                color: AppColors.kBoxShadow,
+                color: AppColors.kBoxShadowColor,
                 blurRadius: 3,
               )
             ],

@@ -42,11 +42,9 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
 
   int quickNoteLength = 0;
   int quickNoteSuccessfulLength = 0;
-  double quickNoteRatio = 0;
 
   int checkListLength = 0;
   int checkListSuccessfulLength = 0;
-  double checkListRatio = 0;
 
   Future<void> getImage(ImageSource source) async {
     var image = await _picker.pickImage(source: source);
@@ -70,16 +68,12 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
                 ((element.listNote.length == 0) && (element.isSuccessful)))
             .length;
 
-        quickNoteRatio = quickNoteSuccessfulLength / quickNoteLength * 100;
-
         checkListLength = event.length - quickNoteLength;
 
         checkListSuccessfulLength = event
             .where((element) =>
                 ((element.listNote.length > 0) && (element.isSuccessful)))
             .length;
-
-        checkListRatio = checkListSuccessfulLength / checkListLength * 100;
       });
     });
   }
@@ -127,13 +121,7 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.r),
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(2, 10),
-            color: AppColors.kBoxShadow,
-            blurRadius: 8.0,
-          )
-        ],
+        boxShadow: AppConstants.kBoxShadow,
       ),
       child: StreamBuilder<infoStatus>(
         stream: getVm().bsInfoStatus,
@@ -144,7 +132,7 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
               pressSignOut: () {
                 getVm().signOut();
                 Get.offAllNamed(AppRoutes.SIGN_IN);
-                },
+              },
             );
           }
           return ProfileInfo(
@@ -194,13 +182,7 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5.r),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.kBoxShadow,
-              offset: Offset(2, 10),
-              blurRadius: 8.0,
-            )
-          ]),
+          boxShadow:AppConstants.kBoxShadow,),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -222,12 +204,16 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
               ),
               StatisticIcon(
                 color: AppColors.kSplashColor[1],
-                ratio: quickNoteRatio,
+                ratio: quickNoteSuccessfulLength == 0
+                    ? 0
+                    : quickNoteSuccessfulLength / quickNoteLength,
                 title: AppConstants.kStatisticTitle[1],
               ),
               StatisticIcon(
                 color: AppColors.kSplashColor[2],
-                ratio: checkListRatio,
+                ratio: checkListSuccessfulLength == 0
+                    ? 0
+                    : checkListSuccessfulLength / checkListLength,
                 title: AppConstants.kStatisticTitle[2],
               )
             ],

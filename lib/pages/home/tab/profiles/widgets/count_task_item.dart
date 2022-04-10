@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/constants/constants.dart';
 
 import '/constants/app_colors.dart';
 import '/util/extension/dimens.dart';
@@ -24,13 +25,7 @@ class CountTaskItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(5.r),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(2, 10),
-            color: AppColors.kBoxShadow,
-            blurRadius: 8.0,
-          )
-        ],
+        boxShadow: AppConstants.kBoxShadow,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
