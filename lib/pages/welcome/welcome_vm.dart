@@ -7,15 +7,15 @@ import '/providers/auth_provider.dart';
 class WelcomeViewModel extends BaseViewModel {
   BehaviorSubject<InitialStatus> bsInitSate =
       BehaviorSubject.seeded(InitialStatus.loading);
-  dynamic auth;
+  dynamic authState;
 
   WelcomeViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
 
   void init(var ref) {
-    auth = ref.watch(authStateProvider);
-    auth.when(
+    authState = ref.watch(authStateProvider);
+    authState.when(
       data: (value) {
         if (value != null) {
           bsInitSate.add(InitialStatus.home);
@@ -23,8 +23,12 @@ class WelcomeViewModel extends BaseViewModel {
           bsInitSate.add(InitialStatus.onBoarding);
         }
       },
-      loading: () {},
-      error: (_, __) {},
+      loading: () {
+        bsInitSate.add(InitialStatus.loading);
+      },
+      error: (_, __) {
+        bsInitSate.add(InitialStatus.error);
+      },
     );
   }
 
@@ -35,4 +39,4 @@ class WelcomeViewModel extends BaseViewModel {
   }
 }
 
-enum InitialStatus { onBoarding, home, loading }
+enum InitialStatus { onBoarding, home, loading, error }

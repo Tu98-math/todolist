@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:to_do_list/pages/home/home_page.dart';
 
 import '/pages/auth/sign_up/sign_up_page.dart';
-import '/pages/new_task_screen/new_task_screen.dart';
+import '/pages/new_task/new_task_screen.dart';
 import '/pages/splash/splash_page.dart';
 import '/pages/welcome/welcome_page.dart';
 import '../pages/auth/forgot_password/forgot_password_screen.dart';

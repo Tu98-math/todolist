@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 import '/base/base_state.dart';
-import '/constants/app_colors.dart';
+import '/constants/constants.dart';
 import '/constants/images.dart';
+import '/constants/strings.dart';
 import '/pages/welcome/welcome_provider.dart';
 import '/pages/welcome/welcome_vm.dart';
 import '/routing/app_routes.dart';
@@ -47,6 +49,9 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
           Get.offAndToNamed(AppRoutes.HOME);
           debugPrint('Get: HOME');
           break;
+        case InitialStatus.error:
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+          break;
         default:
           break;
       }
@@ -75,20 +80,11 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
           SizedBox(
             height: 12.w,
           ),
-          'aking'.trim().plain().fSize(48.t).weight(FontWeight.bold).fShadow(
-            [
-              BoxShadow(
-                offset: Offset(0, 4),
-                color: AppColors.shadowColor,
-                blurRadius: 8,
-              ),
-              BoxShadow(
-                offset: Offset(4, 0),
-                color: AppColors.shadowColor,
-                blurRadius: 8,
-              ),
-            ],
-          ).b(),
+          AppStrings.aking
+              .boldW()
+              .fSize(48)
+              .fShadow(AppConstants.kLogoTextShadow)
+              .b(),
         ],
       ),
     );
