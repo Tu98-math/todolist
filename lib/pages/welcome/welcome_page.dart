@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 
 import '/base/base_state.dart';
 import '/constants/constants.dart';
-import '/constants/images.dart';
-import '/constants/strings.dart';
 import '/pages/welcome/welcome_provider.dart';
 import '/pages/welcome/welcome_vm.dart';
 import '/routing/app_routes.dart';
-import '/util/extension/dimens.dart';
-import '/util/extension/widget_extension.dart';
+import '../../util/extension/extension.dart';
 
 class WelcomePage extends StatefulWidget {
   final ScopedReader watch;
@@ -43,11 +38,9 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
       switch (value) {
         case InitialStatus.onBoarding:
           Get.offAndToNamed(AppRoutes.SPLASH);
-          debugPrint('Get: SPLASH ');
           break;
         case InitialStatus.home:
           Get.offAndToNamed(AppRoutes.HOME);
-          debugPrint('Get: HOME');
           break;
         case InitialStatus.error:
           SystemChannels.platform.invokeMethod('SystemNavigator.pop');
@@ -65,7 +58,7 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
     );
   }
 
-  Container buildBody() {
+  Widget buildBody() {
     return Container(
       color: Colors.white,
       width: screenWidth,
@@ -76,15 +69,12 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
             AppImages.imgLogo,
             width: 149.w,
             fit: BoxFit.fitWidth,
-          ),
-          SizedBox(
-            height: 12.w,
-          ),
+          ).pad(0, 0, 0, 12.w),
           AppStrings.aking
               .boldW()
               .fSize(48)
               .fShadow(AppConstants.kLogoTextShadow)
-              .b(),
+              .btr(),
         ],
       ),
     );

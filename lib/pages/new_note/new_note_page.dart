@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import '/base/base_state.dart';
 import '/constants/app_colors.dart';
 import '/models/quick_note_model.dart';
-import '/pages/auth/widgets/auth_text_field.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
 import '/widgets/choose_color_icon.dart';
 import '/widgets/primary_button.dart';
+import '../../util/ui/common_widget/auth_text_field.dart';
 import 'new_note_provider.dart';
 import 'new_note_vm.dart';
 

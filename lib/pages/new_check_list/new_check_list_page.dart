@@ -11,7 +11,7 @@ import 'package:to_do_list/widgets/choose_color_icon.dart';
 import 'package:to_do_list/widgets/primary_button.dart';
 
 import '../../base/base_state.dart';
-import '../auth/widgets/auth_text_field.dart';
+import '../../util/ui/common_widget/auth_text_field.dart';
 import 'components/check_item.dart';
 import 'new_check_list_provider.dart';
 

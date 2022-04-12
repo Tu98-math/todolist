@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:to_do_list/constants/constants.dart';
+import 'package:to_do_list/constants/app_constants.dart';
 import 'package:to_do_list/models/quick_note_model.dart';
 import 'package:to_do_list/pages/home/tab/profiles/widgets/count_task_item.dart';
 import 'package:to_do_list/pages/home/tab/profiles/widgets/statistic_item.dart';

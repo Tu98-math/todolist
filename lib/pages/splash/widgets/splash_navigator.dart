@@ -1,14 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:to_do_list/constants/constants.dart';
-import 'package:to_do_list/widgets/primary_button.dart';
 
-import '/constants/app_colors.dart';
-import '/constants/images.dart';
+import '/base/base_state.dart';
+import '/constants/constants.dart';
 import '/routing/app_routes.dart';
-import '/util/extension/dimens.dart';
-import '/util/extension/widget_extension.dart';
+import '/util/extension/extension.dart';
+import '/widgets/primary_button.dart';
 
 class SplashNavigator extends StatelessWidget {
   const SplashNavigator({
@@ -38,18 +34,14 @@ class SplashNavigator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PrimaryButton(
-            text: 'get_started',
+            text: StringTranslateExtension(AppStrings.getStarted).tr(),
             press: () => press(),
             textColor: AppColors.kText,
             backgroundColor: Colors.white,
           ),
           SizedBox(height: 22.w),
-          'login'
-              .plain()
-              .fSize(18.t)
-              .color(Colors.white)
-              .weight(FontWeight.bold)
-              .b()
+          AppStrings.logIn
+              .text18(fontWeight: FontWeight.bold, color: Colors.white)
               .tr()
               .pad(10, 30)
               .inkTap(

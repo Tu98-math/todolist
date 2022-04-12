@@ -1,8 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/util/extension/dimens.dart';
-import 'package:to_do_list/util/extension/widget_extension.dart';
+
+import '/constants/app_colors.dart';
+import '/constants/app_constants.dart';
+import '/util/extension/dimens.dart';
+import '/util/extension/widget_extension.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -29,20 +30,17 @@ class PrimaryButton extends StatelessWidget {
       height: height.w,
       decoration: BoxDecoration(
         color: backgroundColor.withOpacity(disable ? 1 : 0.4),
-        borderRadius: BorderRadius.circular(5.r),
+        borderRadius: BorderRadius.circular(AppConstants.kDefaultBorderRadius),
       ),
       child: text
-          .plain()
-          .fSize(18.t)
-          .lHeight(21.09.t)
-          .color(textColor)
-          .weight(FontWeight.bold)
-          .b()
-          .tr()
+          .text18(
+            fontWeight: FontWeight.bold,
+            color: textColor,
+          )
           .center(),
     ).inkTap(
       onTap: disable ? () => press() : () {},
-      borderRadius: BorderRadius.circular(5.r),
+      borderRadius: BorderRadius.circular(AppConstants.kDefaultBorderRadius),
     );
   }
 }

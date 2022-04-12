@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/base/base_state.dart';
 import 'package:to_do_list/constants/app_colors.dart';
 import 'package:to_do_list/util/extension/dimens.dart';
 
@@ -310,6 +311,28 @@ extension TextBuilderExtension on String {
         .b();
   }
 
+  Text text18(
+      {FontWeight fontWeight = FontWeight.w400,
+      Color color = AppColors.kText}) {
+    return plain()
+        .fSize(18)
+        .lHeight(22)
+        .color(color ?? AppColors.kText)
+        .weight(fontWeight)
+        .b();
+  }
+
+
+  Text text24() {
+    return plain()
+        .fSize(24)
+        .lHeight(28)
+        .color(AppColors.kText)
+        .weight(FontWeight.w500)
+        .b();
+  }
+
+
   Text text14({Color? color, FontWeight? fontWeight}) {
     return plain()
         .fSize(14)
@@ -358,6 +381,10 @@ extension TextBuilderExtension on String {
 extension TextExtension on _TextWidgetBuilder {
   Text b() {
     return build();
+  }
+
+  Text btr() {
+    return build().tr();
   }
 }
 

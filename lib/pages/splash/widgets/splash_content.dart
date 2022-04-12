@@ -1,8 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '/base/base_state.dart';
 import '/constants/constants.dart';
-import '/constants/images.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
 
@@ -26,14 +25,14 @@ class SplashContent extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            height: 453.w,
+            height: 453.h,
             child: PageView.builder(
               controller: pageController,
-              onPageChanged: (value) => press(value),
+              onPageChanged: (currentPage) => press(currentPage),
               itemCount: AppConstants.kLengthSplash,
               itemBuilder: (context, index) => buildContent(),
             ),
-          ).pad(0, 0, 0, 48.w),
+          ).pad(0, 0, 0, 48),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
@@ -47,13 +46,14 @@ class SplashContent extends StatelessWidget {
   }
 
   AnimatedContainer buildDot({required int index}) {
+    const double dotSize = 8;
     return AnimatedContainer(
       duration: AppConstants.kAnimationDuration,
-      margin: EdgeInsets.only(right: 8),
-      height: 8,
-      width: 8,
+      margin: EdgeInsets.only(right: dotSize.w),
+      height: dotSize.w,
+      width: dotSize.w,
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(index != indexPage ? .2 : 1),
+        color: index != indexPage ? Colors.black26 : Colors.black,
         shape: BoxShape.circle,
       ),
     );
@@ -70,18 +70,13 @@ class SplashContent extends StatelessWidget {
               AppImages.imgSplash[indexPage],
             ),
           ).pad(0, 0, 0, 53.w),
-          AppConstants.kSplashTitle[indexPage]
-              .tr()
-              .plain()
-              .fSize(24.t)
-              .weight(FontWeight.bold)
-              .b(),
+          AppStrings.splashTitle[indexPage].text24().tr(),
           SizedBox(height: 9.w),
-          AppConstants.kSplashDescription[indexPage]
-              .tr()
-              .plain()
-              .fSize(18.t)
-              .b(),
+          AppStrings.splashDes[indexPage]
+              .text18(
+                fontWeight: FontWeight.w400,
+              )
+              .tr(),
         ],
       ),
     );

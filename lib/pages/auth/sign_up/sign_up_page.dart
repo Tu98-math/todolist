@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
-import 'package:to_do_list/pages/auth/widgets/auth_text_field.dart';
 import 'package:to_do_list/routing/app_routes.dart';
 import 'package:to_do_list/util/extension/dimens.dart';
 import 'package:to_do_list/widgets/auth_switch.dart';
@@ -9,6 +6,7 @@ import 'package:to_do_list/widgets/primary_button.dart';
 import 'package:to_do_list/widgets/sign_in_content.dart';
 
 import '/base/base_state.dart';
+import '/util/ui/common_widget/auth_text_field.dart';
 import 'sign_up_provider.dart';
 import 'sign_up_vm.dart';
 

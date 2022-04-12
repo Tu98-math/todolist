@@ -1,6 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rxdart/rxdart.dart';
-
 import '/base/base_view_model.dart';
 import '/providers/auth_provider.dart';
 
@@ -24,6 +21,7 @@ class SignInViewModel extends BaseViewModel {
 
   @override
   void dispose() {
+    bsLoginStatus.close();
     super.dispose();
   }
 }
