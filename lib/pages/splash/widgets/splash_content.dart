@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '/constants/app_colors.dart';
 import '/constants/constants.dart';
 import '/constants/images.dart';
 import '/util/extension/dimens.dart';
@@ -82,7 +81,6 @@ class SplashContent extends StatelessWidget {
               .tr()
               .plain()
               .fSize(18.t)
-              .color(AppColors.kText80)
               .b(),
         ],
       ),

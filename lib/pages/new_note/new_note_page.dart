@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
-import 'package:to_do_list/pages/auth/widgets/auth_text_field.dart';
 
 import '/base/base_state.dart';
 import '/constants/app_colors.dart';
 import '/models/quick_note_model.dart';
-import '/pages/new_note/new_note_vm.dart';
+import '/pages/auth/widgets/auth_text_field.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
 import '/widgets/choose_color_icon.dart';
 import '/widgets/primary_button.dart';
 import 'new_note_provider.dart';
+import 'new_note_vm.dart';
 
 class NewNotePage extends StatefulWidget {
   final ScopedReader watch;

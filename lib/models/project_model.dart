@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '/base/base_state.dart';
 
@@ -9,6 +10,7 @@ class ProjectModel {
   final int countTask;
   final int indexColor;
   final DateTime timeCreate;
+  User? author;
 
   ProjectModel({
     this.id,
@@ -17,6 +19,7 @@ class ProjectModel {
     required this.countTask,
     required this.indexColor,
     required this.timeCreate,
+    this.author,
   });
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +32,7 @@ class ProjectModel {
       timeCreate: DateFormat("yyyy-MM-dd hh:mm:ss").parse(
         json['time_create'],
       ),
+      author: json['author'],
     );
   }
 
@@ -42,6 +46,7 @@ class ProjectModel {
       timeCreate: DateFormat("yyyy-MM-dd hh:mm:ss").parse(
         doc['time_create'],
       ),
+      // author: doc['author'] as User,
     );
   }
 
@@ -53,6 +58,7 @@ class ProjectModel {
         'index_color': this.indexColor,
         'time_create':
             DateFormat("yyyy-MM-dd hh:mm:ss").format(this.timeCreate),
+        'author': this.author,
       };
 
   Map<String, dynamic> toFirestore() => {
@@ -62,5 +68,6 @@ class ProjectModel {
         'index_color': this.indexColor,
         'time_create':
             DateFormat("yyyy-MM-dd hh:mm:ss").format(this.timeCreate),
+        'author': '/user/$idAuthor'
       };
 }

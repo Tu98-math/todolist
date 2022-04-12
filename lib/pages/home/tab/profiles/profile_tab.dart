@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:to_do_list/constants/constants.dart';
+import 'package:to_do_list/models/quick_note_model.dart';
 import 'package:to_do_list/pages/home/tab/profiles/widgets/count_task_item.dart';
 import 'package:to_do_list/pages/home/tab/profiles/widgets/statistic_item.dart';
 import 'package:to_do_list/routing/app_routes.dart';
@@ -40,53 +42,92 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
 
-  int quickNoteLength = 0;
-  int quickNoteSuccessfulLength = 0;
+  User? localUser;
+
+  int noteLength = 0;
+  int noteSuccessfulLength = 0;
 
   int checkListLength = 0;
   int checkListSuccessfulLength = 0;
-
-  Future<void> getImage(ImageSource source) async {
-    var image = await _picker.pickImage(source: source);
-    if (image != null) {}
-  }
 
   @override
   void initState() {
     super.initState();
     initQuickNoteState();
+    initUser();
   }
 
   void initQuickNoteState() {
     int check = 0;
-    getVm().streamQuickNote().listen((event) {
-      setState(() {
-        quickNoteLength =
-            event.where((element) => element.listNote.length == 0).length;
-        quickNoteSuccessfulLength = event
-            .where((element) =>
-                ((element.listNote.length == 0) && (element.isSuccessful)))
-            .length;
 
-        checkListLength = event.length - quickNoteLength;
+    getVm().bsListQuickNote?.listen((networkListQuickNote) {
+      List<QuickNoteModel> listNote = networkListQuickNote
+          .where((quickNote) => quickNote.listNote.length == 0)
+          .toList();
+      // update quick note length
+      if (noteLength != listNote.length) {
+        setState(() {
+          noteLength = listNote.length;
+        });
+      }
+      // update quick note successful
+      var networkNoteSuccessfulLength = listNote
+          .where((QuickNoteModel note) => note.isSuccessful == true)
+          .length;
+      if (noteSuccessfulLength != networkNoteSuccessfulLength) {
+        setState(() {
+          noteSuccessfulLength = networkNoteSuccessfulLength;
+        });
+      }
 
-        checkListSuccessfulLength = event
-            .where((element) =>
-                ((element.listNote.length > 0) && (element.isSuccessful)))
-            .length;
-      });
+      List<QuickNoteModel> listCheckList = networkListQuickNote
+          .where((quickNote) => quickNote.listNote.length > 0)
+          .toList();
+
+      // update check list length
+      if (checkListLength != listCheckList.length) {
+        setState(() {
+          checkListLength = listCheckList.length;
+        });
+      }
+
+      // update quick note successful
+      var networkQuickNoteSuccessfulLength =
+          listCheckList.where((element) => element.isSuccessful).length;
+      if (checkListSuccessfulLength != networkQuickNoteSuccessfulLength) {
+        setState(() {
+          checkListSuccessfulLength = networkQuickNoteSuccessfulLength;
+        });
+      }
+    });
+  }
+
+  void initUser() {
+    getVm().getUser().listen((networkUser) {
+      // init local user
+      if (networkUser != null) {
+        if (localUser == null) {
+          setState(() {
+            localUser = networkUser;
+          });
+        } else {
+          if (localUser!.photoURL != networkUser.photoURL) {
+            localUser!.updatePhotoURL(networkUser.photoURL);
+          }
+        }
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildContainer(),
+      body: localUser == null ? 'Loading'.desc() : buildBody(),
       appBar: buildAppBar(),
     );
   }
 
-  Widget buildContainer() {
+  Widget buildBody() {
     return Container(
       child: Container(
         color: Colors.white,
@@ -133,14 +174,14 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
                 getVm().signOut();
                 Get.offAllNamed(AppRoutes.SIGN_IN);
               },
+              pressUploadAvatar: getVm().uploadAvatar,
             );
           }
           return ProfileInfo(
-            user: getVm().user!,
+            user: localUser!,
             press: () => getVm().changeInfoStatus(infoStatus.setting),
-            createTask: quickNoteLength + checkListLength,
-            completedTask:
-                quickNoteSuccessfulLength + checkListSuccessfulLength,
+            createTask: noteLength + checkListLength,
+            completedTask: noteSuccessfulLength + checkListSuccessfulLength,
           );
         },
       ),
@@ -162,7 +203,7 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
           ).pad(0, 10, 0),
           CountTaskItem(
             text: AppConstants.kStatisticTitle[1],
-            task: quickNoteLength,
+            task: noteLength,
             color: AppColors.kSplashColor[1],
           ).pad(0, 10, 0),
           CountTaskItem(
@@ -180,9 +221,10 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
       width: 343.w,
       height: 205.w,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5.r),
-          boxShadow:AppConstants.kBoxShadow,),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5.r),
+        boxShadow: AppConstants.kBoxShadow,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -191,7 +233,6 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
               .fSize(18)
               .lHeight(21.09)
               .weight(FontWeight.bold)
-              .color(AppColors.kText)
               .b()
               .pad(0, 0, 16, 21),
           Row(
@@ -204,16 +245,16 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
               ),
               StatisticIcon(
                 color: AppColors.kSplashColor[1],
-                ratio: quickNoteSuccessfulLength == 0
+                ratio: noteSuccessfulLength == 0
                     ? 0
-                    : quickNoteSuccessfulLength / quickNoteLength,
+                    : noteSuccessfulLength / noteLength * 100,
                 title: AppConstants.kStatisticTitle[1],
               ),
               StatisticIcon(
                 color: AppColors.kSplashColor[2],
                 ratio: checkListSuccessfulLength == 0
                     ? 0
-                    : checkListSuccessfulLength / checkListLength,
+                    : checkListSuccessfulLength / checkListLength * 100,
                 title: AppConstants.kStatisticTitle[2],
               )
             ],

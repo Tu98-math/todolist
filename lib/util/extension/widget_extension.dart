@@ -239,7 +239,7 @@ extension TextBuilderExtension on String {
   }
 
   _TextWidgetBuilder plain() {
-    return _TextWidgetBuilder(this);
+    return _TextWidgetBuilder(this).color(AppColors.kText);
   }
 
   _TextWidgetBuilder bold() {
@@ -372,6 +372,8 @@ class _AppBarWidgetBuilder {
 
   Widget? _leading;
 
+  List<Widget>? _actions;
+
   _AppBarWidgetBuilder(this.title);
 
   _AppBarWidgetBuilder centerTitle(bool value) {
@@ -394,6 +396,11 @@ class _AppBarWidgetBuilder {
     return this;
   }
 
+  _AppBarWidgetBuilder actions(List<Widget>? value) {
+    _actions = value;
+    return this;
+  }
+
   AppBar build() {
     return AppBar(
       title: title,
@@ -401,6 +408,7 @@ class _AppBarWidgetBuilder {
       backgroundColor: _backgroundColor ?? AppColors.kPrimaryColor,
       elevation: _elevation ?? 0,
       leading: _leading,
+      actions: _actions,
     );
   }
 }

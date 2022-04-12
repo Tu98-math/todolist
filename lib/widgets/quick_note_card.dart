@@ -12,11 +12,12 @@ class QuickNoteCard extends StatelessWidget {
     required this.color,
     required this.successfulPress,
     required this.checkedPress,
+    required this.deletePress,
   }) : super(key: key);
 
   final QuickNoteModel note;
   final Color color;
-  final Function successfulPress, checkedPress;
+  final Function successfulPress, checkedPress, deletePress;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,11 @@ class QuickNoteCard extends StatelessWidget {
                         .fSize(16)
                         .lHeight(30)
                         .weight(FontWeight.w600)
+                        .color(
+                          note.isSuccessful
+                              ? AppColors.kColorNote[2]
+                              : AppColors.kText,
+                        )
                         .b()
                         .pad(0, 0, 4, 16),
                     for (int i = 0; i < note.listNote.length; i++)
@@ -74,13 +80,21 @@ class QuickNoteCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(
-                Icons.check,
-                color: AppColors.kPrimaryColor,
-              ).pad(5).inkTap(
-                    onTap: successfulPress,
-                    borderRadius: BorderRadius.circular(100),
-                  )
+              note.isSuccessful
+                  ? Icon(
+                      Icons.delete,
+                      color: AppColors.kPrimaryColor,
+                    ).pad(5).inkTap(
+                        onTap: deletePress,
+                        borderRadius: BorderRadius.circular(100),
+                      )
+                  : Icon(
+                      Icons.check,
+                      color: AppColors.kPrimaryColor,
+                    ).pad(5).inkTap(
+                        onTap: successfulPress,
+                        borderRadius: BorderRadius.circular(100),
+                      )
             ],
           ),
         ],

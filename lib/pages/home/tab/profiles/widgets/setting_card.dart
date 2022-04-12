@@ -1,25 +1,37 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '/constants/app_colors.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
 
 class SettingCard extends StatefulWidget {
-  const SettingCard({
-    Key? key,
-    required this.pressToProfile,
-    required this.pressSignOut,
-  }) : super(key: key);
+  const SettingCard(
+      {Key? key,
+      required this.pressToProfile,
+      required this.pressSignOut,
+      required this.pressUploadAvatar})
+      : super(key: key);
 
-  final Function pressToProfile, pressSignOut;
+  final Function pressToProfile, pressSignOut, pressUploadAvatar;
 
   @override
   State<SettingCard> createState() => _SettingCardState();
 }
 
 class _SettingCardState extends State<SettingCard> {
+  final ImagePicker _picker = ImagePicker();
+
+  void takePhoto(ImageSource source) async {
+    final pickerFile = await _picker.pickImage(source: source);
+
+    if (pickerFile != null) {
+      widget.pressUploadAvatar(pickerFile.path);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -111,7 +123,7 @@ class _SettingCardState extends State<SettingCard> {
               ],
             ).inkTap(
               onTap: () {
-                Get.updateLocale(Locale('en', 'US'));
+                takePhoto(ImageSource.gallery);
               },
               borderRadius: BorderRadius.circular(5),
             ),
@@ -123,7 +135,7 @@ class _SettingCardState extends State<SettingCard> {
               ],
             ).inkTap(
               onTap: () {
-                Get.updateLocale(Locale('en', 'US'));
+                takePhoto(ImageSource.camera);
               },
               borderRadius: BorderRadius.circular(5),
             ),

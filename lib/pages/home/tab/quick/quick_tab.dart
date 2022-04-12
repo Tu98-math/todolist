@@ -30,62 +30,78 @@ class QuickTab extends StatefulWidget {
 }
 
 class QuickState extends BaseState<QuickTab, QuickViewModel> {
-  bool isToDay = true;
+  bool isFullQuickNote = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildContainer(),
+      body: buildBody(),
       appBar: buildAppBar(),
     );
   }
 
-  Widget buildContainer() {
+  Widget buildBody() {
     return Container(
-      child: Container(
-        color: Colors.white,
-        height: screenHeight,
-        width: screenWidth,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 32.w),
-              StreamBuilder<List<QuickNoteModel>>(
-                  stream: getVm().streamQuickNote(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
+      color: AppColors.kWhiteBackground,
+      height: screenHeight,
+      width: screenWidth,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 32.w),
+            StreamBuilder<List<QuickNoteModel>>(
+                stream: getVm().bsListQuickNote,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("Loading");
+                  }
 
-                    List<QuickNoteModel> data = snapshot.data!;
-                    return Column(
-                      children: [
-                        if (data.length == 0) buildNoneNote(),
-                        for (int i = 0; i < data.length; i++)
-                          QuickNoteCard(
-                            note: data[i],
-                            color: AppColors.kColorNote[data[i].indexColor],
-                            successfulPress: () =>
-                                getVm().successfulQuickNote(data[i]),
-                            checkedPress: getVm().checkedNote,
-                          )
-                      ],
-                    );
-                  }),
-            ],
-          ),
+                  List<QuickNoteModel> data = snapshot.data!;
+                  return Column(
+                    children: [
+                      if (data.length == 0) buildNoneNote(),
+                      for (int i = 0; i < data.length; i++)
+                        isFullQuickNote == true ||
+                                (!isFullQuickNote &&
+                                    data[i].isSuccessful == false)
+                            ? QuickNoteCard(
+                                note: data[i],
+                                color: AppColors.kColorNote[data[i].indexColor],
+                                successfulPress: () =>
+                                    getVm().successfulQuickNote(data[i]),
+                                checkedPress: getVm().checkedNote,
+                                deletePress: () {
+                                  getVm().deleteNote(data[i]);
+                                },
+                              )
+                            : SizedBox(),
+                    ],
+                  );
+                }),
+          ],
         ),
       ),
     );
   }
 
   AppBar buildAppBar() => 'Quick Notes'
-      .plainAppBar(color: AppColors.kText)
-      .backgroundColor(Colors.white)
-      .bAppBar();
+          .plainAppBar(color: AppColors.kText)
+          .backgroundColor(Colors.white)
+          .actions(
+        [
+          Switch(
+            value: isFullQuickNote,
+            onChanged: (value) {
+              setState(() {
+                isFullQuickNote = !isFullQuickNote;
+              });
+            },
+          ),
+        ],
+      ).bAppBar();
 
   Widget buildNoneNote() =>
       'You are not have a note, create a note to continue'.desc().inkTap(

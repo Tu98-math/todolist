@@ -24,7 +24,6 @@ class AuthSwitch extends StatelessWidget {
                 : "Don’t have an account?")
             .plain()
             .fSize(15)
-            .color(AppColors.kText)
             .b(),
         (auth == authCase.toSignIn ? ' Sign In' : " Sign Up")
             .plain()

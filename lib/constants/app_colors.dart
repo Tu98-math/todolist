@@ -26,6 +26,7 @@ class AppColors {
   static const text = Color(0xFF171D22);
   static const shadowColor = Color.fromRGBO(0, 0, 0, .25);
   static const kGrayBorderColor = Color(0xFFE8E8E8);
+  static const kWhiteBackground = Color(0xFFFDFDFD);
 
   static const kSplashColor = <Color>[
     Color(0xFFF96060),

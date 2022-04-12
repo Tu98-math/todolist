@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:to_do_list/providers/fire_store_provider.dart';
@@ -7,9 +6,9 @@ import '/base/base_view_model.dart';
 import '/providers/auth_provider.dart';
 
 class SignUpViewModel extends BaseViewModel {
-  dynamic auth;
-  dynamic firestore;
-  User? user;
+  dynamic auth, user;
+  dynamic fireStore;
+
   SignUpViewModel(AutoDisposeProviderReference ref) {
     init(ref);
   }
@@ -19,7 +18,7 @@ class SignUpViewModel extends BaseViewModel {
 
   void init(var ref) async {
     auth = ref.watch(authServicesProvider);
-    firestore = ref.watch(firestoreServicesProvider);
+    fireStore = ref.watch(firestoreServicesProvider);
   }
 
   void signUp(String email, String password) async {
@@ -30,9 +29,8 @@ class SignUpViewModel extends BaseViewModel {
 
   void createData(String email, String name) async {
     user = auth.currentUser();
-    if (user != null) {
-      user!.updateDisplayName(name);
-    }
+    await fireStore.createUserData(user.uid, name, email);
+    user.updateDisplayName(name);
     bsSignUpStatus.add(SignUpStatus.successfulData);
   }
 

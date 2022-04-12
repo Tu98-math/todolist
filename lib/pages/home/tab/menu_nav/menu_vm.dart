@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_do_list/models/project_model.dart';
 
@@ -30,6 +28,7 @@ class MenuViewModel extends BaseViewModel {
       countTask: 0,
       indexColor: indexColor,
       timeCreate: DateTime.now(),
+      author: user,
     );
     firestore.addProject(temp);
   }

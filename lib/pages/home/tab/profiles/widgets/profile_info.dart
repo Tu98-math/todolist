@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:to_do_list/util/ui/common_widget/custom_avatar_loading_image.dart';
 
 import '/constants/app_colors.dart';
 import '/util/extension/dimens.dart';
@@ -29,31 +28,8 @@ class ProfileInfo extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CachedNetworkImage(
-              imageUrl:
-                  'https://kenh14cdn.com/thumb_w/660/203336854389633024/2021/9/3/photo-1-1630605138626798987164.jpg',
-              imageBuilder: (context, imageProvider) => Container(
-                width: 64.w,
-                height: 64.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ).pad(23, 10, 24),
-              placeholder: (context, url) => Shimmer(
-                child: Container(
-                  width: 64.w,
-                  height: 64.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                ).pad(23, 10, 24),
-              ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
+            CustomAvatarLoadingImage(url: user.photoURL ?? '', imageSize: 64)
+                .pad(23, 10, 24),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +39,6 @@ class ProfileInfo extends StatelessWidget {
                       .plain()
                       .fSize(18)
                       .lHeight(21.09)
-                      .color(AppColors.kText)
                       .weight(FontWeight.w600)
                       .lines(1)
                       .overflow(TextOverflow.ellipsis)
@@ -97,7 +72,6 @@ class ProfileInfo extends StatelessWidget {
                       .plain()
                       .fSize(18)
                       .lHeight(21.09)
-                      .color(AppColors.kText)
                       .weight(FontWeight.w300)
                       .b(),
                   'Create Tasks'
@@ -133,45 +107,6 @@ class ProfileInfo extends StatelessWidget {
           ],
         ).pad(27, 27, 0, 29),
       ],
-    );
-  }
-}
-
-class Avatar extends StatelessWidget {
-  const Avatar({
-    Key? key,
-    required this.imageUrl,
-    this.size = 64,
-  }) : super(key: key);
-
-  final String imageUrl;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: imageUrl,
-      imageBuilder: (context, imageProvider) => Container(
-        width: size.w,
-        height: size.w,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: imageProvider,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ).pad(23, 10, 24),
-      placeholder: (context, url) => Shimmer(
-        child: Container(
-          width: 64.w,
-          height: 64.w,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-          ),
-        ).pad(23, 10, 24),
-      ),
-      errorWidget: (context, url, error) => Icon(Icons.error),
     );
   }
 }
