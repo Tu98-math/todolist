@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_do_list/constants/app_colors.dart';
+import 'package:to_do_list/constants/constants.dart';
 import 'package:to_do_list/routing/app_routes.dart';
 
 class AddNewButton extends StatelessWidget {
@@ -54,17 +55,16 @@ class AddNewButton extends StatelessWidget {
             SimpleDialogOption(
               padding: EdgeInsets.all(0),
               child: CreateItem(
-                text: "Add Task",
+                text: StringTranslateExtension(AppStrings.addTask).tr(),
                 press: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, AppRoutes.newTaskScreen);
+                  Get.offAndToNamed(AppRoutes.NEW_TASK);
                 },
               ),
             ),
             SimpleDialogOption(
               padding: EdgeInsets.all(0),
               child: CreateItem(
-                text: "Add Quick Note",
+                text: StringTranslateExtension(AppStrings.addQuickNote).tr(),
                 press: () {
                   Get.offAndToNamed(AppRoutes.NEW_NOTE);
                 },
@@ -73,7 +73,7 @@ class AddNewButton extends StatelessWidget {
             SimpleDialogOption(
               padding: EdgeInsets.all(0),
               child: CreateItem(
-                text: "Add Check List",
+                text: StringTranslateExtension(AppStrings.addCheckList).tr(),
                 press: () {
                   Get.offAndToNamed(AppRoutes.NEW_CHECK_LIST);
                 },

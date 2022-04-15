@@ -20,7 +20,7 @@ class SignInContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          title.plain().fSize(32).weight(FontWeight.bold).lHeight(41).b(),
+          title.bold().fSize(32).lHeight(41).b(),
           SizedBox(height: 12.w),
           content.plain().fSize(16).lHeight(19.7).color(AppColors.grayText).b(),
           SizedBox(height: 48.w),

@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:to_do_list/models/project_model.dart';
-import 'package:to_do_list/models/quick_note_model.dart';
+import 'package:to_do_list/models/meta_user_model.dart';
 
-import '../constants/app_colors.dart';
+import '/constants/app_colors.dart';
+import '/models/project_model.dart';
+import '/models/quick_note_model.dart';
+import '/models/task_model.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firebaseFirestore;
@@ -30,16 +32,41 @@ class FirestoreService {
         .snapshots()
         .map(
           (list) => list.docs.map((doc) {
-            DocumentReference<Map<String, dynamic>> map = doc['author'];
-            map.get().then((DocumentSnapshot doc) {
-              if (doc.exists) {
-                print('Document exists on the database');
-              }
-              print(doc['name']);
-            });
             return ProjectModel.fromFirestore(doc);
           }).toList(),
         );
+  }
+
+  Stream<List<TaskModel>> taskStream(String uid) {
+    return _firebaseFirestore
+        .collection('task')
+        .where('id_author', isEqualTo: uid)
+        .snapshots()
+        .map(
+          (list) => list.docs.map((doc) {
+            return TaskModel.fromFirestore(doc);
+          }).toList(),
+        );
+  }
+
+  Stream<List<MetaUserModel>> userStream() {
+    return _firebaseFirestore.collection('user').snapshots().map(
+          (list) => list.docs.map((doc) {
+            return MetaUserModel.fromFirestore(doc);
+          }).toList(),
+        );
+  }
+
+  DocumentReference getDoc(String collectionPath, String id) {
+    return _firebaseFirestore.collection(collectionPath).doc(id);
+  }
+
+  Future<MetaUserModel> getMetaUserByIDoc(DocumentReference doc) {
+    return doc.get().then((value) => MetaUserModel.fromFirestore(value));
+  }
+
+  Future<ProjectModel> getProject(DocumentReference doc) {
+    return doc.get().then((value) => ProjectModel.fromFirestore(value));
   }
 
   Future<bool> addQuickNote(String uid, QuickNoteModel quickNote) async {
@@ -115,6 +142,47 @@ class FirestoreService {
     }).then((value) {
       servicesResultPrint('Update avatar successful', isToast: false);
     });
+  }
+
+  Future<bool> addTask(String uid, TaskModel task) async {
+    await _firebaseFirestore
+        .collection('task')
+        .doc()
+        .set(task.toFirestore())
+        .then((_) {
+      servicesResultPrint('Added task');
+      return true;
+    }).catchError((error) {
+      servicesResultPrint('Add task failed: $error');
+      return false;
+    });
+    return false;
+  }
+
+  Future<bool> deleteTask(String id) async {
+    await _firebaseFirestore.collection('task').doc(id).delete().then((value) {
+      servicesResultPrint("Task Deleted");
+      return true;
+    }).catchError((error) {
+      servicesResultPrint("Failed to delete task: $error");
+      return false;
+    });
+    return false;
+  }
+
+  Future<bool> updateTask(TaskModel task) async {
+    await _firebaseFirestore
+        .collection('task')
+        .doc(task.id)
+        .set(task.toFirestore())
+        .then((value) {
+      servicesResultPrint("Task updated");
+      return true;
+    }).catchError((onError) {
+      servicesResultPrint("Failed to update task: $onError");
+      return false;
+    });
+    return false;
   }
 
   void servicesResultPrint(String result, {bool isToast = true}) async {

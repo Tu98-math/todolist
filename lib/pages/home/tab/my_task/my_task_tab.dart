@@ -7,6 +7,7 @@ import '/base/base_state.dart';
 import '/pages/home/tab/my_task/my_task_vm.dart';
 import '/routing/app_routes.dart';
 import '/util/extension/widget_extension.dart';
+import '../../../../models/task_model.dart';
 import 'my_task_provider.dart';
 import 'widgets/filter_button.dart';
 import 'widgets/to_day_switch.dart';
@@ -30,6 +31,12 @@ class MyTaskTab extends StatefulWidget {
 
 class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
   bool isToDay = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +51,7 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
         children: [
           Container(
             color: AppColors.kPrimaryColor,
-            height: 66,
+            height: 300,
             child: Column(
               children: [
                 StreamBuilder<bool>(
@@ -56,12 +63,32 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
                     );
                   },
                 ),
+                StreamBuilder<List<TaskModel>>(
+                  stream: getVm().bsListTask,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("Loading");
+                    }
+
+                    List<TaskModel> data = snapshot.data!;
+                    return Column(
+                      children: [
+                        for (int i = 0; i < data.length; i++)
+                          data[i].title.desc(),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
           ),
           'LogOut'.desc().inkTap(onTap: () {
             getVm().signOut();
-            Get.offAllNamed(AppRoutes.SIGN_IN);
+            Get.offAndToNamed(AppRoutes.SIGN_IN);
           }),
         ],
       ),

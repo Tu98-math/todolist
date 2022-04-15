@@ -71,7 +71,7 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
             fit: BoxFit.fitWidth,
           ).pad(0, 0, 0, 12.w),
           AppStrings.aking
-              .boldW()
+              .bold()
               .fSize(48)
               .fShadow(AppConstants.kLogoTextShadow)
               .btr(),

@@ -26,31 +26,54 @@ class AppStrings {
   static const String passwordHint = 'enter_your_password';
   static const String passwordValid = 'enter_more_than_6_char';
   // login
+  static const String alreadyHaveAnAccount = 'already_have_an_account';
   static const String forgotPassword = 'forgot_password';
   static const String networkError = 'network_error';
   static const String userDisabled = 'email_has_been_disabled';
   static const String invalidEmail = 'the_email_address_is_not_valid';
   static const String userNotFound = 'no_user_found_for_that_email';
   static const String wrongPassword = 'wrong_password_provided_for_that_user';
+  static const String signIn = 'sign_in';
+
+  /// [Sign Up]
+  static const String createAccount = 'create_account';
+  static const String signUpDes = 'sign_up_to_continue';
+  static const String fullName = 'full_name';
+  static const String fullNameHint = 'enter_your_full_name';
+  static const String fullNameValid = 'enter_more_than_6_char';
+  // username
+  // usernameHint
+  // usernameValid
+  // password
+  // passwordHint
+  // passwordValid
+  static const String signUp = 'sign_up';
+  static const String doNotHaveAnAccount = 'do_not_have_an_account';
 
   /// [Forgot Password]
-  // forgotPassword [Sign In]
+  // forgotPassword
   static const String forgotPasswordDes =
       'please_enter_your_email_below_to_receive_your_password_reset_instructions';
-  // username [Sign In]
+  // username
   static const String sendRequest = 'send_request';
 
   /// [Reset Password]
   static const String resetPassword = 'reset_password';
-  static const String resetPasswordDes =
-      'reset_code_was_sent_to_your_phone_please_enter_the_code_and_create_new_password';
-  static const String resetCode = 'reset_code';
+  static const String resetPasswordDes = 'please_create_new_password';
+  static const String resetCode = 'reset_password';
   static const String enterYourNumber = 'enter_your_number';
   static const String newPassword = 'new_password';
-  // passwordHint [Sign In]
+  // passwordHint
+  // passwordValid
   static const String confirmPassword = 'confirm_password';
   static const String confirmPasswordHint = 'enter_your_confirm_password';
+  static const String confirmPasswordValid = 'incorrect_confirm_password';
   static const String changePassword = 'change_password';
+  static const String invalidActionCode = 'invalid_action_code';
+  // userDisable
+  // userNotFound
+  static const String expiredActionCode = 'expired_action_code';
+  static const String weakPassword = 'weak_password';
 
   /// [Successful]
   static const String successful = 'successful';
@@ -70,28 +93,28 @@ class AppStrings {
 
   /// [Home] [Add Button] [New Task]
   static const String newTask = 'new_task';
-  static const String _in = 'in';
-  // title [Home] [Menu] [Add Button]
-  // description [Home] [My Task] [View Task]
-  // dueDate [Home] [My Task] [View Task]
+  static const String in_ = 'in';
+  // title
+  // description
+  // dueDate
   static const String anytime = 'anytime';
   static const String addMember = 'add_member';
   static const String anyone = 'anyone';
-  // addTask [Home] [Add Button]
+  // addTask
 
   /// [Home] [Add Button] [Add Note]
   static const String addNote = 'add_note';
-  // description [Home] [My Task] [View Task]
-  // chooseColor [Home] [Menu] [Add Button]
+  // description
+  // chooseColor
   static const String done = 'done';
 
   /// [Home] [Add Button] [Add Check List]
-  // addCheckList [Home] [Add Button]
-  // title [Home] [Menu] [Add Button]
+  // addCheckList
+  // title
   static const String listItem = 'list_item';
   static const String addNewItem = 'add_new_item';
-  // chooseColor [Home] [Menu] [Add Button]
-  // done [Home] [Add Button] [Add Note]
+  // chooseColor
+  // done
 
   /// [Home] [My Task]
   static const String workList = 'work_list';
@@ -115,7 +138,7 @@ class AppStrings {
   static const String send = 'send';
 
   /// [Home] [My Task] [View Task] [Edit]
-  // addMember [Home] [Add Button] [New Task]
+  // addMember
   static const String deleteTask = 'delete_task';
 
   /// [Home] [Menu]
@@ -131,9 +154,9 @@ class AppStrings {
   /// [Home] [Profile]
   static const String profiles = 'profiles';
   static const String createTasks = 'create_tasks';
-  // completedTasks [Home] [My Task] [Filter]
+  // completedTasks
   static const String events = 'events';
   static const String toDoTask = 'to_do_task';
-  // quickNotes [Home] [Quick]
+  // quickNotes
   static const String statistic = 'statistic';
 }

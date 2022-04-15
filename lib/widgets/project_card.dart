@@ -56,6 +56,7 @@ class ProjectCard extends StatelessWidget {
             Text(
               project.name,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              maxLines: 3,
             ),
             SizedBox(height: 16),
             Text("${project.countTask} Task")

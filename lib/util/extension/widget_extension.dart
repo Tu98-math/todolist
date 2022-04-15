@@ -244,7 +244,9 @@ extension TextBuilderExtension on String {
   }
 
   _TextWidgetBuilder bold() {
-    return _TextWidgetBuilder(this).weight(FontWeight.w700);
+    return _TextWidgetBuilder(this)
+        .color(AppColors.kText)
+        .weight(FontWeight.w700);
   }
 
   _TextWidgetBuilder lite() {
@@ -311,17 +313,17 @@ extension TextBuilderExtension on String {
         .b();
   }
 
+  Text text14(
+      {FontWeight fontWeight = FontWeight.w400,
+      Color color = AppColors.kText}) {
+    return plain().fSize(14).lHeight(16).color(color).weight(fontWeight).b();
+  }
+
   Text text18(
       {FontWeight fontWeight = FontWeight.w400,
       Color color = AppColors.kText}) {
-    return plain()
-        .fSize(18)
-        .lHeight(22)
-        .color(color ?? AppColors.kText)
-        .weight(fontWeight)
-        .b();
+    return plain().fSize(18).lHeight(22).color(color).weight(fontWeight).b();
   }
-
 
   Text text24() {
     return plain()
@@ -329,18 +331,6 @@ extension TextBuilderExtension on String {
         .lHeight(28)
         .color(AppColors.kText)
         .weight(FontWeight.w500)
-        .b();
-  }
-
-
-  Text text14({Color? color, FontWeight? fontWeight}) {
-    return plain()
-        .fSize(14)
-        .lHeight(20)
-        .weight(fontWeight ?? FontWeight.w500)
-        .center()
-        .overflow(TextOverflow.ellipsis)
-        .align(TextAlign.left)
         .b();
   }
 

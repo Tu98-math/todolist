@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/constants/constants.dart';
 import 'package:to_do_list/routing/app_routes.dart';
 import 'package:to_do_list/util/extension/dimens.dart';
 import 'package:to_do_list/widgets/auth_switch.dart';
@@ -33,7 +34,7 @@ class SignUpState extends BaseState<SignUpPage, SignUpViewModel> {
   TextEditingController _fullNameController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  String _status = '';
+  String signUpStatusString = '';
 
   Future<void> _checkSignUp() async {
     if (_formKey.currentState!.validate()) {
@@ -51,6 +52,16 @@ class SignUpState extends BaseState<SignUpPage, SignUpViewModel> {
           break;
         case SignUpStatus.successfulData:
           Get.offAndToNamed(AppRoutes.HOME);
+          break;
+        case SignUpStatus.emailAlreadyInUse:
+          setState(() {
+            signUpStatusString = '';
+          });
+          break;
+        case SignUpStatus.invalidEmail:
+          setState(() {
+            // signUpStatusString = AppStrings.i
+          });
           break;
         default:
           break;
@@ -84,49 +95,49 @@ class SignUpState extends BaseState<SignUpPage, SignUpViewModel> {
             children: <Widget>[
               SizedBox(height: 86.w),
               SignInContent(
-                title: "Create Account",
-                content: "Sign up to continue",
+                title: StringTranslateExtension(AppStrings.createAccount).tr(),
+                content: StringTranslateExtension(AppStrings.signUpDes).tr(),
               ),
               AuthTextField(
                 controller: _fullNameController,
-                label: 'Full Name',
-                hint: 'Enter your full name',
-                validator: (val) =>
-                    val!.length < 6 ? 'Enter more than 6 char' : null,
+                label: StringTranslateExtension(AppStrings.fullName).tr(),
+                hint: StringTranslateExtension(AppStrings.fullNameHint).tr(),
+                validator: (val) => val!.length < 6
+                    ? StringTranslateExtension(AppStrings.fullNameValid).tr()
+                    : null,
                 enabled: !onRunning,
               ),
               SizedBox(height: 32.w),
               AuthTextField(
                 controller: _emailController,
-                label: 'username',
-                hint: 'enter_your_username',
+                label: StringTranslateExtension(AppStrings.username).tr(),
+                hint: StringTranslateExtension(AppStrings.usernameHint).tr(),
                 validator: (val) => val!.isNotEmpty
                     ? null
-                    : StringTranslateExtension('please_enter_a_email_address')
-                        .tr(),
+                    : StringTranslateExtension(AppStrings.usernameValid).tr(),
                 enabled: !onRunning,
               ),
               SizedBox(height: 32.w),
               AuthTextField(
                 controller: _passwordController,
-                label: 'password',
-                hint: 'enter_your_password',
+                label: StringTranslateExtension(AppStrings.password).tr(),
+                hint: StringTranslateExtension(AppStrings.passwordHint).tr(),
                 validator: (val) => val!.length < 6
-                    ? StringTranslateExtension('enter_more_than_6_char').tr()
+                    ? StringTranslateExtension(AppStrings.passwordValid).tr()
                     : null,
                 isPassword: true,
                 enabled: !onRunning,
               ),
               SizedBox(height: 60),
               Text(
-                "$_status",
+                "$signUpStatusString",
                 style: TextStyle(
                   color: Colors.red,
                 ),
-              ),
+              ).tr(),
               SizedBox(height: 20),
               PrimaryButton(
-                text: "Sign Up",
+                text: StringTranslateExtension(AppStrings.signUp).tr(),
                 press: _checkSignUp,
                 disable: !onRunning,
               ),

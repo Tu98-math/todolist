@@ -1,5 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_do_list/models/quick_note_model.dart';
+import '/models/quick_note_model.dart';
 
 import '/base/base_view_model.dart';
 import '/providers/auth_provider.dart';

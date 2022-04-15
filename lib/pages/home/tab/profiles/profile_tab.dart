@@ -1,10 +1,5 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:to_do_list/constants/app_constants.dart';
 import 'package:to_do_list/models/quick_note_model.dart';
 import 'package:to_do_list/pages/home/tab/profiles/widgets/count_task_item.dart';
@@ -38,10 +33,6 @@ class ProfileTab extends StatefulWidget {
 }
 
 class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
-  bool isToDay = true;
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
-
   User? localUser;
 
   int noteLength = 0;
@@ -58,8 +49,6 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
   }
 
   void initQuickNoteState() {
-    int check = 0;
-
     getVm().bsListQuickNote?.listen((networkListQuickNote) {
       List<QuickNoteModel> listNote = networkListQuickNote
           .where((quickNote) => quickNote.listNote.length == 0)
@@ -172,7 +161,7 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
               pressToProfile: () => getVm().changeInfoStatus(infoStatus.info),
               pressSignOut: () {
                 getVm().signOut();
-                Get.offAllNamed(AppRoutes.SIGN_IN);
+                Get.offAndToNamed(AppRoutes.SIGN_IN);
               },
               pressUploadAvatar: getVm().uploadAvatar,
             );

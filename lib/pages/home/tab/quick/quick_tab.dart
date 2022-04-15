@@ -48,7 +48,7 @@ class QuickState extends BaseState<QuickTab, QuickViewModel> {
         child: Column(
           children: [
             SizedBox(height: 32.w),
-            StreamBuilder<List<QuickNoteModel>>(
+            StreamBuilder<List<QuickNoteModel>?>(
                 stream: getVm().bsListQuickNote,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {

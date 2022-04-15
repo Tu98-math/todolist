@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:to_do_list/pages/home/tab/menu_nav/menu_tab.dart';
+import 'package:to_do_list/pages/home/tab/menu/menu_tab.dart';
+import 'package:to_do_list/util/extension/extension.dart';
 
 import '/base/base_state.dart';
 import '/constants/images.dart';
 import '/pages/home/tab/profiles/profile_tab.dart';
-import '../../util/extension/dimens.dart';
 import 'home_provider.dart';
 import 'home_vm.dart';
 import 'tab/my_task/my_task_tab.dart';
@@ -154,16 +153,15 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
               height: size.width * .064,
             ),
             SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.white.withOpacity(currentTab == index ? 1 : .5),
-              ),
-            ),
+            title
+                .plain()
+                .fSize(12)
+                .color(Colors.white.withOpacity(currentTab == index ? 1 : .5))
+                .b()
           ],
         ),
       ),
-      label: "",
+      label: title,
     );
   }
 

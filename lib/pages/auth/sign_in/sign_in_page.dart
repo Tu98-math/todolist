@@ -44,7 +44,7 @@ class SignInState extends BaseState<SignInPage, SignInViewModel> {
     });
   }
 
-  Future<void> loginClick() async {
+  Future<void> signInClick() async {
     if (formKey.currentState!.validate()) {
       getVm().login(emailController.text, passwordController.text);
     }
@@ -138,17 +138,12 @@ class SignInState extends BaseState<SignInPage, SignInViewModel> {
                 enabled: !(appStatus == SignInStatus.run),
               ),
               LinkForgotPassword(),
-              Text(
-                '$signInStatusString',
-                style: TextStyle(
-                  color: Colors.red,
-                ),
-              ),
+              '$signInStatusString'.text14(color: Colors.red).tr(),
               SizedBox(height: 20.w),
               PrimaryButton(
                 text: StringTranslateExtension(AppStrings.logIn).tr(),
-                press: loginClick,
-                disable: appStatus == SignInStatus.run,
+                press: signInClick,
+                disable: appStatus != SignInStatus.run,
               ),
               AuthSwitch(
                 auth: authCase.toSignUp,
