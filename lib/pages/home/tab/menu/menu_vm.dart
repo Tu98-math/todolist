@@ -1,41 +1,54 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_do_list/models/project_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '/base/base_view_model.dart';
+import '/models/project_model.dart';
 import '/providers/auth_provider.dart';
 import '/providers/fire_store_provider.dart';
+import '/services/fire_store_services.dart';
 
 class MenuViewModel extends BaseViewModel {
-  dynamic user, firestore;
+  User? user;
+  FirestoreService? fireStore;
+
+  BehaviorSubject<List<ProjectModel>?> bsProject = BehaviorSubject();
+
+  StreamSubscription<List<ProjectModel>>? projectStream;
 
   MenuViewModel(AutoDisposeProviderReference ref) {
-    init(ref);
-  }
-
-  void init(var ref) async {
     user = ref.watch(authServicesProvider).currentUser();
-    firestore = ref.watch(firestoreServicesProvider);
+    fireStore = ref.watch(firestoreServicesProvider);
+    if (user != null && fireStore != null) init();
   }
 
-  Stream<List<ProjectModel>> streamProject() {
-    return firestore.projectStream(user.uid);
+  void init() async {
+    initProject();
+  }
+
+  void initProject() {
+    projectStream = fireStore!.projectStream(user!.uid).listen((event) {
+      bsProject.add(event);
+    });
   }
 
   void addProject(String name, int indexColor) {
     var temp = new ProjectModel(
       name: name,
-      idAuthor: user.uid,
+      idAuthor: user!.uid,
       countTask: 0,
       indexColor: indexColor,
       timeCreate: DateTime.now(),
-      author: FirebaseFirestore.instance.collection('user').doc(user.uid),
+      author: FirebaseFirestore.instance.collection('user').doc(user!.uid),
     );
-    firestore.addProject(temp);
+    fireStore!.addProject(temp);
   }
 
   @override
   void dispose() {
+    bsProject.close();
+    if (projectStream != null) projectStream!.cancel();
     super.dispose();
   }
 }

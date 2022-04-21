@@ -187,6 +187,7 @@ class FirestoreService {
 
   void servicesResultPrint(String result, {bool isToast = true}) async {
     print("FirebaseStore services result: $result");
+
     if (isToast)
       await Fluttertoast.showToast(
         msg: result,

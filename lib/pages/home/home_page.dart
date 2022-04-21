@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:to_do_list/pages/home/tab/menu/menu_tab.dart';
-import 'package:to_do_list/util/extension/extension.dart';
 
 import '/base/base_state.dart';
-import '/constants/images.dart';
+import '/constants/constants.dart';
+import '/pages/home/tab/menu/menu_tab.dart';
 import '/pages/home/tab/profiles/profile_tab.dart';
+import '/util/extension/extension.dart';
 import 'home_provider.dart';
 import 'home_vm.dart';
 import 'tab/my_task/my_task_tab.dart';
@@ -108,23 +108,23 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
       backgroundColor: Color(0xFF292E4E),
       items: [
         buildBottomNavigationBarItem(
-          title: "My Task",
+          title: StringTranslateExtension(AppStrings.myTask).tr(),
           icon: AppImages.myTaskIcon,
           index: 0,
         ),
         buildBottomNavigationBarItem(
-          title: "Menu",
+          title: StringTranslateExtension(AppStrings.menu).tr(),
           icon: AppImages.menuIcon,
           index: 1,
         ),
         BottomNavigationBarItem(icon: Container(), label: ""),
         buildBottomNavigationBarItem(
-          title: "Quick",
+          title: StringTranslateExtension(AppStrings.quick).tr(),
           icon: AppImages.quickIcon,
           index: 2,
         ),
         buildBottomNavigationBarItem(
-          title: 'Profiles',
+          title: StringTranslateExtension(AppStrings.profiles).tr(),
           icon: AppImages.profileIcon,
           index: 3,
         ),
@@ -138,7 +138,6 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
     required String icon,
     required int index,
   }) {
-    Size size = MediaQuery.of(context).size;
     return BottomNavigationBarItem(
       icon: Padding(
         padding: const EdgeInsets.only(
@@ -149,8 +148,8 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
             SvgPicture.asset(
               icon,
               color: Colors.white.withOpacity(currentTab == index ? 1 : .5),
-              width: size.width * .064,
-              height: size.width * .064,
+              width: 24.w,
+              height: 24.w,
             ),
             SizedBox(height: 4),
             title

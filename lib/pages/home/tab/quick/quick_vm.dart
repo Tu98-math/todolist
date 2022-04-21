@@ -1,5 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rxdart/rxdart.dart';
+import 'dart:async';
 
 import '/base/base_view_model.dart';
 import '/models/quick_note_model.dart';
@@ -9,8 +8,10 @@ import '/providers/fire_store_provider.dart';
 class QuickViewModel extends BaseViewModel {
   dynamic fireStore, user;
 
-  BehaviorSubject<List<QuickNoteModel>>? bsListQuickNote =
+  BehaviorSubject<List<QuickNoteModel>?> bsListQuickNote =
       BehaviorSubject<List<QuickNoteModel>>();
+
+  StreamSubscription<List<QuickNoteModel>>? streamQuickNote;
 
   QuickViewModel(AutoDisposeProviderReference ref) {
     user = ref.watch(authServicesProvider).currentUser();
@@ -19,8 +20,8 @@ class QuickViewModel extends BaseViewModel {
   }
 
   void initListQuickNoteData() {
-    fireStore.quickNoteStream(user.uid).listen((event) {
-      bsListQuickNote!.add(event);
+    streamQuickNote = fireStore.quickNoteStream(user.uid).listen((event) {
+      bsListQuickNote.add(event);
     });
   }
 
@@ -45,7 +46,8 @@ class QuickViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    bsListQuickNote!.close();
+    bsListQuickNote.close();
+    if (streamQuickNote != null) streamQuickNote!.cancel();
     super.dispose();
   }
 }

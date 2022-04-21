@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/models/project_model.dart';
-import 'package:to_do_list/util/extension/dimens.dart';
-import 'package:to_do_list/util/ui/common_widget/add_project_button.dart';
-import 'package:to_do_list/widgets/project_card.dart';
 
 import '/base/base_state.dart';
 import '/constants/app_colors.dart';
+import '/models/project_model.dart';
+import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
+import '/util/ui/common_widget/add_project_button.dart';
+import '/widgets/project_card.dart';
 import 'menu_provider.dart';
 import 'menu_vm.dart';
 
@@ -40,8 +40,8 @@ class MenuState extends BaseState<MenuTab, MenuViewModel> {
 
   Widget buildBody() {
     return SingleChildScrollView(
-      child: StreamBuilder<List<ProjectModel>>(
-        stream: getVm().streamProject(),
+      child: StreamBuilder<List<ProjectModel>?>(
+        stream: getVm().bsProject,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
