@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
-class TaskModel {
+class TaskModel extends Equatable {
   final String id;
   final String idAuthor;
   final DocumentReference project;
@@ -53,4 +54,8 @@ class TaskModel {
         },
         'author': this.author,
       };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id];
 }

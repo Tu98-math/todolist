@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
 import '/base/base_state.dart';
 
-class ProjectModel {
+class ProjectModel extends Equatable {
   final String? id;
   final String name;
   final String idAuthor;
@@ -67,4 +68,8 @@ class ProjectModel {
             DateFormat("yyyy-MM-dd hh:mm:ss").format(this.timeCreate),
         'author': this.author,
       };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
