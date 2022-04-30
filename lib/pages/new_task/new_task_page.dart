@@ -187,7 +187,7 @@ class NewTaskState extends BaseState<NewTaskPage, NewTaskViewModel> {
       }
       TaskModel task = new TaskModel(
         idProject: dropValue!.id,
-        idAuthor: getVm().user.uid,
+        idAuthor: getVm().user!.uid,
         title: titleController.text,
         description: descriptionController.text,
         startDate: DateTime.now(),
@@ -199,16 +199,11 @@ class NewTaskState extends BaseState<NewTaskPage, NewTaskViewModel> {
     }
   }
 
-  Widget buildDoneButton() => StreamBuilder<bool>(
-        stream: getVm().bsRunning,
-        builder: (context, snapshot) {
-          return PrimaryButton(
-            text: StringTranslateExtension(AppStrings.addTask).tr(),
-            press: () => addTaskClick(),
-            disable: !snapshot.data!,
-          ).pad(0, 24);
-        },
-      );
+  Widget buildDoneButton() => PrimaryButton(
+        text: StringTranslateExtension(AppStrings.addTask).tr(),
+        press: () => addTaskClick(),
+        disable: !onRunning,
+      ).pad(0, 24);
 
   AppBar buildAppBar() =>
       StringTranslateExtension(AppStrings.newTask).tr().plainAppBar().bAppBar();

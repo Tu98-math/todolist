@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:to_do_list/services/auth_services.dart';
+
 import '/models/task_model.dart';
 import '/services/fire_store_services.dart';
 
@@ -7,25 +10,26 @@ import '/providers/auth_provider.dart';
 import '/providers/fire_store_provider.dart';
 
 class NewTaskViewModel extends BaseViewModel {
-  dynamic auth, user;
-
   final AutoDisposeProviderReference ref;
   late final FirestoreService firestoreService;
+  late final AuthenticationService auth;
+  User? user;
 
   BehaviorSubject<List<ProjectModel>>? bsListProject =
       BehaviorSubject<List<ProjectModel>>();
 
   NewTaskViewModel(this.ref) {
-    init();
-  }
-
-  void init() async {
+    // watch provider
     auth = ref.watch(authServicesProvider);
     user = auth.currentUser();
     firestoreService = ref.watch(firestoreServicesProvider);
-    firestoreService.projectStream(user.uid).listen((event) {
-      bsListProject!.add(event);
-    });
+
+    // add project data
+    if (user != null) {
+      firestoreService.projectStream(user!.uid).listen((event) {
+        bsListProject!.add(event);
+      });
+    }
   }
 
   Future<void> newTask(TaskModel task, ProjectModel project) async {
@@ -42,7 +46,6 @@ class NewTaskViewModel extends BaseViewModel {
     if (bsListProject != null) {
       bsListProject!.close();
     }
-
     super.dispose();
   }
 }

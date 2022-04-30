@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_list/constants/app_colors.dart';
-import 'package:to_do_list/util/extension/dimens.dart';
+import 'package:to_do_list/constants/constants.dart';
+import 'package:to_do_list/util/extension/extension.dart';
+import '/util/extension/dimens.dart';
 
 class CheckItem extends StatelessWidget {
   const CheckItem({
@@ -16,7 +18,7 @@ class CheckItem extends StatelessWidget {
     return Container(
       width: screenWidth,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
@@ -29,15 +31,16 @@ class CheckItem extends StatelessWidget {
                 color: AppColors.kInnerBorder,
               ),
             ),
-          ),
+          ).pad(0, 0, 12),
           SizedBox(width: 14),
           Expanded(
             child: TextFormField(
               controller: controller,
               validator: (val) =>
-                  val!.isNotEmpty ? null : "Please enter list item",
+                  val!.isNotEmpty ? null : AppStrings.pleaseEnterListItem.tr(),
               decoration: InputDecoration(
-                hintText: "List Item ${index + 1}",
+                hintText:
+                    AppStrings.listItem.tr(args: [(index + 1).toString()]),
                 hintStyle: TextStyle(
                   color: AppColors.kGrayTextA,
                 ),
