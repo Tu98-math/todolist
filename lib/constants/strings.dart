@@ -159,4 +159,10 @@ class AppStrings {
   static const String toDoTask = 'to_do_task';
   // quickNotes
   static const String statistic = 'statistic';
+
+  /// [List user form]
+  static const String selectUser = 'select_user';
+  static const String loading = 'loading';
+  static const String somethingWentWrong = 'something_went_wrong';
+  static const String pleaseEnterYourText = 'please_enter_your_text';
 }

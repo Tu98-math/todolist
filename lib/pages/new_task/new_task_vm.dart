@@ -1,52 +1,48 @@
+import '/models/task_model.dart';
+import '/services/fire_store_services.dart';
+
 import '/base/base_view_model.dart';
-import '/models/meta_user_model.dart';
 import '/models/project_model.dart';
-import '/models/quick_note_model.dart';
 import '/providers/auth_provider.dart';
 import '/providers/fire_store_provider.dart';
 
 class NewTaskViewModel extends BaseViewModel {
-  dynamic auth, fireStore, user;
+  dynamic auth, user;
+
+  final AutoDisposeProviderReference ref;
+  late final FirestoreService firestoreService;
 
   BehaviorSubject<List<ProjectModel>>? bsListProject =
       BehaviorSubject<List<ProjectModel>>();
 
-  BehaviorSubject<List<MetaUserModel>>? bsListUser =
-      BehaviorSubject<List<MetaUserModel>>();
-
-  NewTaskViewModel(AutoDisposeProviderReference ref) {
-    init(ref);
+  NewTaskViewModel(this.ref) {
+    init();
   }
 
-  void init(var ref) async {
+  void init() async {
     auth = ref.watch(authServicesProvider);
     user = auth.currentUser();
-    fireStore = ref.watch(firestoreServicesProvider);
-    initListProjectData();
-    initListUserData();
-  }
-
-  void newTask(QuickNoteModel quickNote) async {
-    // update new quick note to network
-    await fireStore.addQuickNote(user.uid, quickNote);
-  }
-
-  void initListProjectData() {
-    fireStore.projectStream(user.uid).listen((event) {
+    firestoreService = ref.watch(firestoreServicesProvider);
+    firestoreService.projectStream(user.uid).listen((event) {
       bsListProject!.add(event);
     });
   }
 
-  void initListUserData() {
-    fireStore.userStream().listen((event) {
-      bsListUser!.add(event);
-    });
+  Future<void> newTask(TaskModel task, ProjectModel project) async {
+    startRunning();
+    // add task to database
+    String taskID = await firestoreService.addTask(task);
+    // add task to project
+    await firestoreService.addTaskProject(project, taskID);
+    endRunning();
   }
 
   @override
   void dispose() {
-    bsListUser!.close();
-    bsListProject!.close();
+    if (bsListProject != null) {
+      bsListProject!.close();
+    }
+
     super.dispose();
   }
 }

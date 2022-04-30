@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/constants/constants.dart';
 
 import '/base/base_state.dart';
 import '/constants/app_colors.dart';
@@ -79,18 +80,22 @@ class NewNoteState extends BaseState<NewNotePage, NewNoteViewModel> {
                     label: 'Description',
                     controller: descriptionController,
                     hint: 'Enter your note ...',
-                    validator: (val) =>
-                        val!.isNotEmpty ? null : 'Please enter your text',
+                    validator: (val) => val!.isNotEmpty
+                        ? null
+                        : StringTranslateExtension(
+                                AppStrings.pleaseEnterYourText)
+                            .tr(),
                     border: InputBorder.none,
                     maxLines: 8,
                   ),
                   SizedBox(height: 10),
-                  'Choose Color'
+                  AppStrings.chooseColor
                       .plain()
                       .fSize(18)
                       .lHeight(22)
                       .weight(FontWeight.w600)
-                      .b(),
+                      .b()
+                      .tr(),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 17,

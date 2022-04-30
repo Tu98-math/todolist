@@ -4,22 +4,20 @@ import 'package:equatable/equatable.dart';
 import '/base/base_state.dart';
 
 class ProjectModel extends Equatable {
-  final String? id;
+  final String id;
   final String name;
   final String idAuthor;
-  final int countTask;
   final int indexColor;
   final DateTime timeCreate;
-  final DocumentReference author;
+  final List<String> listTask;
 
   ProjectModel({
-    this.id,
+    this.id = '',
     required this.name,
     required this.idAuthor,
-    required this.countTask,
     required this.indexColor,
+    required this.listTask,
     required this.timeCreate,
-    required this.author,
   });
 
   // factory ProjectModel.fromJson(Map<String, dynamic> json) {
@@ -36,16 +34,19 @@ class ProjectModel extends Equatable {
   // }
 
   factory ProjectModel.fromFirestore(DocumentSnapshot doc) {
+    List<String> list = [];
+    for (int i = 0; i < doc["list_task"].length; i++) {
+      list.add(doc["list_task"][i]);
+    }
     return ProjectModel(
       id: doc.id,
       name: doc['name'],
       idAuthor: doc['id_author'],
-      countTask: doc['count_task'],
       indexColor: doc['index_color'],
       timeCreate: DateFormat("yyyy-MM-dd hh:mm:ss").parse(
         doc['time_create'],
       ),
-      author: doc['author'],
+      listTask: list,
     );
   }
 
@@ -53,7 +54,6 @@ class ProjectModel extends Equatable {
         'id': this.id,
         'name': this.name,
         'id_author': this.idAuthor,
-        'count_task': this.countTask,
         'index_color': this.indexColor,
         'time_create':
             DateFormat("yyyy-MM-dd hh:mm:ss").format(this.timeCreate),
@@ -62,14 +62,13 @@ class ProjectModel extends Equatable {
   Map<String, dynamic> toFirestore() => {
         'name': this.name,
         'id_author': this.idAuthor,
-        'count_task': this.countTask,
         'index_color': this.indexColor,
         'time_create':
             DateFormat("yyyy-MM-dd hh:mm:ss").format(this.timeCreate),
-        'author': this.author,
+        "list_task": this.listTask,
       };
 
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [id];
 }
