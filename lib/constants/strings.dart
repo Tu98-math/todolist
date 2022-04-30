@@ -122,6 +122,20 @@ class AppStrings {
   static const String workList = 'work_list';
   static const String today = 'today';
   static const String month = 'month';
+  static const kMonthHeader = <String>[
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
+  ];
 
   /// [Home] [My Task] [Filter]
   static const String incompleteTasks = 'incomplete_tasks';

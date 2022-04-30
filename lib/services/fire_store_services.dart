@@ -38,11 +38,7 @@ class FirestoreService {
   }
 
   Stream<List<TaskModel>> taskStream(String uid) {
-    return _firebaseFirestore
-        .collection('task')
-        .where('id_author', isEqualTo: uid)
-        .snapshots()
-        .map(
+    return _firebaseFirestore.collection('task').snapshots().map(
           (list) => list.docs.map((doc) {
             return TaskModel.fromFirestore(doc);
           }).toList(),
@@ -150,7 +146,7 @@ class FirestoreService {
   Future<void> createUserData(
       String uid, String displayName, String email) async {
     await _firebaseFirestore.collection('user').doc(uid).set({
-      'displayName': displayName,
+      'display_name': displayName,
       'email': email,
     }).then((value) {
       servicesResultPrint('Create user data successful', isToast: false);
