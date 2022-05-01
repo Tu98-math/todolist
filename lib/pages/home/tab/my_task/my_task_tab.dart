@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/pages/home/tab/my_task/widgets/list_task_date.dart';
+import '../../../../models/to_do_date_model.dart';
+import '../../../../util/ui/common_widget/calendar.dart';
 import '/constants/constants.dart';
 import '/util/ui/common_widget/task_card.dart';
 
@@ -30,6 +31,7 @@ class MyTaskTab extends StatefulWidget {
 
 class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
   bool isToDay = true;
+  bool isFullMonth = true;
 
   @override
   void initState() {
@@ -38,6 +40,12 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
     getVm().bsIsToDay.listen((value) {
       setState(() {
         isToDay = value;
+      });
+    });
+
+    getVm().bsFullMonth.listen((value) {
+      setState(() {
+        isFullMonth = value;
       });
     });
   }
@@ -52,14 +60,35 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
 
   Widget buildBody() {
     return Container(
-      child: Column(
-        children: [
-          buildToDaySwitch(),
-          buildListCard(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            buildToDaySwitch(),
+            if (!this.isToDay) buildMonth(),
+            buildListCard(),
+          ],
+        ),
       ),
     );
   }
+
+  Widget buildMonth() => StreamBuilder<List<ToDoDateModel>>(
+      stream: getVm().bsToDoDate,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return AppStrings.somethingWentWrong.text12().tr().center();
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return AppStrings.loading.text12().tr().center();
+        }
+
+        return Calendar(
+          isFullMonth: isFullMonth,
+          press: getVm().setFullMonth,
+          list: snapshot.data!,
+        );
+      });
 
   Widget buildToDaySwitch() => ToDaySwitch(
         isToDay: isToDay,

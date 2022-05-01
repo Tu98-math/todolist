@@ -23,6 +23,7 @@ class AppColors {
   static const kBoxShadowColor = Color(0x80E3E3E3);
   static const kBoxShadowAddFormColor = Color.fromRGBO(221, 221, 221, .05);
   static const KBoxShadowCard = Color.fromRGBO(224, 224, 224, .5);
+  static const kBoxShadowMonth = Color.fromRGBO(227, 227, 227, .5);
 
   static const primary = Color(0xFF4FB3C1);
   static const primaryBackground = Color(0xFF1B232A);

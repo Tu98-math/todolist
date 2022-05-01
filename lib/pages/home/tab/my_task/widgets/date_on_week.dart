@@ -9,7 +9,7 @@ class DateOnWeek extends StatelessWidget {
     required this.toDoDate,
   }) : super(key: key);
   final int week;
-  final List<ToDoDate> toDoDate;
+  final List<ToDoDateModel> toDoDate;
 
   @override
   Widget build(BuildContext context) {

@@ -467,7 +467,7 @@ String toDateString(DateTime dateTime) {
     result += 'tomorrow, ';
   }
 
-  result += AppStrings.kMonthHeader[dateTime.month].tr().substring(0, 3) +
+  result += AppStrings.kMonthHeader[dateTime.month - 1].tr().substring(0, 3) +
       " " +
       dateTime.day.toString() +
       '/' +
