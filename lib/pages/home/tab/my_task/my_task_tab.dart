@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/pages/home/tab/my_task/widgets/list_card.dart';
-import 'package:to_do_list/routing/app_routes.dart';
-import '../../../../models/to_do_date_model.dart';
-import '../../../../util/ui/common_widget/calendar.dart';
+import 'widgets/list_card.dart';
+import '/models/to_do_date_model.dart';
+import '/util/ui/common_widget/calendar.dart';
 import '/constants/constants.dart';
-import '/util/ui/common_widget/task_card.dart';
 
 import '/base/base_state.dart';
 import '/pages/home/tab/my_task/my_task_vm.dart';

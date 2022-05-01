@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:to_do_list/models/meta_user_model.dart';
-import 'package:to_do_list/models/project_model.dart';
-import 'package:to_do_list/util/ui/common_widget/custom_avatar_loading_image.dart';
+import 'widgets/assigned.dart';
+import 'widgets/description.dart';
+import 'widgets/tag.dart';
+import '/models/meta_user_model.dart';
+import '/models/project_model.dart';
+import '/util/ui/common_widget/custom_avatar_loading_image.dart';
+import '/widgets/primary_button.dart';
 import '/constants/constants.dart';
 import '/util/extension/extension.dart';
 import '/models/task_model.dart';
 import '/base/base_state.dart';
 import 'detail_task_vm.dart';
 import 'detail_task_provider.dart';
+import 'widgets/due_date.dart';
 
 class DetailTaskPage extends StatefulWidget {
   final ScopedReader watch;
@@ -70,10 +75,14 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
         buildLine(),
         buildDescription(task.description),
         buildLine(),
-        buildMember(task.listMember),
+        buildListMember(task.listMember),
         buildLine(),
         buildTag(task.idProject),
         SizedBox(height: 32.w),
+        buildCompletedButton(
+          task.completed,
+          press: () => getVm().completedTask(task.id),
+        )
       ],
     ).pad(0, 24);
   }
@@ -93,29 +102,7 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
         }
 
         MetaUserModel user = snapshot.data!;
-        return Row(
-          children: [
-            CustomAvatarLoadingImage(url: user.url ?? '', imageSize: 44.w),
-            SizedBox(width: 10.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppStrings.assignedTo
-                    .plain()
-                    .fSize(16)
-                    .color(AppColors.kGrayTextA)
-                    .b()
-                    .tr(),
-                user.displayName
-                    .plain()
-                    .fSize(16)
-                    .color(AppColors.kText)
-                    .b()
-                    .tr(),
-              ],
-            )
-          ],
-        );
+        return Assigned(user: user);
       },
     );
   }
@@ -126,69 +113,11 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
         height: 2.w,
       ).pad(16, 0);
 
-  Widget buildDueDate(DateTime dueDate) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(width: 15.w),
-          SizedBox(
-            width: 18,
-            height: 18,
-            child: SvgPicture.asset(
-              AppImages.dueDateIcon,
-            ),
-          ),
-          SizedBox(width: 23.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppStrings.dueDate
-                  .plain()
-                  .fSize(16)
-                  .color(AppColors.kGrayTextA)
-                  .b()
-                  .tr(),
-              toDateString(dueDate, isUpCase: false).plain().fSize(16).b().tr(),
-            ],
-          )
-        ],
-      );
+  Widget buildDueDate(DateTime dueDate) => DueDate(dueDate: dueDate);
 
-  Widget buildDescription(String des) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(width: 15.w),
-          SizedBox(
-            width: 18,
-            height: 18,
-            child: SvgPicture.asset(
-              AppImages.descriptionIcon,
-            ),
-          ),
-          SizedBox(width: 23.w),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppStrings.description
-                    .plain()
-                    .fSize(16)
-                    .color(AppColors.kGrayTextA)
-                    .b()
-                    .tr(),
-                des
-                    .plain()
-                    .fSize(16)
-                    .overflow(TextOverflow.ellipsis)
-                    .lines(3)
-                    .b()
-                    .tr(),
-              ],
-            ),
-          )
-        ],
-      );
+  Widget buildDescription(String des) => Description(des: des);
 
-  Widget buildMember(List<String> listId) => Row(
+  Widget buildListMember(List<String> listId) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(width: 15.w),
@@ -196,7 +125,7 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
             width: 18,
             height: 18,
             child: SvgPicture.asset(
-              AppImages.descriptionIcon,
+              AppImages.memberIcon,
             ),
           ),
           SizedBox(width: 23.w),
@@ -252,47 +181,25 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
           return AppStrings.loading.text12().tr().center();
         }
         ProjectModel project = snapshot.data!;
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(width: 15.w),
-            SizedBox(
-              width: 18,
-              height: 18,
-              child: SvgPicture.asset(
-                AppImages.tagProjectIcon,
-              ),
-            ),
-            SizedBox(width: 23.w),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppStrings.tag
-                      .plain()
-                      .fSize(16)
-                      .color(AppColors.kGrayTextA)
-                      .b()
-                      .tr(),
-                  SizedBox(height: 8.w),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.r),
-                      border: Border.all(color: AppColors.kGrayBorderColor),
-                    ),
-                    child: project.name
-                        .plain()
-                        .color(AppColors.kColorNote[project.indexColor])
-                        .fSize(16)
-                        .b()
-                        .pad(8, 12),
-                  )
-                ],
-              ),
-            )
-          ],
-        );
+        return Tag(project: project);
       });
+
+  Widget buildCompletedButton(bool isComleted, {required Function press}) {
+    if (!isComleted)
+      return PrimaryButton(
+        text: AppStrings.completedTasks,
+        backgroundColor: AppColors.kColorNote[0],
+        press: press,
+        disable: !onRunning,
+      );
+    else
+      return PrimaryButton(
+        text: AppStrings.completedTasks,
+        backgroundColor: AppColors.kPrimaryColor,
+        press: () {},
+        disable: false,
+      );
+  }
 
   Widget buildAvatarById(String id) {
     return StreamBuilder<MetaUserModel>(

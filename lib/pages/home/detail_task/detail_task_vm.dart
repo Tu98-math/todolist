@@ -39,6 +39,12 @@ class DetailTaskViewModel extends BaseViewModel {
     return firestoreService.projectStreamById(id);
   }
 
+  void completedTask(String id) async {
+    startRunning();
+    await firestoreService.completedTaskById(id);
+    endRunning();
+  }
+
   @override
   void dispose() {
     bsTask.close();

@@ -167,6 +167,17 @@ class FirestoreService {
     return true;
   }
 
+  Future<void> completedTaskById(String id) async {
+    await _firebaseFirestore
+        .collection('task')
+        .doc(id)
+        .update({"completed": true}).then((value) {
+      servicesResultPrint('Completed Task');
+    }).catchError((error) {
+      servicesResultPrint('Completed Task failed: $error');
+    });
+  }
+
   Future<void> createUserData(
       String uid, String displayName, String email) async {
     await _firebaseFirestore.collection('user').doc(uid).set({
