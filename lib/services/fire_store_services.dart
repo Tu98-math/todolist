@@ -37,7 +37,7 @@ class FirestoreService {
         );
   }
 
-  Stream<List<TaskModel>> taskStream(String uid) {
+  Stream<List<TaskModel>> taskStream() {
     return _firebaseFirestore.collection('task').snapshots().map(
           (list) => list.docs.map((doc) {
             return TaskModel.fromFirestore(doc);
@@ -178,6 +178,17 @@ class FirestoreService {
     });
   }
 
+  Future<void> updateDescriptionUrlTaskById(String id, String url) async {
+    await _firebaseFirestore
+        .collection('task')
+        .doc(id)
+        .update({"des_url": url}).then((value) {
+      servicesResultPrint('Update url successful');
+    }).catchError((error) {
+      servicesResultPrint('Update url failed: $error');
+    });
+  }
+
   Future<void> createUserData(
       String uid, String displayName, String email) async {
     await _firebaseFirestore.collection('user').doc(uid).set({
@@ -199,7 +210,7 @@ class FirestoreService {
   Future<String> addTask(TaskModel task) async {
     DocumentReference doc = _firebaseFirestore.collection('task').doc();
     await doc.set(task.toFirestore()).then((onValue) {
-      servicesResultPrint('Added task ${doc.id}');
+      servicesResultPrint('Added task');
     }).catchError((error) {
       servicesResultPrint('Add task failed: $error');
     });

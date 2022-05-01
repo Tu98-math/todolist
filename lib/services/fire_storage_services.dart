@@ -15,4 +15,15 @@ class FireStorageService {
   Future<String> loadAvatar(String uid) {
     return _firebaseStorage.ref('user/$uid/avatar.png').getDownloadURL();
   }
+
+  uploadTaskImage(String filePath, String taskId) async {
+    File file = File(filePath);
+    await _firebaseStorage.ref('task/$taskId/description.png').putFile(file);
+  }
+
+  Future<String> loadTaskImage(String taskId) {
+    return _firebaseStorage
+        .ref('task/$taskId/description.png')
+        .getDownloadURL();
+  }
 }

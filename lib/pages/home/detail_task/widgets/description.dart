@@ -1,14 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:to_do_list/util/ui/common_widget/custom_loading_image.dart';
 import '/util/extension/extension.dart';
 
 import '/constants/constants.dart';
 
 class Description extends StatelessWidget {
-  const Description({Key? key, required this.des}) : super(key: key);
+  const Description({Key? key, required this.des, required this.url})
+      : super(key: key);
 
   final String des;
+
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,8 @@ class Description extends StatelessWidget {
                   .lines(3)
                   .b()
                   .tr(),
+              if (url != '')
+                CustomLoadingImage(url: url, imageSize: screenWidth * .6)
             ],
           ),
         )

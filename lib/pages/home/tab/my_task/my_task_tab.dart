@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/models/project_model.dart';
 import 'widgets/list_card.dart';
 import '/models/to_do_date_model.dart';
 import '/util/ui/common_widget/calendar.dart';
@@ -15,13 +16,17 @@ import 'widgets/to_day_switch.dart';
 class MyTaskTab extends StatefulWidget {
   final ScopedReader watch;
 
-  static Widget instance() {
+  final ProjectModel? mode;
+  final Function closeProjectMode;
+
+  static Widget instance(
+      {ProjectModel? mode, required Function closeProjectMode}) {
     return Consumer(builder: (context, watch, _) {
-      return MyTaskTab._(watch);
+      return MyTaskTab._(watch, mode, closeProjectMode);
     });
   }
 
-  const MyTaskTab._(this.watch);
+  const MyTaskTab._(this.watch, this.mode, this.closeProjectMode);
 
   @override
   State<StatefulWidget> createState() {
@@ -32,6 +37,7 @@ class MyTaskTab extends StatefulWidget {
 class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
   bool isToDay = true;
   bool isFullMonth = true;
+  taskDisplayStatus taskStatus = taskDisplayStatus.allTasks;
 
   @override
   void initState() {
@@ -46,6 +52,12 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
     getVm().bsFullMonth.listen((value) {
       setState(() {
         isFullMonth = value;
+      });
+    });
+
+    getVm().bsTaskDisplayStatus.listen((value) {
+      setState(() {
+        taskStatus = value;
       });
     });
   }
@@ -93,6 +105,9 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
   Widget buildToDaySwitch() => ToDaySwitch(
         isToDay: isToDay,
         press: getVm().setToDay,
+        backgroundColor: widget.mode == null
+            ? AppColors.kPrimaryColor
+            : AppColors.kColorNote[widget.mode!.indexColor],
       );
 
   Widget buildListCard() => StreamBuilder<List<TaskModel>?>(
@@ -108,14 +123,45 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
 
           List<TaskModel> data = snapshot.data!;
 
-          return ListCard(data: data);
+          return ListCard(
+            data: data,
+            status: taskStatus,
+            mode: widget.mode,
+          );
         },
       );
 
-  AppBar buildAppBar() =>
-      StringTranslateExtension(AppStrings.workList).tr().plainAppBar().actions([
-        FilterButton(),
-      ]).bAppBar();
+  AppBar appBar() => AppBar();
+
+  AppBar buildAppBar() {
+    String title = widget.mode == null
+        ? StringTranslateExtension(AppStrings.workList).tr()
+        : widget.mode!.name;
+    return title
+        .plainAppBar()
+        .leading(
+          widget.mode == null
+              ? null
+              : IconButton(
+                  onPressed: () => widget.closeProjectMode(),
+                  icon: Icon(Icons.arrow_back_ios),
+                ),
+        )
+        .backgroundColor(
+          widget.mode == null
+              ? AppColors.kPrimaryColor
+              : AppColors.kColorNote[widget.mode!.indexColor],
+        )
+        .actions(
+      [
+        FilterButton(
+          appBarHeight: appBar().preferredSize.height,
+          status: taskStatus,
+          press: getVm().setTaskDisplay,
+        ),
+      ],
+    ).bAppBar();
+  }
 
   @override
   MyTaskViewModel getVm() => widget.watch(viewModelProvider).state;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '/models/task_model.dart';
 import 'widgets/due_date_form.dart';
 import 'widgets/member_form.dart';
@@ -44,6 +45,20 @@ class NewTaskState extends BaseState<NewTaskPage, NewTaskViewModel> {
   TimeOfDay? dueTimeValue;
   final f = new DateFormat('dd/MM/yyyy');
 
+  final ImagePicker _picker = ImagePicker();
+
+  XFile? pickerFile;
+
+  void getPhoto() async {
+    pickerFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {});
+  }
+
+  void removePhoto() {
+    pickerFile = null;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +82,7 @@ class NewTaskState extends BaseState<NewTaskPage, NewTaskViewModel> {
         top: 10,
         left: 0,
         width: screenWidth,
-        height: 669.h,
+        height: screenHeight - buildAppBar().preferredSize.height - 100,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -133,7 +148,12 @@ class NewTaskState extends BaseState<NewTaskPage, NewTaskViewModel> {
   }
 
   Widget buildDesForm() {
-    return DescriptionForm(controller: descriptionController);
+    return DescriptionForm(
+      controller: descriptionController,
+      pickerImage: pickerFile,
+      press: getPhoto,
+      pressRemove: removePhoto,
+    );
   }
 
   void setValueDate(DateTime? date) {
@@ -195,7 +215,8 @@ class NewTaskState extends BaseState<NewTaskPage, NewTaskViewModel> {
         dueDate: dueDateValue!,
         listMember: list,
       );
-      await getVm().newTask(task, dropValue!);
+      String taskId = await getVm().newTask(task, dropValue!);
+      if (pickerFile != null) getVm().uploadDesTask(taskId, pickerFile!.path);
       Get.back();
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:to_do_list/models/project_model.dart';
 
 import '/base/base_state.dart';
 import '/constants/constants.dart';
@@ -32,17 +33,54 @@ class HomePage extends StatefulWidget {
 class HomeState extends BaseState<HomePage, HomeViewModel> {
   int currentTab = 0;
   PageController tabController = PageController();
+  ProjectModel? projectMode;
 
   void logOutClick() {
     getVm().logOut();
   }
 
-  List<Widget> tabWidget = [
-    MyTaskTab.instance(),
-    MenuTab.instance(),
-    QuickTab.instance(),
-    ProfileTab.instance(),
-  ];
+  List<Widget> tabWidget = [];
+
+  @override
+  void initState() {
+    super.initState();
+    tabWidget = [
+      MyTaskTab.instance(mode: projectMode, closeProjectMode: closeProjectMode),
+      MenuTab.instance(pressMode: setProjectMode),
+      QuickTab.instance(),
+      ProfileTab.instance(),
+    ];
+  }
+
+  void setProjectMode(ProjectModel value) async {
+    setState(() {
+      projectMode = value;
+      tabWidget[0] = MyTaskTab.instance(
+          mode: projectMode, closeProjectMode: closeProjectMode);
+    });
+    await tabController.animateToPage(
+      0,
+      duration: Duration(
+        milliseconds: 300,
+      ),
+      curve: Curves.easeIn,
+    );
+  }
+
+  void closeProjectMode() async {
+    setState(() {
+      projectMode = null;
+      tabWidget[0] = MyTaskTab.instance(
+          mode: projectMode, closeProjectMode: closeProjectMode);
+    });
+    await tabController.animateToPage(
+      0,
+      duration: Duration(
+        milliseconds: 300,
+      ),
+      curve: Curves.easeIn,
+    );
+  }
 
   void tabClick(int index) {
     if (index > 1) {

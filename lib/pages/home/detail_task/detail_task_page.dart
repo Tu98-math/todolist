@@ -73,7 +73,7 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
         buildLine(),
         buildDueDate(task.dueDate),
         buildLine(),
-        buildDescription(task.description),
+        buildDescription(task.description, task.desUrl),
         buildLine(),
         buildListMember(task.listMember),
         buildLine(),
@@ -82,12 +82,19 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
         buildCompletedButton(
           task.completed,
           press: () => getVm().completedTask(task.id),
-        )
+        ),
+        SizedBox(height: 30.w),
       ],
     ).pad(0, 24);
   }
 
-  Widget buildTitle(String title) => title.plain().fSize(18).lHeight(30).b();
+  Widget buildTitle(String title) => title
+      .plain()
+      .fSize(18)
+      .lHeight(30)
+      .weight(FontWeight.bold)
+      .b()
+      .align(Alignment.topLeft);
 
   Widget buildAssigned(String id) {
     return StreamBuilder<MetaUserModel>(
@@ -115,7 +122,10 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
 
   Widget buildDueDate(DateTime dueDate) => DueDate(dueDate: dueDate);
 
-  Widget buildDescription(String des) => Description(des: des);
+  Widget buildDescription(String des, String url) => Description(
+        des: des,
+        url: url,
+      );
 
   Widget buildListMember(List<String> listId) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,

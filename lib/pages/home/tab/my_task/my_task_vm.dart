@@ -16,7 +16,9 @@ class MyTaskViewModel extends BaseViewModel {
 
   BehaviorSubject<bool> bsIsToDay = BehaviorSubject<bool>.seeded(true);
   BehaviorSubject<bool> bsFullMonth = BehaviorSubject<bool>.seeded(false);
-  BehaviorSubject<List<TaskModel>>? bsListTask =
+  BehaviorSubject<taskDisplayStatus> bsTaskDisplayStatus =
+      BehaviorSubject<taskDisplayStatus>.seeded(taskDisplayStatus.allTasks);
+  BehaviorSubject<List<TaskModel>?> bsListTask =
       BehaviorSubject<List<TaskModel>>();
 
   BehaviorSubject<List<ToDoDateModel>> bsToDoDate =
@@ -29,7 +31,7 @@ class MyTaskViewModel extends BaseViewModel {
     firestoreService = ref.watch(firestoreServicesProvider);
 
     if (user != null) {
-      firestoreService.taskStream(user!.uid).listen((event) {
+      firestoreService.taskStream().listen((event) {
         List<TaskModel> listAllData = event;
         List<TaskModel> listData = [];
         for (var task in listAllData) {
@@ -40,7 +42,7 @@ class MyTaskViewModel extends BaseViewModel {
           }
         }
         listData.sort((a, b) => a.dueDate.compareTo(b.dueDate));
-        bsListTask!.add(listData);
+        bsListTask.add(listData);
       });
     }
   }
@@ -52,8 +54,6 @@ class MyTaskViewModel extends BaseViewModel {
     while (DateTime.now().month == startDate.month || startDate.weekday != 1) {
       startDate = startDate.subtract(const Duration(days: 1));
     }
-
-    print(startDate);
 
     while (DateTime.now().month == endDate.month || endDate.weekday != 7) {
       endDate = endDate.add(const Duration(days: 1));
@@ -91,6 +91,10 @@ class MyTaskViewModel extends BaseViewModel {
     bsFullMonth.add(value);
   }
 
+  setTaskDisplay(taskDisplayStatus status) {
+    bsTaskDisplayStatus.add(status);
+  }
+
   void signOut() {
     auth.signOut();
   }
@@ -98,9 +102,11 @@ class MyTaskViewModel extends BaseViewModel {
   @override
   void dispose() {
     bsIsToDay.close();
-    if (bsListTask != null) {
-      bsListTask!.close();
-    }
+    bsFullMonth.close();
+    bsTaskDisplayStatus.close();
+    bsListTask.close();
     super.dispose();
   }
 }
+
+enum taskDisplayStatus { incompleteTasks, completedTasks, allTasks }
