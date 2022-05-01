@@ -180,18 +180,19 @@ class NewTaskState extends BaseState<NewTaskPage, NewTaskViewModel> {
       list.add(userDate.uid);
     }
 
-    if (formKey.currentState!.validate() && dropValue != null) {
-      if (dueDateValue != null && dueTimeValue != null) {
-        dueDateValue = new DateTime(dueDateValue!.year, dueDateValue!.month,
-            dueDateValue!.day, dueTimeValue!.hour, dueTimeValue!.minute);
-      }
+    if (formKey.currentState!.validate() &&
+        dropValue != null &&
+        dueDateValue != null &&
+        dueTimeValue != null) {
+      dueDateValue = new DateTime(dueDateValue!.year, dueDateValue!.month,
+          dueDateValue!.day, dueTimeValue!.hour, dueTimeValue!.minute);
       TaskModel task = new TaskModel(
         idProject: dropValue!.id,
         idAuthor: getVm().user!.uid,
         title: titleController.text,
         description: descriptionController.text,
         startDate: DateTime.now(),
-        dueDate: dueDateValue,
+        dueDate: dueDateValue!,
         listMember: list,
       );
       await getVm().newTask(task, dropValue!);

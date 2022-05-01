@@ -78,6 +78,7 @@
     "title": "Title",
     "description": "Description",
     "due_date": "Due Date",
+    "members" : "Members",
     "new_task": "New Task",
     "anytime": "Anytime",
     "add_member": "Add Member",

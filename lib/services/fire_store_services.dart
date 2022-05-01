@@ -45,6 +45,30 @@ class FirestoreService {
         );
   }
 
+  Stream<TaskModel> taskStreamById(String id) {
+    return _firebaseFirestore
+        .collection('task')
+        .doc(id)
+        .snapshots()
+        .map((doc) => TaskModel.fromFirestore(doc));
+  }
+
+  Stream<MetaUserModel> userStreamById(String id) {
+    return _firebaseFirestore
+        .collection('user')
+        .doc(id)
+        .snapshots()
+        .map((doc) => MetaUserModel.fromFirestore(doc));
+  }
+
+  Stream<ProjectModel> projectStreamById(String id) {
+    return _firebaseFirestore
+        .collection('project')
+        .doc(id)
+        .snapshots()
+        .map((doc) => ProjectModel.fromFirestore(doc));
+  }
+
   Stream<List<MetaUserModel>> userStream(String email) {
     return _firebaseFirestore
         .collection('user')

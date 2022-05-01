@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/pages/home/tab/my_task/widgets/list_card.dart';
+import 'package:to_do_list/routing/app_routes.dart';
 import '../../../../models/to_do_date_model.dart';
 import '../../../../util/ui/common_widget/calendar.dart';
 import '/constants/constants.dart';
@@ -108,28 +110,7 @@ class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
 
           List<TaskModel> data = snapshot.data!;
 
-          return Column(
-            children: [
-              for (int i = 0; i < data.length; i++)
-                if (i == 0 ||
-                    data[i - 1].dueDate!.year != data[i].dueDate!.year ||
-                    data[i - 1].dueDate!.month != data[i].dueDate!.month ||
-                    data[i - 1].dueDate!.day != data[i].dueDate!.day)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      toDateString(data[i].dueDate!)
-                          .plain()
-                          .color(AppColors.kGrayTextA)
-                          .b()
-                          .pad(20, 0, 24, 10),
-                      TaskCard(task: data[i]),
-                    ],
-                  )
-                else
-                  TaskCard(task: data[i]),
-            ],
-          );
+          return ListCard(data: data);
         },
       );
 

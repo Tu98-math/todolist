@@ -8,7 +8,7 @@ class TaskModel extends Equatable {
   final String idProject;
   final String title;
   final String description;
-  final DateTime? dueDate;
+  final DateTime dueDate;
   final DateTime startDate;
   final List<String> listMember;
   bool completed;
@@ -47,9 +47,7 @@ class TaskModel extends Equatable {
         'id_project': this.idProject,
         'title': this.title,
         'description': this.description,
-        'due_date': this.dueDate == null
-            ? null
-            : DateFormat("yyyy-MM-dd hh:mm:ss").format(this.dueDate!),
+        'due_date': DateFormat("yyyy-MM-dd hh:mm:ss").format(this.dueDate),
         'start_date': DateFormat("yyyy-MM-dd hh:mm:ss").format(this.startDate),
         'list_member': this.listMember,
         'completed': this.completed

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:to_do_list/models/meta_user_model.dart';
 import '/models/to_do_date_model.dart';
 import '/services/auth_services.dart';
 import '/services/fire_store_services.dart';
@@ -38,7 +39,7 @@ class MyTaskViewModel extends BaseViewModel {
             setTaskDate(task);
           }
         }
-        listData.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
+        listData.sort((a, b) => a.dueDate.compareTo(b.dueDate));
         bsListTask!.add(listData);
       });
     }
@@ -74,9 +75,9 @@ class MyTaskViewModel extends BaseViewModel {
   void setTaskDate(TaskModel task) {
     List<ToDoDateModel> list = bsToDoDate.value;
     for (ToDoDateModel taskDate in list) {
-      if (task.dueDate!.day == taskDate.day.day &&
-          task.dueDate!.month == taskDate.day.month &&
-          task.dueDate!.year == taskDate.day.year) {
+      if (task.dueDate.day == taskDate.day.day &&
+          task.dueDate.month == taskDate.day.month &&
+          task.dueDate.year == taskDate.day.year) {
         taskDate.isTask = true;
       }
     }
