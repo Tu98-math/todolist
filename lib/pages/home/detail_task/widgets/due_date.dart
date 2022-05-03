@@ -33,7 +33,7 @@ class DueDate extends StatelessWidget {
                 .color(AppColors.kGrayTextA)
                 .b()
                 .tr(),
-            toDateString(dueDate, isUpCase: false).plain().fSize(16).b().tr(),
+            toDateString(dueDate, isUpCase: false).plain().fSize(16).b(),
           ],
         )
       ],

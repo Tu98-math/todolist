@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:to_do_list/models/meta_user_model.dart';
 
+import '../models/comment_model.dart';
 import '/constants/app_colors.dart';
 import '/models/project_model.dart';
 import '/models/quick_note_model.dart';
@@ -45,6 +47,19 @@ class FirestoreService {
         );
   }
 
+  Stream<List<CommentModel>> commentStream(String taskId) {
+    return _firebaseFirestore
+        .collection('task')
+        .doc(taskId)
+        .collection('comment')
+        .snapshots()
+        .map(
+          (list) => list.docs.map((doc) {
+            return CommentModel.fromFirestore(doc);
+          }).toList(),
+        );
+  }
+
   Stream<TaskModel> taskStreamById(String id) {
     return _firebaseFirestore
         .collection('task')
@@ -59,6 +74,14 @@ class FirestoreService {
         .doc(id)
         .snapshots()
         .map((doc) => MetaUserModel.fromFirestore(doc));
+  }
+
+  Future<MetaUserModel> getUserById(String id) {
+    return _firebaseFirestore
+        .collection('user')
+        .doc(id)
+        .get()
+        .then((doc) => MetaUserModel.fromFirestore(doc));
   }
 
   Stream<ProjectModel> projectStreamById(String id) {
@@ -76,7 +99,6 @@ class FirestoreService {
         .snapshots()
         .map(
           (list) => list.docs.map((doc) {
-            print(doc.id);
             return MetaUserModel.fromFirestore(doc);
           }).toList(),
         );
@@ -154,7 +176,7 @@ class FirestoreService {
   Future<bool> addTaskProject(ProjectModel projectModel, String taskID) async {
     List<String> list = projectModel.listTask;
     list.add(taskID);
-    print('task id $taskID');
+
     await _firebaseFirestore.collection('project').doc(projectModel.id).update({
       "list_task": list,
     }).then((value) {
@@ -189,6 +211,20 @@ class FirestoreService {
     });
   }
 
+  Future<void> updateDescriptionUrlCommentById(
+      String taskId, String commentId, String url) async {
+    await _firebaseFirestore
+        .collection('task')
+        .doc(taskId)
+        .collection('comment')
+        .doc(commentId)
+        .update({"url": url}).then((value) {
+      servicesResultPrint('Update url successful');
+    }).catchError((error) {
+      servicesResultPrint('Update url failed: $error');
+    });
+  }
+
   Future<void> createUserData(
       String uid, String displayName, String email) async {
     await _firebaseFirestore.collection('user').doc(uid).set({
@@ -213,6 +249,20 @@ class FirestoreService {
       servicesResultPrint('Added task');
     }).catchError((error) {
       servicesResultPrint('Add task failed: $error');
+    });
+    return doc.id;
+  }
+
+  Future<String> addComment(CommentModel comment, String taskId) async {
+    DocumentReference doc = _firebaseFirestore
+        .collection('task')
+        .doc(taskId)
+        .collection('comment')
+        .doc();
+    await doc.set(comment.toFirestore()).then((onValue) {
+      servicesResultPrint('Added comment');
+    }).catchError((error) {
+      servicesResultPrint('Add comment failed: $error');
     });
     return doc.id;
   }

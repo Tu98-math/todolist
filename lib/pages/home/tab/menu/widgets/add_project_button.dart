@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import '/constants/constants.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
-import '/widgets/choose_color_icon.dart';
-import '/widgets/primary_button.dart';
+import '../../../../../util/ui/common_widget/choose_color_icon.dart';
+import '../../../../../util/ui/common_widget/primary_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class AddProjectButton extends StatelessWidget {

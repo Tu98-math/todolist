@@ -42,7 +42,6 @@ class _LinkAppState extends State<LinkApp> {
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
       String dynamicLinkString = dynamicLinkData.link.path;
-      print('code ${dynamicLinkData.link.queryParameters}');
       if (dynamicLinkString == AppRoutes.PATH_RESET_PASSWORD) {
         Get.toNamed(AppRoutes.RESET_PASSWORD,
             arguments: dynamicLinkData.link.queryParameters['oobCode']);

@@ -26,4 +26,17 @@ class FireStorageService {
         .ref('task/$taskId/description.png')
         .getDownloadURL();
   }
+
+  uploadCommentImage(String filePath, String taskId, String commentId) {
+    File file = File(filePath);
+    return _firebaseStorage
+        .ref('task/$taskId/comment/$commentId/description.png')
+        .putFile(file);
+  }
+
+  Future<String> loadCommentImage(String taskId, String commentId) {
+    return _firebaseStorage
+        .ref('task/$taskId/comment/$commentId/description.png')
+        .getDownloadURL();
+  }
 }

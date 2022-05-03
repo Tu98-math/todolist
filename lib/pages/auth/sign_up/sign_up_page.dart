@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/constants.dart';
 import 'package:to_do_list/routing/app_routes.dart';
 import 'package:to_do_list/util/extension/dimens.dart';
-import 'package:to_do_list/widgets/auth_switch.dart';
-import 'package:to_do_list/widgets/primary_button.dart';
-import 'package:to_do_list/widgets/sign_in_content.dart';
+import 'package:to_do_list/util/ui/common_widget/auth_switch.dart';
+import 'package:to_do_list/util/ui/common_widget/primary_button.dart';
+import 'package:to_do_list/util/ui/common_widget/sign_in_content.dart';
 
 import '/base/base_state.dart';
 import '/util/ui/common_widget/auth_text_field.dart';

@@ -26,7 +26,7 @@ class Assigned extends StatelessWidget {
                 .color(AppColors.kGrayTextA)
                 .b()
                 .tr(),
-            user.displayName.plain().fSize(16).color(AppColors.kText).b().tr(),
+            user.displayName.plain().fSize(16).color(AppColors.kText).b(),
           ],
         )
       ],

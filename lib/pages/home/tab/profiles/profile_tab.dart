@@ -98,7 +98,7 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
       if (value != null) {
         setState(() {
           taskSuccessfulLength =
-              value!.where((element) => element.completed).toList().length;
+              value.where((element) => element.completed).toList().length;
           taskLength = value.length;
         });
       }

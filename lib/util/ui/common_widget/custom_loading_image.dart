@@ -35,14 +35,14 @@ class CustomLoadingImage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.r),
                   image: DecorationImage(
                     image: NetworkImage(url),
-                    fit: BoxFit.cover,
                   ),
                 ),
               ).inkTap(onTap: () async {
                 _showMyDialog(context, url);
               }),
-              placeholder: (_, __) => CircleShimmer(
-                radius: imageSize.w,
+              placeholder: (_, __) => RectangleShimmer(
+                width: imageSize.w,
+                height: imageSize.w,
               ),
               errorWidget: (_, __, ___) => Container(
                 width: imageSize.w,

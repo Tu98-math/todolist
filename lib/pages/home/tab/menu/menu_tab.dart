@@ -6,7 +6,7 @@ import '/models/project_model.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
 import 'widgets/add_project_button.dart';
-import '/widgets/project_card.dart';
+import '../../../../util/ui/common_widget/project_card.dart';
 import 'menu_provider.dart';
 import 'menu_vm.dart';
 
@@ -54,7 +54,7 @@ class MenuState extends BaseState<MenuTab, MenuViewModel> {
           }
 
           List<ProjectModel> data = snapshot.data!;
-          print(data.length);
+
           return Wrap(
             spacing: 12.w,
             runSpacing: 24.w,

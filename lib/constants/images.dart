@@ -39,6 +39,7 @@ class AppImages {
   static const memberIcon = '$_baseIconFolder/member.svg';
   static const tagIcon = '$_baseIconFolder/tag.svg';
   static const tagProjectIcon = '$_baseIconFolder/tag_project.svg';
+  static const commentIcon = '$_baseIconFolder/comment.svg';
   // [WorkList Navigator Menu]
   static const menuIcon = "$_baseIconFolder/menu.svg";
   static const blueIcon = "$_baseIconFolder/blueicon.svg";

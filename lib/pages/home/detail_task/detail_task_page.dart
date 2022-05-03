@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import '/pages/home/detail_task/widgets/comment_button.dart';
+import '/pages/home/detail_task/widgets/comment_form.dart';
+import '/pages/home/detail_task/widgets/list_comment.dart';
+import '/pages/home/detail_task/widgets/list_member.dart';
+import '/models/comment_model.dart';
 import 'widgets/assigned.dart';
 import 'widgets/description.dart';
 import 'widgets/tag.dart';
 import '/models/meta_user_model.dart';
 import '/models/project_model.dart';
-import '/util/ui/common_widget/custom_avatar_loading_image.dart';
-import '/widgets/primary_button.dart';
+import '../../../util/ui/common_widget/primary_button.dart';
 import '/constants/constants.dart';
 import '/util/extension/extension.dart';
 import '/models/task_model.dart';
@@ -33,11 +37,35 @@ class DetailTaskPage extends StatefulWidget {
 }
 
 class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
+  bool showComment = false;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController commentController = TextEditingController();
+
+  final ImagePicker _picker = ImagePicker();
+
+  XFile? pickerFile;
+
+  void getPhoto() async {
+    pickerFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {});
+  }
+
+  void removePhoto() {
+    pickerFile = null;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     getVm().loadTask(Get.arguments);
-    print(Get.arguments);
+    getVm().loadComment(Get.arguments);
+
+    getVm().bsShowComment.listen((value) {
+      setState(() {
+        showComment = value;
+      });
+    });
   }
 
   @override
@@ -79,11 +107,15 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
         buildLine(),
         buildTag(task.idProject),
         SizedBox(height: 32.w),
+        showComment ? buildCommentForm() : SizedBox(),
+        showComment ? buildListComment() : SizedBox(),
         buildCompletedButton(
           task.completed,
           press: () => getVm().completedTask(task.id),
         ),
-        SizedBox(height: 30.w),
+        SizedBox(height: 15.w),
+        buildCommentButton(),
+        SizedBox(height: 35.w),
       ],
     ).pad(0, 24);
   }
@@ -98,7 +130,7 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
 
   Widget buildAssigned(String id) {
     return StreamBuilder<MetaUserModel>(
-      stream: getVm().getUser(id),
+      stream: getVm().streamUser(id),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return AppStrings.somethingWentWrong.text12().tr().center();
@@ -127,72 +159,26 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
         url: url,
       );
 
-  Widget buildListMember(List<String> listId) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(width: 15.w),
-          SizedBox(
-            width: 18,
-            height: 18,
-            child: SvgPicture.asset(
-              AppImages.memberIcon,
-            ),
-          ),
-          SizedBox(width: 23.w),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppStrings.members
-                    .plain()
-                    .fSize(16)
-                    .color(AppColors.kGrayTextA)
-                    .b()
-                    .tr(),
-                SizedBox(height: 18.w),
-                Row(
-                  children: [
-                    for (int i = 0;
-                        i < (listId.length > 4 ? 4 : listId.length);
-                        i++)
-                      buildAvatarById(listId[i]).pad(0, 5, 0),
-                    if (listId.length > 4)
-                      Container(
-                        width: 32.w,
-                        height: 32.w,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: '...'
-                            .plain()
-                            .color(Colors.white)
-                            .weight(FontWeight.bold)
-                            .b()
-                            .pad(0, 0, 0, 6)
-                            .center(),
-                      )
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
+  Widget buildListMember(List<String> listId) => ListMember(
+        futureListMember: getVm().getAllUser(listId),
+        streamComment: getVm().bsComment,
+        getAllUser: getVm().getUser,
       );
 
   Widget buildTag(String projectId) => StreamBuilder<ProjectModel>(
-      stream: getVm().getProject(projectId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return AppStrings.somethingWentWrong.text12().tr().center();
-        }
+        stream: getVm().getProject(projectId),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return AppStrings.somethingWentWrong.text12().tr().center();
+          }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return AppStrings.loading.text12().tr().center();
-        }
-        ProjectModel project = snapshot.data!;
-        return Tag(project: project);
-      });
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return AppStrings.loading.text12().tr().center();
+          }
+          ProjectModel project = snapshot.data!;
+          return Tag(project: project);
+        },
+      );
 
   Widget buildCompletedButton(bool isComleted, {required Function press}) {
     if (!isComleted)
@@ -211,22 +197,55 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
       );
   }
 
-  Widget buildAvatarById(String id) {
-    return StreamBuilder<MetaUserModel>(
-      stream: getVm().getUser(id),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return AppStrings.somethingWentWrong.text12().tr().center();
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return AppStrings.loading.text12().tr().center();
-        }
-        MetaUserModel user = snapshot.data!;
-        return CustomAvatarLoadingImage(url: user.url ?? '', imageSize: 32);
-      },
-    );
+  void sendCommentClick() async {
+    if (formKey.currentState!.validate() && !onRunning) {
+      var comment = new CommentModel(
+        text: commentController.text,
+        userId: getVm().user!.uid,
+        time: DateTime.now(),
+      );
+      String commentId = await getVm().newComment(Get.arguments, comment);
+      if (pickerFile != null)
+        await getVm()
+            .uploadCommentImage(Get.arguments, commentId, pickerFile!.path);
+      commentController.text = '';
+      pickerFile = null;
+    }
   }
+
+  Widget buildCommentForm() => Form(
+        key: formKey,
+        child: CommentForm(
+          controller: commentController,
+          pickerImage: pickerFile,
+          pressLoadImage: getPhoto,
+          pressRemove: removePhoto,
+          pressSend: sendCommentClick,
+        ),
+      );
+
+  Widget buildListComment() => StreamBuilder<List<CommentModel>?>(
+        stream: getVm().bsComment,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return AppStrings.somethingWentWrong.text12().tr().center();
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return AppStrings.loading.text12().tr().center();
+          }
+          List<CommentModel> data = snapshot.data!;
+          return ListComment(
+            data: data,
+            getUser: getVm().getUser,
+          );
+        },
+      );
+
+  Widget buildCommentButton() => CommentButton(
+        showComment: showComment,
+        press: () => getVm().setShowComment(!showComment),
+      );
 
   AppBar buildAppbar() => ''
           .plainAppBar()
