@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:to_do_list/models/project_model.dart';
+import 'package:to_do_list/util/ui/common_widget/back_to_login.dart';
 
 import '/base/base_state.dart';
 import '/constants/constants.dart';
@@ -109,6 +110,7 @@ class HomeState extends BaseState<HomePage, HomeViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    if (getVm().user == null) return BackToLogin();
     return Scaffold(
       body: buildBody(),
       floatingActionButton: AddNewButton(),

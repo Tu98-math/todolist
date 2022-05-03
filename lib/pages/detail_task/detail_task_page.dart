@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '/pages/home/detail_task/widgets/comment_button.dart';
-import '/pages/home/detail_task/widgets/comment_form.dart';
-import '/pages/home/detail_task/widgets/list_comment.dart';
-import '/pages/home/detail_task/widgets/list_member.dart';
+import '/util/ui/common_widget/back_to_login.dart';
+import 'widgets/comment_button.dart';
+import 'widgets/comment_form.dart';
+import 'widgets/list_comment.dart';
+import 'widgets/list_member.dart';
 import '/models/comment_model.dart';
 import 'widgets/assigned.dart';
 import 'widgets/description.dart';
 import 'widgets/tag.dart';
 import '/models/meta_user_model.dart';
 import '/models/project_model.dart';
-import '../../../util/ui/common_widget/primary_button.dart';
+import '/util/ui/common_widget/primary_button.dart';
 import '/constants/constants.dart';
 import '/util/extension/extension.dart';
 import '/models/task_model.dart';
@@ -70,6 +71,7 @@ class DetailTaskState extends BaseState<DetailTaskPage, DetailTaskViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    if (getVm().user == null) return BackToLogin();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildAppbar(),

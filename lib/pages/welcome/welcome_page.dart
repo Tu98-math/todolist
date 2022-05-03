@@ -28,7 +28,6 @@ class WelcomeState extends BaseState<WelcomePage, WelcomeViewModel> {
   @override
   void initState() {
     super.initState();
-
     init();
   }
 
