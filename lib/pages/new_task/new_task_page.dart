@@ -12,7 +12,7 @@ import '/base/base_state.dart';
 import '/constants/constants.dart';
 import '/util/extension/dimens.dart';
 import '/util/extension/widget_extension.dart';
-import '../../util/ui/common_widget/primary_button.dart';
+import '/util/ui/common_widget/primary_button.dart';
 import 'new_task_provider.dart';
 import 'new_task_vm.dart';
 import 'widgets/in_form.dart';

@@ -1,19 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:to_do_list/models/meta_user_model.dart';
 import '/models/to_do_date_model.dart';
-import '/services/auth_services.dart';
-import '/services/fire_store_services.dart';
 import '/base/base_view_model.dart';
 import '/models/task_model.dart';
-import '/providers/auth_provider.dart';
-import '/providers/fire_store_provider.dart';
 
 class MyTaskViewModel extends BaseViewModel {
-  final AutoDisposeProviderReference ref;
-  late final FirestoreService firestoreService;
-  late final AuthenticationService auth;
-  User? user;
-
   BehaviorSubject<bool> bsIsToDay = BehaviorSubject<bool>.seeded(true);
   BehaviorSubject<bool> bsFullMonth = BehaviorSubject<bool>.seeded(false);
   BehaviorSubject<taskDisplayStatus> bsTaskDisplayStatus =
@@ -24,11 +13,8 @@ class MyTaskViewModel extends BaseViewModel {
   BehaviorSubject<List<ToDoDateModel>> bsToDoDate =
       BehaviorSubject<List<ToDoDateModel>>.seeded([]);
 
-  MyTaskViewModel(this.ref) {
+  MyTaskViewModel(ref) : super(ref) {
     initListDate();
-    auth = ref.watch(authServicesProvider);
-    user = auth.currentUser();
-    firestoreService = ref.watch(firestoreServicesProvider);
 
     if (user != null) {
       firestoreService.taskStream().listen((event) {

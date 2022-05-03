@@ -1,36 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import '/models/comment_model.dart';
-import '/services/fire_storage_services.dart';
-import '/providers/fire_storage_provider.dart';
 import '/models/project_model.dart';
 
 import '/models/meta_user_model.dart';
 import '/models/task_model.dart';
-import '/providers/auth_provider.dart';
-import '/providers/fire_store_provider.dart';
-import '/services/auth_services.dart';
-import '/services/fire_store_services.dart';
 import '/base/base_view_model.dart';
 
 class DetailTaskViewModel extends BaseViewModel {
-  final AutoDisposeProviderReference ref;
-  late final FirestoreService firestoreService;
-  late final AuthenticationService auth;
-  late final FireStorageService fireStorageService;
-  User? user;
-
   BehaviorSubject<TaskModel?> bsTask = BehaviorSubject<TaskModel?>();
   BehaviorSubject<List<CommentModel>?> bsComment =
       BehaviorSubject<List<CommentModel>?>();
   BehaviorSubject<bool> bsShowComment = BehaviorSubject<bool>.seeded(true);
 
-  DetailTaskViewModel(this.ref) {
-    // watch provider
-    auth = ref.watch(authServicesProvider);
-    user = auth.currentUser();
-    firestoreService = ref.watch(firestoreServicesProvider);
-    fireStorageService = ref.watch(fireStorageServicesProvider);
-  }
+  DetailTaskViewModel(ref) : super(ref);
 
   void loadTask(String taskId) {
     firestoreService.taskStreamById(taskId).listen((event) {
