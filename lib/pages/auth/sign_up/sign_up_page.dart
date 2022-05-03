@@ -88,8 +88,6 @@ class SignUpState extends BaseState<SignUpPage, SignUpViewModel> {
       child: StreamBuilder<SignUpStatus>(
         stream: getVm().bsSignUpStatus,
         builder: (context, snapshot) {
-          bool onRunning = (snapshot.data == SignUpStatus.runData) ||
-              (snapshot.data == SignUpStatus.runEmail);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

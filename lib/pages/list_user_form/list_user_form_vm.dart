@@ -12,7 +12,7 @@ class ListUserFormViewModel extends BaseViewModel {
     bsSelectListUser.add([]);
     if (user != null)
       firestoreService.userStream(user!.email!).listen((event) {
-        bsListUser!.add(event);
+        bsListUser.add(event);
       });
   }
 
@@ -33,9 +33,7 @@ class ListUserFormViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    if (bsListUser != null) {
-      bsListUser!.close();
-    }
+    bsListUser.close();
     bsSelectListUser.close();
     super.dispose();
   }

@@ -11,7 +11,7 @@ class NewTaskViewModel extends BaseViewModel {
     // add project data
     if (user != null) {
       firestoreService.projectStream(user!.uid).listen((event) {
-        bsListProject!.add(event);
+        bsListProject.add(event);
       });
     }
   }
