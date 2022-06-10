@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
-
 import '/base/base_state.dart';
 import '/constants/app_colors.dart';
 import '/models/quick_note_model.dart';

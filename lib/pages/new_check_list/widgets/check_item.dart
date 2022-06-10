@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/constants.dart';
 import 'package:to_do_list/util/extension/extension.dart';
-import '/util/extension/dimens.dart';
 
 class CheckItem extends StatelessWidget {
   const CheckItem({

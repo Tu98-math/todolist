@@ -167,12 +167,12 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
         color: Colors.white,
         boxShadow: AppConstants.kBoxShadow,
       ),
-      child: StreamBuilder<infoStatus>(
+      child: StreamBuilder<InfoStatus>(
         stream: getVm().bsInfoStatus,
         builder: (context, snapshot) {
-          if (snapshot.data == infoStatus.setting) {
+          if (snapshot.data == InfoStatus.setting) {
             return SettingCard(
-              pressToProfile: () => getVm().changeInfoStatus(infoStatus.info),
+              pressToProfile: () => getVm().changeInfoStatus(InfoStatus.info),
               pressSignOut: () {
                 getVm().signOut();
                 Get.offAndToNamed(AppRoutes.SIGN_IN);
@@ -182,7 +182,7 @@ class ProfileState extends BaseState<ProfileTab, ProfileViewModel> {
           }
           return ProfileInfo(
             user: localUser!,
-            press: () => getVm().changeInfoStatus(infoStatus.setting),
+            press: () => getVm().changeInfoStatus(InfoStatus.setting),
             createTask: noteLength + checkListLength + taskLength,
             completedTask: noteSuccessfulLength +
                 checkListSuccessfulLength +

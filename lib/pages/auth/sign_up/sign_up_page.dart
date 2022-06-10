@@ -141,7 +141,7 @@ class SignUpState extends BaseState<SignUpPage, SignUpViewModel> {
               ),
               SizedBox(height: 20),
               AuthSwitch(
-                auth: authCase.toSignIn,
+                auth: AuthCase.toSignIn,
               ),
               SizedBox(height: 20),
             ],

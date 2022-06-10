@@ -15,7 +15,7 @@ class FilterButton extends StatelessWidget {
 
   final double appBarHeight;
 
-  final taskDisplayStatus status;
+  final TaskDisplayStatus status;
 
   final Function press;
 
@@ -41,18 +41,18 @@ class FilterButton extends StatelessWidget {
             ),
             child: Column(
               children: [
-                buildItem(taskDisplayStatus.completedTasks,
+                buildItem(TaskDisplayStatus.completedTasks,
                     AppStrings.completedTasks),
-                buildItem(taskDisplayStatus.incompleteTasks,
+                buildItem(TaskDisplayStatus.incompleteTasks,
                     AppStrings.incompleteTasks),
-                buildItem(taskDisplayStatus.allTasks, AppStrings.allTasks),
+                buildItem(TaskDisplayStatus.allTasks, AppStrings.allTasks),
               ],
             ),
           ),
         ).pad(0, 14, appBarHeight, 0);
       });
 
-  Widget buildItem(taskDisplayStatus _status, String text) => Container(
+  Widget buildItem(TaskDisplayStatus _status, String text) => Container(
         height: 44.w,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

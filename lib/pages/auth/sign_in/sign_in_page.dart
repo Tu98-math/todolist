@@ -146,7 +146,7 @@ class SignInState extends BaseState<SignInPage, SignInViewModel> {
                 disable: appStatus != SignInStatus.run,
               ),
               AuthSwitch(
-                auth: authCase.toSignUp,
+                auth: AuthCase.toSignUp,
               ).pad(20.w, 0),
             ],
           ),

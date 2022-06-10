@@ -4,8 +4,8 @@ import '/base/base_view_model.dart';
 import '/models/quick_note_model.dart';
 
 class ProfileViewModel extends BaseViewModel {
-  BehaviorSubject<infoStatus> bsInfoStatus =
-      BehaviorSubject.seeded(infoStatus.info);
+  BehaviorSubject<InfoStatus> bsInfoStatus =
+      BehaviorSubject.seeded(InfoStatus.info);
 
   BehaviorSubject<List<QuickNoteModel>?> bsListQuickNote =
       BehaviorSubject<List<QuickNoteModel>>();
@@ -37,7 +37,7 @@ class ProfileViewModel extends BaseViewModel {
     String url = await fireStorageService.loadAvatar(user!.uid);
     user!.updatePhotoURL(url);
     firestoreService.updateUserAvatar(user!.uid, url);
-    bsInfoStatus.add(infoStatus.info);
+    bsInfoStatus.add(InfoStatus.info);
   }
 
   Stream<User?> getUser() {
@@ -48,7 +48,7 @@ class ProfileViewModel extends BaseViewModel {
     auth.signOut();
   }
 
-  void changeInfoStatus(infoStatus status) {
+  void changeInfoStatus(InfoStatus status) {
     bsInfoStatus.add(status);
   }
 
@@ -61,4 +61,4 @@ class ProfileViewModel extends BaseViewModel {
   }
 }
 
-enum infoStatus { info, setting }
+enum InfoStatus { info, setting }

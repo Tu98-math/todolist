@@ -14,7 +14,7 @@ class ListCard extends StatelessWidget {
 
   final List<TaskModel> data;
 
-  final taskDisplayStatus status;
+  final TaskDisplayStatus status;
 
   final ProjectModel? mode;
 
@@ -22,11 +22,11 @@ class ListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<TaskModel> statusData = [];
     for (TaskModel task in data) {
-      if (task.completed && status != taskDisplayStatus.incompleteTasks) {
+      if (task.completed && status != TaskDisplayStatus.incompleteTasks) {
         statusData.add(task);
       }
 
-      if (!task.completed && status != taskDisplayStatus.completedTasks) {
+      if (!task.completed && status != TaskDisplayStatus.completedTasks) {
         statusData.add(task);
       }
     }

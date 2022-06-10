@@ -5,8 +5,8 @@ import '/models/task_model.dart';
 class MyTaskViewModel extends BaseViewModel {
   BehaviorSubject<bool> bsIsToDay = BehaviorSubject<bool>.seeded(true);
   BehaviorSubject<bool> bsFullMonth = BehaviorSubject<bool>.seeded(false);
-  BehaviorSubject<taskDisplayStatus> bsTaskDisplayStatus =
-      BehaviorSubject<taskDisplayStatus>.seeded(taskDisplayStatus.allTasks);
+  BehaviorSubject<TaskDisplayStatus> bsTaskDisplayStatus =
+      BehaviorSubject<TaskDisplayStatus>.seeded(TaskDisplayStatus.allTasks);
   BehaviorSubject<List<TaskModel>?> bsListTask =
       BehaviorSubject<List<TaskModel>>();
 
@@ -77,7 +77,7 @@ class MyTaskViewModel extends BaseViewModel {
     bsFullMonth.add(value);
   }
 
-  setTaskDisplay(taskDisplayStatus status) {
+  setTaskDisplay(TaskDisplayStatus status) {
     bsTaskDisplayStatus.add(status);
   }
 
@@ -95,4 +95,4 @@ class MyTaskViewModel extends BaseViewModel {
   }
 }
 
-enum taskDisplayStatus { incompleteTasks, completedTasks, allTasks }
+enum TaskDisplayStatus { incompleteTasks, completedTasks, allTasks }

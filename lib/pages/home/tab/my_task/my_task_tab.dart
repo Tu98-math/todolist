@@ -37,7 +37,7 @@ class MyTaskTab extends StatefulWidget {
 class MyTaskState extends BaseState<MyTaskTab, MyTaskViewModel> {
   bool isToDay = true;
   bool isFullMonth = true;
-  taskDisplayStatus taskStatus = taskDisplayStatus.allTasks;
+  TaskDisplayStatus taskStatus = TaskDisplayStatus.allTasks;
 
   @override
   void initState() {
