@@ -69,7 +69,7 @@ class QuickNoteCard extends StatelessWidget {
                     for (int i = 0; i < note.listNote.length; i++)
                       buildNote(
                         text: note.listNote[i].text,
-                        check: note.listNote[i].check,
+                        check: note.listNote[i].check ?? true,
                       )
                           .inkTap(
                             onTap: () => checkedPress(note, i),
@@ -103,7 +103,7 @@ class QuickNoteCard extends StatelessWidget {
   }
 
   Widget buildNote({
-    required String text,
+    required String? text,
     required bool check,
   }) {
     return Row(
@@ -119,7 +119,7 @@ class QuickNoteCard extends StatelessWidget {
             ),
           ),
         ).pad(0, 11, 0),
-        text
+        (text ?? '')
             .plain()
             .fSize(16)
             .lHeight(19.7)

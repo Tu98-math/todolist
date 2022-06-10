@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
 class CommentModel extends Equatable {
-  String id;
+  final String? id;
   final String userId;
   final String text;
   final String? url;
@@ -34,6 +34,5 @@ class CommentModel extends Equatable {
       };
 
   @override
-  // TODO: implement props
   List<Object?> get props => [id];
 }

@@ -35,8 +35,8 @@ class SelectUserItem extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            userModel.displayName.text14(),
-            userModel.email.text12(),
+            (userModel.displayName ?? '').text14(),
+            (userModel.email ?? '').text12(),
           ],
         ),
       ],

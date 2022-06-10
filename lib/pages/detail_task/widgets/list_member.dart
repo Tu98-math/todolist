@@ -64,17 +64,6 @@ class ListMember extends StatelessWidget {
             );
           },
         ),
-        StreamBuilder<List<CommentModel>?>(
-          stream: streamComment,
-          builder: (context, snapshotComment) {
-            if (snapshotComment.hasError)
-              return AppStrings.somethingWentWrong.text12().tr().center();
-            if (snapshotComment.connectionState == ConnectionState.waiting)
-              return AppStrings.loading.text12().tr().center();
-            List<CommentModel> data = snapshotComment.data!;
-            return Container();
-          },
-        ),
       ],
     );
   }
